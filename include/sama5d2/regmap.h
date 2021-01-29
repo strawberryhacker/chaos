@@ -1,7 +1,7 @@
 // Register map definitions for SAMA5D2 chips
 
-#ifndef REGMAP_H
-#define REGMAP_H
+#ifndef SAMA5D2_REGMAP_H
+#define SAMA5D2_REGMAP_H    
 
 #include <chaos/types.h>
 
@@ -11,7 +11,7 @@ struct wdt_reg {
     __r u32 sr;
 };
 
-#define WDT ((struct wdt_reg *)0xf8048040)
+#define WDT_REG ((struct wdt_reg *)0xf8048040)
 
 struct gpio_reg {
     _rw u32 mskr;
@@ -30,10 +30,10 @@ struct gpio_reg {
     __w u32 iofr;
 };
 
-#define GPIOA ((struct gpio_reg *)0xfc038000)
-#define GPIOB ((struct gpio_reg *)0xfc038040)
-#define GPIOC ((struct gpio_reg *)0xfc038080)
-#define GPIOD ((struct gpio_reg *)0xfc0380c0)
+#define GPIOA_REG ((struct gpio_reg *)0xfc038000)
+#define GPIOB_REG ((struct gpio_reg *)0xfc038040)
+#define GPIOC_REG ((struct gpio_reg *)0xfc038080)
+#define GPIOD_REG ((struct gpio_reg *)0xfc0380c0)
 
 struct uart_reg {
     __w u32 cr;
@@ -51,11 +51,11 @@ struct uart_reg {
     _rw u32 wpmr;
 };
 
-#define UART0 ((struct uart_reg *)0xf801c000)
-#define UART1 ((struct uart_reg *)0xf8020000)
-#define UART2 ((struct uart_reg *)0xf8024000)
-#define UART3 ((struct uart_reg *)0xfc008000)
-#define UART4 ((struct uart_reg *)0xfc00c000)
+#define UART0_REG ((struct uart_reg *)0xf801c000)
+#define UART1_REG ((struct uart_reg *)0xf8020000)
+#define UART2_REG ((struct uart_reg *)0xf8024000)
+#define UART3_REG ((struct uart_reg *)0xfc008000)
+#define UART4_REG ((struct uart_reg *)0xfc00c000)
 
 struct pmc_reg {
     __w u32 scer;
@@ -111,7 +111,7 @@ struct pmc_reg {
     _rw u32 audio_pll1;
 };
 
-#define PMC ((struct pmc_reg *)0xf0014000)
+#define PMC_REG ((struct pmc_reg *)0xf0014000)
 
 struct pit_reg {
     _rw u32 mr;
@@ -120,7 +120,7 @@ struct pit_reg {
     __r u32 piir;
 };
 
-#define PIT ((struct pit_reg *)0xf8048030)
+#define PIT_REG ((struct pit_reg *)0xf8048030)
 
 struct apic_reg {
     _rw u32 ssr;
@@ -150,8 +150,8 @@ struct apic_reg {
     __r u32 wpsr;
 };
 
-#define APIC ((struct apic_reg *)0xfc020000)
-#define SAPIC ((struct apic_reg *)0xf803c000)
+#define APIC_REG ((struct apic_reg *)0xfc020000)
+#define SAPIC_REG ((struct apic_reg *)0xf803c000)
 
 struct mmc_reg {
     _rw u32 ssar;
@@ -216,8 +216,8 @@ struct mmc_reg {
     _rw u32 calcr;
 };
 
-#define MMC0 ((struct mmc_reg *)0xa0000000)
-#define MMC1 ((struct mmc_reg *)0xb0000000)
+#define MMC0_REG ((struct mmc_reg *)0xa0000000)
+#define MMC1_REG ((struct mmc_reg *)0xb0000000)
 
 struct ddr_reg {
     _rw u32 mr;
@@ -252,7 +252,7 @@ struct ddr_reg {
     __r u32 wpsr;
 };
 
-#define DDR ((struct ddr_reg *)0xf000c000)
+#define DDR_REG ((struct ddr_reg *)0xf000c000)
 
 struct matrix_pri {
     _rw u32 a;
@@ -286,8 +286,8 @@ struct matrix_reg {
     _rw u32 spselr3;
 };
 
-#define H32MX ((struct matrix_reg *)0xfc03c000)
-#define H64MX ((struct matrix_reg *)0xf0018000)
+#define H32MX_REG ((struct matrix_reg *)0xfc03c000)
+#define H64MX_REG ((struct matrix_reg *)0xf0018000)
 
 struct sfr_reg {
     __r u32 reserved0;
@@ -313,7 +313,7 @@ struct sfr_reg {
     _rw u32 qspiclk;
 };
 
-#define SFR ((struct sfr_reg *)0xf8030000)
+#define SFR_REG ((struct sfr_reg *)0xf8030000)
 
 struct reset_reg {
     __w u32 cr;
@@ -321,7 +321,7 @@ struct reset_reg {
     _rw u32 mr;
 };
 
-#define RST ((struct reset_reg *)0xf8048000)
+#define RST_REG ((struct reset_reg *)0xf8048000)
 
 struct l2cache_reg {
     __r u32 idr;
@@ -368,7 +368,7 @@ struct l2cache_reg {
     _rw u32 powcr;
 };
 
-#define L2CAHCE ((struct l2cache_reg *)0x00a00000)
+#define L2CAHCE_REG ((struct l2cache_reg *)0x00a00000)
 
 struct trng_reg {
     __w u32 cr;
@@ -381,7 +381,7 @@ struct trng_reg {
     __r u32 odata;
 };
 
-#define TRNG ((struct trng_reg *)0xfc01c000)
+#define TRNG_REG ((struct trng_reg *)0xfc01c000)
 
 struct timer_channel_reg {
     __w u32 ccr;
@@ -414,8 +414,8 @@ struct timer_reg {
     _rw u32 wpmr;
 };
 
-#define TIMER0 ((struct timer_reg *)0xf800c000)
-#define TIMER1 ((struct timer_reg *)0xf8010000)
+#define TIMER0_REG ((struct timer_reg *)0xf800c000)
+#define TIMER1_REG ((struct timer_reg *)0xf8010000)
 
 #define DMA_CHANNELS 16
 
@@ -458,10 +458,9 @@ struct dma_reg {
     } channel[DMA_CHANNELS];
 };
 
-#define DMA0 ((struct dma_reg *)0xf0010000)
-#define DMA1 ((struct dma_reg *)0xf0004000)
+#define DMA0_REG ((struct dma_reg *)0xf0010000)
+#define DMA1_REG ((struct dma_reg *)0xf0004000)
 
-/// spi registers
 struct spi_reg {
     __w u32 cr;
     _rw u32 mr;
@@ -485,8 +484,8 @@ struct spi_reg {
     __r u32 wpsr;
 };
 
-#define SPI0 ((struct spi_reg *)0xf8000000)
-#define SPI1 ((struct spi_reg *)0xfc000000)
+#define SPI0_REG ((struct spi_reg *)0xf8000000)
+#define SPI1_REG ((struct spi_reg *)0xfc000000)
 
 struct flexcom_reg {
     _rw u32 flex_mr;
@@ -508,11 +507,11 @@ struct flexcom_reg {
     _rw u32 u_ttgr;
 };
 
-#define FLEX0 ((struct flexcom_reg *)0xf8034000)
-#define FLEX1 ((struct flexcom_reg *)0xf8038000)
-#define FLEX2 ((struct flexcom_reg *)0xfc010000)
-#define FLEX3 ((struct flexcom_reg *)0xfc014000)
-#define FLEX4 ((struct flexcom_reg *)0xfc018000)
+#define FLEX0_REG ((struct flexcom_reg *)0xf8034000)
+#define FLEX1_REG ((struct flexcom_reg *)0xf8038000)
+#define FLEX2_REG ((struct flexcom_reg *)0xfc010000)
+#define FLEX3_REG ((struct flexcom_reg *)0xfc014000)
+#define FLEX4_REG ((struct flexcom_reg *)0xfc018000)
 
 struct lcd_ctrl {
     __w u32 cher;
@@ -582,7 +581,7 @@ struct lcd_reg {
     _rw u32 heoclut[256];
 };
 
-#define LCD ((struct lcd_reg *)0xf0000000)
+#define LCD_REG ((struct lcd_reg *)0xf0000000)
 
 struct gmac_reg {
     _rw u32 ncr;
@@ -724,6 +723,6 @@ struct gmac_reg {
     } st2[24];
 };
 
-#define GMAC ((struct gmac_reg *)0xf8008000)
+#define GMAC_REG ((struct gmac_reg *)0xf8008000)
 
 #endif

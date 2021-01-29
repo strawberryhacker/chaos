@@ -6,7 +6,7 @@
 
 void main() {
 
-    kprint("Starting chaos kernel\n");
+    kprint("Starting chaos kernel v1.0\n");
 
     while (1);
 }

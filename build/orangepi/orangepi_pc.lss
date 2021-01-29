@@ -5,41 +5,41 @@ Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
   0 .kernel_entry 00000010  42000000  42000000  00010000  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .text         0000097c  42000010  42000010  00010010  2**3
+  1 .text         000009ac  42000010  42000010  00010010  2**3
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .init         00000004  4200098c  4200098c  0001098c  2**2
+  2 .init         00000004  420009bc  420009bc  000109bc  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  3 .fini         00000004  42000990  42000990  00010990  2**2
+  3 .fini         00000004  420009c0  420009c0  000109c0  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  4 .rodata       00000030  42000994  42000994  00010994  2**2
+  4 .rodata       00000034  420009c4  420009c4  000109c4  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  5 .data         00000438  420009c8  420009c8  000109c8  2**3
+  5 .data         00000438  420009f8  420009f8  000109f8  2**3
                   CONTENTS, ALLOC, LOAD, DATA
-  6 .stack        00000c00  42000e00  42000e00  00010e00  2**0
+  6 .stack        00000c00  42000e30  42000e30  00010e30  2**0
                   ALLOC
-  7 .bss          00000400  42001a00  42001a00  00010e00  2**2
+  7 .bss          00000400  42001a30  42001a30  00010e30  2**2
                   ALLOC
-  8 .ARM.attributes 0000002d  00000000  00000000  00010e00  2**0
+  8 .ARM.attributes 0000002d  00000000  00000000  00010e30  2**0
                   CONTENTS, READONLY
-  9 .comment      000000a7  00000000  00000000  00010e2d  2**0
+  9 .comment      000000a7  00000000  00000000  00010e5d  2**0
                   CONTENTS, READONLY
- 10 .debug_line   000017c5  00000000  00000000  00010ed4  2**0
+ 10 .debug_line   0000181a  00000000  00000000  00010f04  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 11 .debug_info   00004bd1  00000000  00000000  00012699  2**0
+ 11 .debug_info   00004d4a  00000000  00000000  0001271e  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 12 .debug_abbrev 00001341  00000000  00000000  0001726a  2**0
+ 12 .debug_abbrev 000013c5  00000000  00000000  00017468  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 13 .debug_aranges 00000208  00000000  00000000  000185b0  2**3
+ 13 .debug_aranges 00000208  00000000  00000000  00018830  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_str    00004c6f  00000000  00000000  000187b8  2**0
+ 14 .debug_str    00004e08  00000000  00000000  00018a38  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_loc    0000131d  00000000  00000000  0001d427  2**0
+ 15 .debug_loc    0000136c  00000000  00000000  0001d840  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_ranges 00000140  00000000  00000000  0001e744  2**0
+ 16 .debug_ranges 00000140  00000000  00000000  0001ebac  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_macro  00001098  00000000  00000000  0001e884  2**0
+ 17 .debug_macro  000010c9  00000000  00000000  0001ecec  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_frame  00000288  00000000  00000000  0001f91c  2**2
+ 18 .debug_frame  00000288  00000000  00000000  0001fdb8  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .kernel_entry:
@@ -58,7 +58,7 @@ kernel_entry:
     b main
 42000008:	ea000241 	b	42000914 <main>
     ldr sp, =_svc_stack_e
-4200000c:	42001800 	.word	0x42001800
+4200000c:	42001830 	.word	0x42001830
 
 Disassembly of section .text:
 
@@ -299,7 +299,7 @@ u32 print_format_to_buf_arg(char* buf, u32 len, const char* str, va_list arg) {
             u32 num_pos = (u32)num;
             while (num_pos) {
                 num_buf[index++] = number_lookup[num_pos % base] | lowercase;
-420002bc:	e3003998 	movw	r3, #2456	; 0x998
+420002bc:	e30039c8 	movw	r3, #2504	; 0x9c8
 420002c0:	e3443200 	movt	r3, #16896	; 0x4200
 420002c4:	e58d3004 	str	r3, [sp, #4]
 420002c8:	e300326d 	movw	r3, #621	; 0x26d
@@ -869,8 +869,8 @@ u32 print_format_to_buf_arg(char* buf, u32 len, const char* str, va_list arg) {
 void main() {
 42000914:	e92d4010 	push	{r4, lr}
 
-    kprint("Starting chaos kernel\n");
-42000918:	e30009ac 	movw	r0, #2476	; 0x9ac
+    kprint("Starting chaos kernel v1.0\n");
+42000918:	e30009dc 	movw	r0, #2524	; 0x9dc
 4200091c:	e3440200 	movt	r0, #16896	; 0x4200
 42000920:	e3003930 	movw	r3, #2352	; 0x930
 42000924:	e3443200 	movt	r3, #16896	; 0x4200
@@ -895,7 +895,7 @@ void kprint(const char* message, ...) {
 42000940:	e58d3004 	str	r3, [sp, #4]
     u32 count =
         print_format_to_buf_arg(kprint_buf, KPRINT_BUF_SIZE, message, arg);
-42000944:	e3014a00 	movw	r4, #6656	; 0x1a00
+42000944:	e3014a30 	movw	r4, #6704	; 0x1a30
 42000948:	e3444200 	movt	r4, #16896	; 0x4200
 4200094c:	e59d2018 	ldr	r2, [sp, #24]
 42000950:	e3a01b01 	mov	r1, #1024	; 0x400
@@ -918,22 +918,38 @@ void kprint(const char* message, ...) {
 42000984:	e12fff1e 	bx	lr
 
 42000988 <kprint_from_buf>:
-// Serial kernel driver for Allwinner H3 chips
-
-#include <chaos/kprint.h>
+#include <h3/regmap.h>
 
 void kprint_from_buf(const char* buf, u32 size) {
-    while (1);
-42000988:	eafffffe 	b	42000988 <kprint_from_buf>
+    struct uart_reg* const hw = UART0_REG;
+    
+    while (size--) {
+42000988:	e3510000 	cmp	r1, #0
+4200098c:	012fff1e 	bxeq	lr
+42000990:	e0801001 	add	r1, r0, r1
+        // Wait for empty FIFO
+        while (!(hw->lsr & (1 << 5)));
+42000994:	e3a02902 	mov	r2, #32768	; 0x8000
+42000998:	e34021c2 	movt	r2, #450	; 0x1c2
+4200099c:	e5923014 	ldr	r3, [r2, #20]
+420009a0:	e3130020 	tst	r3, #32
+420009a4:	0afffffc 	beq	4200099c <kprint_from_buf+0x14>
+        hw->thr = *buf++;
+420009a8:	e4d03001 	ldrb	r3, [r0], #1
+420009ac:	e5823000 	str	r3, [r2]
+    while (size--) {
+420009b0:	e1510000 	cmp	r1, r0
+420009b4:	1afffff8 	bne	4200099c <kprint_from_buf+0x14>
+420009b8:	e12fff1e 	bx	lr
 
 Disassembly of section .init:
 
-4200098c <_init>:
-4200098c:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
-4200098e:	bf00      	nop
+420009bc <_init>:
+420009bc:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+420009be:	bf00      	nop
 
 Disassembly of section .fini:
 
-42000990 <_fini>:
-42000990:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
-42000992:	bf00      	nop
+420009c0 <_fini>:
+420009c0:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+420009c2:	bf00      	nop

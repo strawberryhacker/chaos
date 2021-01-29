@@ -5,7 +5,7 @@
 while True:
 	start_v = int(input("Start addr: "), 16)
 	stop_i  = int(input("Stop addr: "), 16)
-	diff = ((stop_i + 4) - start_v) / 4
+	diff = ((stop_i) - (start_v + 4)) / 4
 	if (diff.is_integer() == False):
 		print("Input error")
 	elif (diff < 0):
