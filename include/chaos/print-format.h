@@ -1,4 +1,5 @@
-// Formatted print to sized buffer implementation_H
+// Formatted print to sized buffer implementation
+
 #ifndef PRINT_FORMAT_H
 #define PRINT_FORMAT_H
 

@@ -1,0 +1,977 @@
+
+/home/strawberry/chaos/build/sama5/sama5d27_som_ek.elf:     file format elf32-littlearm
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .kernel_entry 00000010  20000000  20000000  00010000  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .text         000009e4  20000010  20000010  00010010  2**3
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .init         00000004  200009f4  200009f4  000109f4  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  3 .fini         00000004  200009f8  200009f8  000109f8  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  4 .rodata       00000030  200009fc  200009fc  000109fc  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  5 .data         00000438  20000a30  20000a30  00010a30  2**3
+                  CONTENTS, ALLOC, LOAD, DATA
+  6 .stack        00000c00  20000e68  20000e68  00010e68  2**0
+                  ALLOC
+  7 .bss          00000400  20001a68  20001a68  00010e68  2**2
+                  ALLOC
+  8 .ARM.attributes 0000002d  00000000  00000000  00010e68  2**0
+                  CONTENTS, READONLY
+  9 .comment      000000a7  00000000  00000000  00010e95  2**0
+                  CONTENTS, READONLY
+ 10 .debug_line   0000185b  00000000  00000000  00010f3c  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 11 .debug_info   00004cc3  00000000  00000000  00012797  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 12 .debug_abbrev 0000139e  00000000  00000000  0001745a  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 13 .debug_aranges 00000208  00000000  00000000  000187f8  2**3
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 14 .debug_str    00004c9a  00000000  00000000  00018a00  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 15 .debug_loc    000013d8  00000000  00000000  0001d69a  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 16 .debug_ranges 00000140  00000000  00000000  0001ea72  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 17 .debug_macro  000010a1  00000000  00000000  0001ebb2  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 18 .debug_frame  00000290  00000000  00000000  0001fc54  2**2
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+
+Disassembly of section .kernel_entry:
+
+20000000 <_kernel_s>:
+
+.section .kernel_entry, "ax", %progbits
+kernel_entry:
+
+    // Setup the stack for the kernel SVC entry
+    ldr sp, =_svc_stack_e
+20000000:	e59fd004 	ldr	sp, [pc, #4]	; 2000000c <_kernel_s+0xc>
+    isb
+20000004:	f57ff06f 	isb	sy
+
+    b main
+20000008:	ea000241 	b	20000914 <main>
+    ldr sp, =_svc_stack_e
+2000000c:	20001868 	.word	0x20001868
+
+Disassembly of section .text:
+
+20000010 <__udivsi3>:
+20000010:	1e4a      	subs	r2, r1, #1
+20000012:	bf08      	it	eq
+20000014:	4770      	bxeq	lr
+20000016:	f0c0 8124 	bcc.w	20000262 <__udivsi3+0x252>
+2000001a:	4288      	cmp	r0, r1
+2000001c:	f240 8116 	bls.w	2000024c <__udivsi3+0x23c>
+20000020:	4211      	tst	r1, r2
+20000022:	f000 8117 	beq.w	20000254 <__udivsi3+0x244>
+20000026:	fab0 f380 	clz	r3, r0
+2000002a:	fab1 f281 	clz	r2, r1
+2000002e:	eba2 0303 	sub.w	r3, r2, r3
+20000032:	f1c3 031f 	rsb	r3, r3, #31
+20000036:	a204      	add	r2, pc, #16	; (adr r2, 20000048 <__udivsi3+0x38>)
+20000038:	eb02 1303 	add.w	r3, r2, r3, lsl #4
+2000003c:	f04f 0200 	mov.w	r2, #0
+20000040:	469f      	mov	pc, r3
+20000042:	bf00      	nop
+20000044:	f3af 8000 	nop.w
+20000048:	ebb0 7fc1 	cmp.w	r0, r1, lsl #31
+2000004c:	bf00      	nop
+2000004e:	eb42 0202 	adc.w	r2, r2, r2
+20000052:	bf28      	it	cs
+20000054:	eba0 70c1 	subcs.w	r0, r0, r1, lsl #31
+20000058:	ebb0 7f81 	cmp.w	r0, r1, lsl #30
+2000005c:	bf00      	nop
+2000005e:	eb42 0202 	adc.w	r2, r2, r2
+20000062:	bf28      	it	cs
+20000064:	eba0 7081 	subcs.w	r0, r0, r1, lsl #30
+20000068:	ebb0 7f41 	cmp.w	r0, r1, lsl #29
+2000006c:	bf00      	nop
+2000006e:	eb42 0202 	adc.w	r2, r2, r2
+20000072:	bf28      	it	cs
+20000074:	eba0 7041 	subcs.w	r0, r0, r1, lsl #29
+20000078:	ebb0 7f01 	cmp.w	r0, r1, lsl #28
+2000007c:	bf00      	nop
+2000007e:	eb42 0202 	adc.w	r2, r2, r2
+20000082:	bf28      	it	cs
+20000084:	eba0 7001 	subcs.w	r0, r0, r1, lsl #28
+20000088:	ebb0 6fc1 	cmp.w	r0, r1, lsl #27
+2000008c:	bf00      	nop
+2000008e:	eb42 0202 	adc.w	r2, r2, r2
+20000092:	bf28      	it	cs
+20000094:	eba0 60c1 	subcs.w	r0, r0, r1, lsl #27
+20000098:	ebb0 6f81 	cmp.w	r0, r1, lsl #26
+2000009c:	bf00      	nop
+2000009e:	eb42 0202 	adc.w	r2, r2, r2
+200000a2:	bf28      	it	cs
+200000a4:	eba0 6081 	subcs.w	r0, r0, r1, lsl #26
+200000a8:	ebb0 6f41 	cmp.w	r0, r1, lsl #25
+200000ac:	bf00      	nop
+200000ae:	eb42 0202 	adc.w	r2, r2, r2
+200000b2:	bf28      	it	cs
+200000b4:	eba0 6041 	subcs.w	r0, r0, r1, lsl #25
+200000b8:	ebb0 6f01 	cmp.w	r0, r1, lsl #24
+200000bc:	bf00      	nop
+200000be:	eb42 0202 	adc.w	r2, r2, r2
+200000c2:	bf28      	it	cs
+200000c4:	eba0 6001 	subcs.w	r0, r0, r1, lsl #24
+200000c8:	ebb0 5fc1 	cmp.w	r0, r1, lsl #23
+200000cc:	bf00      	nop
+200000ce:	eb42 0202 	adc.w	r2, r2, r2
+200000d2:	bf28      	it	cs
+200000d4:	eba0 50c1 	subcs.w	r0, r0, r1, lsl #23
+200000d8:	ebb0 5f81 	cmp.w	r0, r1, lsl #22
+200000dc:	bf00      	nop
+200000de:	eb42 0202 	adc.w	r2, r2, r2
+200000e2:	bf28      	it	cs
+200000e4:	eba0 5081 	subcs.w	r0, r0, r1, lsl #22
+200000e8:	ebb0 5f41 	cmp.w	r0, r1, lsl #21
+200000ec:	bf00      	nop
+200000ee:	eb42 0202 	adc.w	r2, r2, r2
+200000f2:	bf28      	it	cs
+200000f4:	eba0 5041 	subcs.w	r0, r0, r1, lsl #21
+200000f8:	ebb0 5f01 	cmp.w	r0, r1, lsl #20
+200000fc:	bf00      	nop
+200000fe:	eb42 0202 	adc.w	r2, r2, r2
+20000102:	bf28      	it	cs
+20000104:	eba0 5001 	subcs.w	r0, r0, r1, lsl #20
+20000108:	ebb0 4fc1 	cmp.w	r0, r1, lsl #19
+2000010c:	bf00      	nop
+2000010e:	eb42 0202 	adc.w	r2, r2, r2
+20000112:	bf28      	it	cs
+20000114:	eba0 40c1 	subcs.w	r0, r0, r1, lsl #19
+20000118:	ebb0 4f81 	cmp.w	r0, r1, lsl #18
+2000011c:	bf00      	nop
+2000011e:	eb42 0202 	adc.w	r2, r2, r2
+20000122:	bf28      	it	cs
+20000124:	eba0 4081 	subcs.w	r0, r0, r1, lsl #18
+20000128:	ebb0 4f41 	cmp.w	r0, r1, lsl #17
+2000012c:	bf00      	nop
+2000012e:	eb42 0202 	adc.w	r2, r2, r2
+20000132:	bf28      	it	cs
+20000134:	eba0 4041 	subcs.w	r0, r0, r1, lsl #17
+20000138:	ebb0 4f01 	cmp.w	r0, r1, lsl #16
+2000013c:	bf00      	nop
+2000013e:	eb42 0202 	adc.w	r2, r2, r2
+20000142:	bf28      	it	cs
+20000144:	eba0 4001 	subcs.w	r0, r0, r1, lsl #16
+20000148:	ebb0 3fc1 	cmp.w	r0, r1, lsl #15
+2000014c:	bf00      	nop
+2000014e:	eb42 0202 	adc.w	r2, r2, r2
+20000152:	bf28      	it	cs
+20000154:	eba0 30c1 	subcs.w	r0, r0, r1, lsl #15
+20000158:	ebb0 3f81 	cmp.w	r0, r1, lsl #14
+2000015c:	bf00      	nop
+2000015e:	eb42 0202 	adc.w	r2, r2, r2
+20000162:	bf28      	it	cs
+20000164:	eba0 3081 	subcs.w	r0, r0, r1, lsl #14
+20000168:	ebb0 3f41 	cmp.w	r0, r1, lsl #13
+2000016c:	bf00      	nop
+2000016e:	eb42 0202 	adc.w	r2, r2, r2
+20000172:	bf28      	it	cs
+20000174:	eba0 3041 	subcs.w	r0, r0, r1, lsl #13
+20000178:	ebb0 3f01 	cmp.w	r0, r1, lsl #12
+2000017c:	bf00      	nop
+2000017e:	eb42 0202 	adc.w	r2, r2, r2
+20000182:	bf28      	it	cs
+20000184:	eba0 3001 	subcs.w	r0, r0, r1, lsl #12
+20000188:	ebb0 2fc1 	cmp.w	r0, r1, lsl #11
+2000018c:	bf00      	nop
+2000018e:	eb42 0202 	adc.w	r2, r2, r2
+20000192:	bf28      	it	cs
+20000194:	eba0 20c1 	subcs.w	r0, r0, r1, lsl #11
+20000198:	ebb0 2f81 	cmp.w	r0, r1, lsl #10
+2000019c:	bf00      	nop
+2000019e:	eb42 0202 	adc.w	r2, r2, r2
+200001a2:	bf28      	it	cs
+200001a4:	eba0 2081 	subcs.w	r0, r0, r1, lsl #10
+200001a8:	ebb0 2f41 	cmp.w	r0, r1, lsl #9
+200001ac:	bf00      	nop
+200001ae:	eb42 0202 	adc.w	r2, r2, r2
+200001b2:	bf28      	it	cs
+200001b4:	eba0 2041 	subcs.w	r0, r0, r1, lsl #9
+200001b8:	ebb0 2f01 	cmp.w	r0, r1, lsl #8
+200001bc:	bf00      	nop
+200001be:	eb42 0202 	adc.w	r2, r2, r2
+200001c2:	bf28      	it	cs
+200001c4:	eba0 2001 	subcs.w	r0, r0, r1, lsl #8
+200001c8:	ebb0 1fc1 	cmp.w	r0, r1, lsl #7
+200001cc:	bf00      	nop
+200001ce:	eb42 0202 	adc.w	r2, r2, r2
+200001d2:	bf28      	it	cs
+200001d4:	eba0 10c1 	subcs.w	r0, r0, r1, lsl #7
+200001d8:	ebb0 1f81 	cmp.w	r0, r1, lsl #6
+200001dc:	bf00      	nop
+200001de:	eb42 0202 	adc.w	r2, r2, r2
+200001e2:	bf28      	it	cs
+200001e4:	eba0 1081 	subcs.w	r0, r0, r1, lsl #6
+200001e8:	ebb0 1f41 	cmp.w	r0, r1, lsl #5
+200001ec:	bf00      	nop
+200001ee:	eb42 0202 	adc.w	r2, r2, r2
+200001f2:	bf28      	it	cs
+200001f4:	eba0 1041 	subcs.w	r0, r0, r1, lsl #5
+200001f8:	ebb0 1f01 	cmp.w	r0, r1, lsl #4
+200001fc:	bf00      	nop
+200001fe:	eb42 0202 	adc.w	r2, r2, r2
+20000202:	bf28      	it	cs
+20000204:	eba0 1001 	subcs.w	r0, r0, r1, lsl #4
+20000208:	ebb0 0fc1 	cmp.w	r0, r1, lsl #3
+2000020c:	bf00      	nop
+2000020e:	eb42 0202 	adc.w	r2, r2, r2
+20000212:	bf28      	it	cs
+20000214:	eba0 00c1 	subcs.w	r0, r0, r1, lsl #3
+20000218:	ebb0 0f81 	cmp.w	r0, r1, lsl #2
+2000021c:	bf00      	nop
+2000021e:	eb42 0202 	adc.w	r2, r2, r2
+20000222:	bf28      	it	cs
+20000224:	eba0 0081 	subcs.w	r0, r0, r1, lsl #2
+20000228:	ebb0 0f41 	cmp.w	r0, r1, lsl #1
+2000022c:	bf00      	nop
+2000022e:	eb42 0202 	adc.w	r2, r2, r2
+20000232:	bf28      	it	cs
+20000234:	eba0 0041 	subcs.w	r0, r0, r1, lsl #1
+20000238:	ebb0 0f01 	cmp.w	r0, r1
+2000023c:	bf00      	nop
+2000023e:	eb42 0202 	adc.w	r2, r2, r2
+20000242:	bf28      	it	cs
+20000244:	eba0 0001 	subcs.w	r0, r0, r1
+20000248:	4610      	mov	r0, r2
+2000024a:	4770      	bx	lr
+2000024c:	bf0c      	ite	eq
+2000024e:	2001      	moveq	r0, #1
+20000250:	2000      	movne	r0, #0
+20000252:	4770      	bx	lr
+20000254:	fab1 f281 	clz	r2, r1
+20000258:	f1c2 021f 	rsb	r2, r2, #31
+2000025c:	fa20 f002 	lsr.w	r0, r0, r2
+20000260:	4770      	bx	lr
+20000262:	b108      	cbz	r0, 20000268 <__udivsi3+0x258>
+20000264:	f04f 30ff 	mov.w	r0, #4294967295	; 0xffffffff
+20000268:	f000 b80e 	b.w	20000288 <__aeabi_idiv0>
+
+2000026c <__aeabi_uidivmod>:
+2000026c:	2900      	cmp	r1, #0
+2000026e:	d0f8      	beq.n	20000262 <__udivsi3+0x252>
+20000270:	e92d 4003 	stmdb	sp!, {r0, r1, lr}
+20000274:	f7ff fecc 	bl	20000010 <__udivsi3>
+20000278:	e8bd 4006 	ldmia.w	sp!, {r1, r2, lr}
+2000027c:	fb02 f300 	mul.w	r3, r2, r0
+20000280:	eba1 0103 	sub.w	r1, r1, r3
+20000284:	4770      	bx	lr
+20000286:	bf00      	nop
+
+20000288 <__aeabi_idiv0>:
+20000288:	4770      	bx	lr
+2000028a:	bf00      	nop
+
+2000028c <print_format_to_buf_arg>:
+    if (*buf < end) {
+        *(*buf)++ = c;
+    }
+}
+
+u32 print_format_to_buf_arg(char* buf, u32 len, const char* str, va_list arg) {
+2000028c:	e92d4ff0 	push	{r4, r5, r6, r7, r8, r9, sl, fp, lr}
+20000290:	e24dd054 	sub	sp, sp, #84	; 0x54
+20000294:	e1a07000 	mov	r7, r0
+20000298:	e58d1008 	str	r1, [sp, #8]
+2000029c:	e1a0c002 	mov	ip, r2
+    // Save the end of the buffer so that we can detect overflow
+    char* const end = buf + len;
+200002a0:	e080b001 	add	fp, r0, r1
+
+    for (; *str; str++) {
+200002a4:	e5d21000 	ldrb	r1, [r2]
+200002a8:	e3510000 	cmp	r1, #0
+200002ac:	0a000169 	beq	20000858 <print_format_to_buf_arg+0x5cc>
+200002b0:	e1a02003 	mov	r2, r3
+200002b4:	e28d3038 	add	r3, sp, #56	; 0x38
+200002b8:	e58d300c 	str	r3, [sp, #12]
+            }
+
+            // Convert the number to string representation
+            u32 num_pos = (u32)num;
+            while (num_pos) {
+                num_buf[index++] = number_lookup[num_pos % base] | lowercase;
+200002bc:	e3003a00 	movw	r3, #2560	; 0xa00
+200002c0:	e3423000 	movt	r3, #8192	; 0x2000
+200002c4:	e58d3004 	str	r3, [sp, #4]
+200002c8:	e300326d 	movw	r3, #621	; 0x26d
+200002cc:	e3423000 	movt	r3, #8192	; 0x2000
+200002d0:	e58d3010 	str	r3, [sp, #16]
+                num_pos /= base;
+200002d4:	e3003011 	movw	r3, #17
+200002d8:	e3423000 	movt	r3, #8192	; 0x2000
+200002dc:	e58d3014 	str	r3, [sp, #20]
+200002e0:	ea00009c 	b	20000558 <print_format_to_buf_arg+0x2cc>
+        while (*++str) {
+200002e4:	e28c4001 	add	r4, ip, #1
+200002e8:	e5dc3001 	ldrb	r3, [ip, #1]
+200002ec:	e3530000 	cmp	r3, #0
+        u16 flags = 0;
+200002f0:	03a05000 	moveq	r5, #0
+        while (*++str) {
+200002f4:	0a000016 	beq	20000354 <print_format_to_buf_arg+0xc8>
+        u16 flags = 0;
+200002f8:	e3a05000 	mov	r5, #0
+200002fc:	ea000003 	b	20000310 <print_format_to_buf_arg+0x84>
+            else if (*str == ' ') flags |= FLAG_SIGN_IGNORE;
+20000300:	e3855008 	orr	r5, r5, #8
+        while (*++str) {
+20000304:	e5f43001 	ldrb	r3, [r4, #1]!
+20000308:	e3530000 	cmp	r3, #0
+2000030c:	0a000010 	beq	20000354 <print_format_to_buf_arg+0xc8>
+20000310:	e2441001 	sub	r1, r4, #1
+            if      (*str == '!') flags |= FLAG_PREFIX;
+20000314:	e3530021 	cmp	r3, #33	; 0x21
+20000318:	03855001 	orreq	r5, r5, #1
+2000031c:	0afffff8 	beq	20000304 <print_format_to_buf_arg+0x78>
+            else if (*str == '<') flags |= FLAG_LEFT;
+20000320:	e353003c 	cmp	r3, #60	; 0x3c
+20000324:	03855002 	orreq	r5, r5, #2
+20000328:	0afffff5 	beq	20000304 <print_format_to_buf_arg+0x78>
+            else if (*str == '0') flags |= FLAG_ZERO;
+2000032c:	e3530030 	cmp	r3, #48	; 0x30
+20000330:	03855004 	orreq	r5, r5, #4
+20000334:	0afffff2 	beq	20000304 <print_format_to_buf_arg+0x78>
+            else if (*str == '+') flags |= FLAG_SIGN_FORCE;
+20000338:	e353002b 	cmp	r3, #43	; 0x2b
+2000033c:	03855010 	orreq	r5, r5, #16
+20000340:	0affffef 	beq	20000304 <print_format_to_buf_arg+0x78>
+            else if (*str == ' ') flags |= FLAG_SIGN_IGNORE;
+20000344:	e3530020 	cmp	r3, #32
+20000348:	0affffec 	beq	20000300 <print_format_to_buf_arg+0x74>
+        if (*str == ':') {
+2000034c:	e353003a 	cmp	r3, #58	; 0x3a
+            str++;
+20000350:	02814002 	addeq	r4, r1, #2
+        if (*str == '_') {
+20000354:	e5d43000 	ldrb	r3, [r4]
+20000358:	e353005f 	cmp	r3, #95	; 0x5f
+            width = (i32)va_arg(arg, int);
+2000035c:	04926004 	ldreq	r6, [r2], #4
+            str++;
+20000360:	02844001 	addeq	r4, r4, #1
+        if (*str == '_') {
+20000364:	0a000004 	beq	2000037c <print_format_to_buf_arg+0xf0>
+        } else if (*str >= '0' && *str <= '9') {
+20000368:	e2431030 	sub	r1, r3, #48	; 0x30
+2000036c:	e6ef1071 	uxtb	r1, r1
+20000370:	e3510009 	cmp	r1, #9
+        i32 width = -1;
+20000374:	83e06000 	mvnhi	r6, #0
+        } else if (*str >= '0' && *str <= '9') {
+20000378:	9a000041 	bls	20000484 <print_format_to_buf_arg+0x1f8>
+        if (*str == ':') {
+2000037c:	e5d43000 	ldrb	r3, [r4]
+20000380:	e353003a 	cmp	r3, #58	; 0x3a
+            str++;
+20000384:	02844001 	addeq	r4, r4, #1
+        switch (*str) {
+20000388:	e5d43000 	ldrb	r3, [r4]
+2000038c:	e2433042 	sub	r3, r3, #66	; 0x42
+20000390:	e3530039 	cmp	r3, #57	; 0x39
+20000394:	979ff103 	ldrls	pc, [pc, r3, lsl #2]
+20000398:	ea00005c 	b	20000510 <print_format_to_buf_arg+0x284>
+2000039c:	20000574 	.word	0x20000574
+200003a0:	200004c0 	.word	0x200004c0
+200003a4:	20000510 	.word	0x20000510
+200003a8:	20000510 	.word	0x20000510
+200003ac:	20000510 	.word	0x20000510
+200003b0:	20000510 	.word	0x20000510
+200003b4:	20000510 	.word	0x20000510
+200003b8:	20000510 	.word	0x20000510
+200003bc:	20000510 	.word	0x20000510
+200003c0:	20000510 	.word	0x20000510
+200003c4:	20000510 	.word	0x20000510
+200003c8:	20000510 	.word	0x20000510
+200003cc:	20000510 	.word	0x20000510
+200003d0:	20000510 	.word	0x20000510
+200003d4:	200004e4 	.word	0x200004e4
+200003d8:	20000510 	.word	0x20000510
+200003dc:	200004f4 	.word	0x200004f4
+200003e0:	200004b4 	.word	0x200004b4
+200003e4:	20000510 	.word	0x20000510
+200003e8:	20000510 	.word	0x20000510
+200003ec:	20000510 	.word	0x20000510
+200003f0:	20000510 	.word	0x20000510
+200003f4:	200004ac 	.word	0x200004ac
+200003f8:	20000510 	.word	0x20000510
+200003fc:	20000510 	.word	0x20000510
+20000400:	20000510 	.word	0x20000510
+20000404:	20000510 	.word	0x20000510
+20000408:	20000510 	.word	0x20000510
+2000040c:	20000510 	.word	0x20000510
+20000410:	20000510 	.word	0x20000510
+20000414:	20000510 	.word	0x20000510
+20000418:	20000510 	.word	0x20000510
+2000041c:	20000574 	.word	0x20000574
+20000420:	200004c0 	.word	0x200004c0
+20000424:	20000518 	.word	0x20000518
+20000428:	20000510 	.word	0x20000510
+2000042c:	20000510 	.word	0x20000510
+20000430:	20000510 	.word	0x20000510
+20000434:	20000510 	.word	0x20000510
+20000438:	200004cc 	.word	0x200004cc
+2000043c:	20000510 	.word	0x20000510
+20000440:	20000510 	.word	0x20000510
+20000444:	20000510 	.word	0x20000510
+20000448:	20000510 	.word	0x20000510
+2000044c:	20000510 	.word	0x20000510
+20000450:	20000510 	.word	0x20000510
+20000454:	200004e4 	.word	0x200004e4
+20000458:	20000510 	.word	0x20000510
+2000045c:	200004f4 	.word	0x200004f4
+20000460:	200004b4 	.word	0x200004b4
+20000464:	20000510 	.word	0x20000510
+20000468:	20000518 	.word	0x20000518
+2000046c:	20000510 	.word	0x20000510
+20000470:	20000510 	.word	0x20000510
+20000474:	200004d8 	.word	0x200004d8
+20000478:	20000510 	.word	0x20000510
+2000047c:	20000510 	.word	0x20000510
+20000480:	20000504 	.word	0x20000504
+            width = 0;
+20000484:	e3a06000 	mov	r6, #0
+                width = width * 10 + (*str++ - '0');
+20000488:	e3a0000a 	mov	r0, #10
+2000048c:	e2433030 	sub	r3, r3, #48	; 0x30
+20000490:	e0263690 	mla	r6, r0, r6, r3
+            while (*str >= '0' && *str <= '9') {
+20000494:	e5f43001 	ldrb	r3, [r4, #1]!
+20000498:	e2431030 	sub	r1, r3, #48	; 0x30
+2000049c:	e6ef1071 	uxtb	r1, r1
+200004a0:	e3510009 	cmp	r1, #9
+200004a4:	9afffff8 	bls	2000048c <print_format_to_buf_arg+0x200>
+200004a8:	eaffffb3 	b	2000037c <print_format_to_buf_arg+0xf0>
+        switch (*str) {
+200004ac:	e3a08010 	mov	r8, #16
+200004b0:	ea000019 	b	2000051c <print_format_to_buf_arg+0x290>
+                flags |= FLAG_STRING;
+200004b4:	e3855080 	orr	r5, r5, #128	; 0x80
+        u8 base = 10;
+200004b8:	e3a0800a 	mov	r8, #10
+                break;
+200004bc:	ea000016 	b	2000051c <print_format_to_buf_arg+0x290>
+                flags |= FLAG_CHAR;
+200004c0:	e3855c01 	orr	r5, r5, #256	; 0x100
+        u8 base = 10;
+200004c4:	e3a0800a 	mov	r8, #10
+                break;
+200004c8:	ea000013 	b	2000051c <print_format_to_buf_arg+0x290>
+                flags |= FLAG_SIGN;
+200004cc:	e3855040 	orr	r5, r5, #64	; 0x40
+        u8 base = 10;
+200004d0:	e3a0800a 	mov	r8, #10
+200004d4:	ea000010 	b	2000051c <print_format_to_buf_arg+0x290>
+                flags |= FLAG_LOWERCASE;
+200004d8:	e3855020 	orr	r5, r5, #32
+                base = 16;
+200004dc:	e3a08010 	mov	r8, #16
+200004e0:	ea00000d 	b	2000051c <print_format_to_buf_arg+0x290>
+                flags |= FLAG_PREFIX;
+200004e4:	e3855001 	orr	r5, r5, #1
+                base = 16;
+200004e8:	e3a08010 	mov	r8, #16
+                width = 8;
+200004ec:	e3a06008 	mov	r6, #8
+                break;
+200004f0:	ea000009 	b	2000051c <print_format_to_buf_arg+0x290>
+                flags |= FLAG_PREFIX;
+200004f4:	e3855001 	orr	r5, r5, #1
+                base = 2;
+200004f8:	e3a08002 	mov	r8, #2
+                width = 32;
+200004fc:	e3a06020 	mov	r6, #32
+                break;
+20000500:	ea000005 	b	2000051c <print_format_to_buf_arg+0x290>
+                flags |= FLAG_BRACKET;
+20000504:	e3855c02 	orr	r5, r5, #512	; 0x200
+        u8 base = 10;
+20000508:	e3a0800a 	mov	r8, #10
+                break;
+2000050c:	ea000002 	b	2000051c <print_format_to_buf_arg+0x290>
+                str--;
+20000510:	e2444001 	sub	r4, r4, #1
+                continue;
+20000514:	ea00000b 	b	20000548 <print_format_to_buf_arg+0x2bc>
+        u8 base = 10;
+20000518:	e3a0800a 	mov	r8, #10
+        if (flags & FLAG_CHAR) {
+2000051c:	e3150c01 	tst	r5, #256	; 0x100
+20000520:	0a000015 	beq	2000057c <print_format_to_buf_arg+0x2f0>
+            put_char((char)va_arg(arg, int), &buf, end);
+20000524:	e2823004 	add	r3, r2, #4
+    if (*buf < end) {
+20000528:	e15b0007 	cmp	fp, r7
+            put_char((char)va_arg(arg, int), &buf, end);
+2000052c:	91a02003 	movls	r2, r3
+20000530:	85922000 	ldrhi	r2, [r2]
+20000534:	84c72001 	strbhi	r2, [r7], #1
+20000538:	81a02003 	movhi	r2, r3
+                }
+            }
+        }
+
+        // Skip the last bracket if any
+        if (*str == '}') {
+2000053c:	e5d43000 	ldrb	r3, [r4]
+20000540:	e353007d 	cmp	r3, #125	; 0x7d
+            str++;
+20000544:	02844001 	addeq	r4, r4, #1
+    for (; *str; str++) {
+20000548:	e284c001 	add	ip, r4, #1
+2000054c:	e5d41001 	ldrb	r1, [r4, #1]
+20000550:	e3510000 	cmp	r1, #0
+20000554:	0a0000bf 	beq	20000858 <print_format_to_buf_arg+0x5cc>
+        if (*str != '{') {
+20000558:	e351007b 	cmp	r1, #123	; 0x7b
+2000055c:	0affff60 	beq	200002e4 <print_format_to_buf_arg+0x58>
+    if (*buf < end) {
+20000560:	e15b0007 	cmp	fp, r7
+        *(*buf)++ = c;
+20000564:	84c71001 	strbhi	r1, [r7], #1
+20000568:	81a0400c 	movhi	r4, ip
+    if (*buf < end) {
+2000056c:	91a0400c 	movls	r4, ip
+20000570:	eafffff4 	b	20000548 <print_format_to_buf_arg+0x2bc>
+                base = 2;
+20000574:	e3a08002 	mov	r8, #2
+20000578:	eaffffe7 	b	2000051c <print_format_to_buf_arg+0x290>
+        } else if (flags & FLAG_STRING) {
+2000057c:	e3150080 	tst	r5, #128	; 0x80
+20000580:	0a000035 	beq	2000065c <print_format_to_buf_arg+0x3d0>
+            const char* ptr = (const char *)va_arg(arg, char *);
+20000584:	e4920004 	ldr	r0, [r2], #4
+            if (width < 0) {
+20000588:	e3560000 	cmp	r6, #0
+2000058c:	ba000023 	blt	20000620 <print_format_to_buf_arg+0x394>
+                for (i = 0; (i < width) && ptr[i]; i++);
+20000590:	e1a0e006 	mov	lr, r6
+20000594:	0a0000bb 	beq	20000888 <print_format_to_buf_arg+0x5fc>
+20000598:	e2403001 	sub	r3, r0, #1
+2000059c:	e3a0c000 	mov	ip, #0
+200005a0:	e5f31001 	ldrb	r1, [r3, #1]!
+200005a4:	e3510000 	cmp	r1, #0
+200005a8:	0a000025 	beq	20000644 <print_format_to_buf_arg+0x3b8>
+200005ac:	e28cc001 	add	ip, ip, #1
+200005b0:	e15c000e 	cmp	ip, lr
+200005b4:	1afffff9 	bne	200005a0 <print_format_to_buf_arg+0x314>
+                if ((flags & FLAG_LEFT) == 0) {
+200005b8:	e2155002 	ands	r5, r5, #2
+200005bc:	0a0000aa 	beq	2000086c <print_format_to_buf_arg+0x5e0>
+                u32 padding = width - i;
+200005c0:	e3a03000 	mov	r3, #0
+                while (i--) {
+200005c4:	e24e1001 	sub	r1, lr, #1
+200005c8:	e35e0000 	cmp	lr, #0
+200005cc:	0a000009 	beq	200005f8 <print_format_to_buf_arg+0x36c>
+200005d0:	e2811001 	add	r1, r1, #1
+200005d4:	e0801001 	add	r1, r0, r1
+                    put_char(*ptr++, &buf, end);
+200005d8:	e2800001 	add	r0, r0, #1
+    if (*buf < end) {
+200005dc:	e15b0007 	cmp	fp, r7
+                    put_char(*ptr++, &buf, end);
+200005e0:	8550c001 	ldrbhi	ip, [r0, #-1]
+        *(*buf)++ = c;
+200005e4:	84c7c001 	strbhi	ip, [r7], #1
+                while (i--) {
+200005e8:	e1510000 	cmp	r1, r0
+200005ec:	1afffff9 	bne	200005d8 <print_format_to_buf_arg+0x34c>
+                if (flags & FLAG_LEFT) {
+200005f0:	e3550000 	cmp	r5, #0
+200005f4:	0affffd0 	beq	2000053c <print_format_to_buf_arg+0x2b0>
+                    while (padding--) {
+200005f8:	e2431001 	sub	r1, r3, #1
+200005fc:	e3530000 	cmp	r3, #0
+20000600:	0affffcd 	beq	2000053c <print_format_to_buf_arg+0x2b0>
+    if (*buf < end) {
+20000604:	e15b0007 	cmp	fp, r7
+        *(*buf)++ = c;
+20000608:	83a03020 	movhi	r3, #32
+2000060c:	84c73001 	strbhi	r3, [r7], #1
+                    while (padding--) {
+20000610:	e2411001 	sub	r1, r1, #1
+20000614:	e3710001 	cmn	r1, #1
+20000618:	1afffff9 	bne	20000604 <print_format_to_buf_arg+0x378>
+2000061c:	eaffffc6 	b	2000053c <print_format_to_buf_arg+0x2b0>
+                while (*ptr) {
+20000620:	e5d03000 	ldrb	r3, [r0]
+20000624:	e3530000 	cmp	r3, #0
+20000628:	0affffc3 	beq	2000053c <print_format_to_buf_arg+0x2b0>
+    if (*buf < end) {
+2000062c:	e15b0007 	cmp	fp, r7
+        *(*buf)++ = c;
+20000630:	84c73001 	strbhi	r3, [r7], #1
+                while (*ptr) {
+20000634:	e5f03001 	ldrb	r3, [r0, #1]!
+20000638:	e3530000 	cmp	r3, #0
+2000063c:	1afffffa 	bne	2000062c <print_format_to_buf_arg+0x3a0>
+20000640:	eaffffbd 	b	2000053c <print_format_to_buf_arg+0x2b0>
+                u32 padding = width - i;
+20000644:	e04e300c 	sub	r3, lr, ip
+                if ((flags & FLAG_LEFT) == 0) {
+20000648:	e2155002 	ands	r5, r5, #2
+                u32 padding = width - i;
+2000064c:	01a0e003 	moveq	lr, r3
+                if ((flags & FLAG_LEFT) == 0) {
+20000650:	0a000090 	beq	20000898 <print_format_to_buf_arg+0x60c>
+20000654:	e1a0e00c 	mov	lr, ip
+20000658:	eaffffd9 	b	200005c4 <print_format_to_buf_arg+0x338>
+            char pad_char = (flags & FLAG_ZERO) ? '0' : ' ';
+2000065c:	e3150004 	tst	r5, #4
+20000660:	13a03030 	movne	r3, #48	; 0x30
+20000664:	03a03020 	moveq	r3, #32
+20000668:	e58d3034 	str	r3, [sp, #52]	; 0x34
+            i32 num = (i32)va_arg(arg, int);
+2000066c:	e4923004 	ldr	r3, [r2], #4
+20000670:	e58d2018 	str	r2, [sp, #24]
+            u8 lowercase = (flags & FLAG_LOWERCASE) ? FLAG_LOWERCASE : 0;
+20000674:	e2052020 	and	r2, r5, #32
+20000678:	e1a01002 	mov	r1, r2
+            if (num < 0 && (flags & FLAG_SIGN)) {
+2000067c:	e3530000 	cmp	r3, #0
+20000680:	ba00004b 	blt	200007b4 <print_format_to_buf_arg+0x528>
+                sign = '+';
+20000684:	e3150010 	tst	r5, #16
+20000688:	03a02000 	moveq	r2, #0
+2000068c:	13a0202b 	movne	r2, #43	; 0x2b
+                sign = ' ';
+20000690:	e3150008 	tst	r5, #8
+20000694:	13a02020 	movne	r2, #32
+20000698:	e58d201c 	str	r2, [sp, #28]
+            u32 num_pos = (u32)num;
+2000069c:	e1a02003 	mov	r2, r3
+            while (num_pos) {
+200006a0:	e3530000 	cmp	r3, #0
+            u32 index = 0;
+200006a4:	01a0a003 	moveq	sl, r3
+            while (num_pos) {
+200006a8:	0a00001e 	beq	20000728 <print_format_to_buf_arg+0x49c>
+200006ac:	e28d9038 	add	r9, sp, #56	; 0x38
+                sign = '-';
+200006b0:	e3a0a000 	mov	sl, #0
+200006b4:	e58d4020 	str	r4, [sp, #32]
+200006b8:	e58d6024 	str	r6, [sp, #36]	; 0x24
+200006bc:	e1a04002 	mov	r4, r2
+200006c0:	e58db028 	str	fp, [sp, #40]	; 0x28
+200006c4:	e58d502c 	str	r5, [sp, #44]	; 0x2c
+200006c8:	e1a06001 	mov	r6, r1
+200006cc:	e58d7030 	str	r7, [sp, #48]	; 0x30
+200006d0:	e59d7010 	ldr	r7, [sp, #16]
+200006d4:	e59db014 	ldr	fp, [sp, #20]
+                num_buf[index++] = number_lookup[num_pos % base] | lowercase;
+200006d8:	e28aa001 	add	sl, sl, #1
+200006dc:	e1a01008 	mov	r1, r8
+200006e0:	e1a00004 	mov	r0, r4
+200006e4:	e12fff37 	blx	r7
+200006e8:	e59d3004 	ldr	r3, [sp, #4]
+200006ec:	e7d33001 	ldrb	r3, [r3, r1]
+200006f0:	e1863003 	orr	r3, r6, r3
+200006f4:	e4c93001 	strb	r3, [r9], #1
+                num_pos /= base;
+200006f8:	e1a05004 	mov	r5, r4
+200006fc:	e1a01008 	mov	r1, r8
+20000700:	e1a00004 	mov	r0, r4
+20000704:	e12fff3b 	blx	fp
+20000708:	e1a04000 	mov	r4, r0
+            while (num_pos) {
+2000070c:	e1580005 	cmp	r8, r5
+20000710:	9afffff0 	bls	200006d8 <print_format_to_buf_arg+0x44c>
+20000714:	e59d4020 	ldr	r4, [sp, #32]
+20000718:	e59d6024 	ldr	r6, [sp, #36]	; 0x24
+2000071c:	e59db028 	ldr	fp, [sp, #40]	; 0x28
+20000720:	e59d502c 	ldr	r5, [sp, #44]	; 0x2c
+20000724:	e59d7030 	ldr	r7, [sp, #48]	; 0x30
+            if (flags & FLAG_PREFIX) {
+20000728:	e3150001 	tst	r5, #1
+2000072c:	0a000003 	beq	20000740 <print_format_to_buf_arg+0x4b4>
+                if (base == 16) {
+20000730:	e3580010 	cmp	r8, #16
+20000734:	0a000027 	beq	200007d8 <print_format_to_buf_arg+0x54c>
+                } else if (base == 2) {
+20000738:	e3580002 	cmp	r8, #2
+2000073c:	0a000030 	beq	20000804 <print_format_to_buf_arg+0x578>
+            if (sign) {
+20000740:	e59d201c 	ldr	r2, [sp, #28]
+20000744:	e3520000 	cmp	r2, #0
+                num_buf[index++] = sign;
+20000748:	128d3050 	addne	r3, sp, #80	; 0x50
+2000074c:	1083300a 	addne	r3, r3, sl
+20000750:	15432018 	strbne	r2, [r3, #-24]	; 0xffffffe8
+20000754:	128aa001 	addne	sl, sl, #1
+            if (width >= 0) {
+20000758:	e3560000 	cmp	r6, #0
+2000075c:	ba00005a 	blt	200008cc <print_format_to_buf_arg+0x640>
+                padding = (index > width) ? 0 : width - index;
+20000760:	e1a02006 	mov	r2, r6
+20000764:	e156000a 	cmp	r6, sl
+20000768:	3a000057 	bcc	200008cc <print_format_to_buf_arg+0x640>
+2000076c:	e046100a 	sub	r1, r6, sl
+            if ((flags & FLAG_LEFT) == 0) {
+20000770:	e2155002 	ands	r5, r5, #2
+20000774:	1a000057 	bne	200008d8 <print_format_to_buf_arg+0x64c>
+                while (padding--) {
+20000778:	e2410001 	sub	r0, r1, #1
+2000077c:	e3510000 	cmp	r1, #0
+20000780:	0a00003c 	beq	20000878 <print_format_to_buf_arg+0x5ec>
+20000784:	e1a03000 	mov	r3, r0
+20000788:	e59d1034 	ldr	r1, [sp, #52]	; 0x34
+    if (*buf < end) {
+2000078c:	e15b0007 	cmp	fp, r7
+        *(*buf)++ = c;
+20000790:	84c71001 	strbhi	r1, [r7], #1
+                while (padding--) {
+20000794:	e2433001 	sub	r3, r3, #1
+20000798:	e3730001 	cmn	r3, #1
+2000079c:	1afffffa 	bne	2000078c <print_format_to_buf_arg+0x500>
+200007a0:	e04a2002 	sub	r2, sl, r2
+200007a4:	e0821000 	add	r1, r2, r0
+            while (index) {
+200007a8:	e35a0000 	cmp	sl, #0
+200007ac:	1a00004b 	bne	200008e0 <print_format_to_buf_arg+0x654>
+200007b0:	ea000055 	b	2000090c <print_format_to_buf_arg+0x680>
+            if (num < 0 && (flags & FLAG_SIGN)) {
+200007b4:	e3150040 	tst	r5, #64	; 0x40
+200007b8:	0affffb1 	beq	20000684 <print_format_to_buf_arg+0x3f8>
+            u32 num_pos = (u32)num;
+200007bc:	e2633000 	rsb	r3, r3, #0
+200007c0:	e1a02003 	mov	r2, r3
+200007c4:	e3150008 	tst	r5, #8
+200007c8:	13a03020 	movne	r3, #32
+200007cc:	03a0302d 	moveq	r3, #45	; 0x2d
+200007d0:	e58d301c 	str	r3, [sp, #28]
+200007d4:	eaffffb4 	b	200006ac <print_format_to_buf_arg+0x420>
+                    num_buf[index++] = 'x';
+200007d8:	e28a3001 	add	r3, sl, #1
+200007dc:	e28d2050 	add	r2, sp, #80	; 0x50
+200007e0:	e082200a 	add	r2, r2, sl
+200007e4:	e3a01078 	mov	r1, #120	; 0x78
+200007e8:	e5421018 	strb	r1, [r2, #-24]	; 0xffffffe8
+                    num_buf[index++] = '0';
+200007ec:	e28d2050 	add	r2, sp, #80	; 0x50
+200007f0:	e0823003 	add	r3, r2, r3
+200007f4:	e28aa002 	add	sl, sl, #2
+200007f8:	e3a02030 	mov	r2, #48	; 0x30
+200007fc:	e5432018 	strb	r2, [r3, #-24]	; 0xffffffe8
+20000800:	eaffffce 	b	20000740 <print_format_to_buf_arg+0x4b4>
+                    num_buf[index++] = 'b';
+20000804:	e28a3001 	add	r3, sl, #1
+20000808:	e28d2050 	add	r2, sp, #80	; 0x50
+2000080c:	e082200a 	add	r2, r2, sl
+20000810:	e3a01062 	mov	r1, #98	; 0x62
+20000814:	e5421018 	strb	r1, [r2, #-24]	; 0xffffffe8
+                    num_buf[index++] = '0';
+20000818:	e28d2050 	add	r2, sp, #80	; 0x50
+2000081c:	e0823003 	add	r3, r2, r3
+20000820:	e28aa002 	add	sl, sl, #2
+20000824:	e3a02030 	mov	r2, #48	; 0x30
+20000828:	e5432018 	strb	r2, [r3, #-24]	; 0xffffffe8
+2000082c:	eaffffc3 	b	20000740 <print_format_to_buf_arg+0x4b4>
+                while (padding--) {
+20000830:	e2413001 	sub	r3, r1, #1
+20000834:	e3510000 	cmp	r1, #0
+20000838:	0a000033 	beq	2000090c <print_format_to_buf_arg+0x680>
+2000083c:	e59d2034 	ldr	r2, [sp, #52]	; 0x34
+    if (*buf < end) {
+20000840:	e15b0007 	cmp	fp, r7
+        *(*buf)++ = c;
+20000844:	84c72001 	strbhi	r2, [r7], #1
+                while (padding--) {
+20000848:	e2433001 	sub	r3, r3, #1
+2000084c:	e3730001 	cmn	r3, #1
+20000850:	1afffffa 	bne	20000840 <print_format_to_buf_arg+0x5b4>
+20000854:	ea00002c 	b	2000090c <print_format_to_buf_arg+0x680>
+        }
+    }
+    return buf + len - end;
+20000858:	e59d3008 	ldr	r3, [sp, #8]
+2000085c:	e0870003 	add	r0, r7, r3
+20000860:	e040000b 	sub	r0, r0, fp
+}
+20000864:	e28dd054 	add	sp, sp, #84	; 0x54
+20000868:	e8bd8ff0 	pop	{r4, r5, r6, r7, r8, r9, sl, fp, pc}
+                for (i = 0; (i < width) && ptr[i]; i++);
+2000086c:	e1a0c00e 	mov	ip, lr
+                    while (padding--) {
+20000870:	e3e03000 	mvn	r3, #0
+20000874:	ea000010 	b	200008bc <print_format_to_buf_arg+0x630>
+                while (padding--) {
+20000878:	e1a01000 	mov	r1, r0
+2000087c:	eaffffc9 	b	200007a8 <print_format_to_buf_arg+0x51c>
+20000880:	e3e01000 	mvn	r1, #0
+20000884:	eaffffc7 	b	200007a8 <print_format_to_buf_arg+0x51c>
+                if ((flags & FLAG_LEFT) == 0) {
+20000888:	e2155002 	ands	r5, r5, #2
+                u32 padding = width - i;
+2000088c:	11a03006 	movne	r3, r6
+                if ((flags & FLAG_LEFT) == 0) {
+20000890:	1affff58 	bne	200005f8 <print_format_to_buf_arg+0x36c>
+                for (i = 0; (i < width) && ptr[i]; i++);
+20000894:	e1a0c00e 	mov	ip, lr
+                    while (padding--) {
+20000898:	e24e3001 	sub	r3, lr, #1
+2000089c:	e35e0000 	cmp	lr, #0
+200008a0:	0a000005 	beq	200008bc <print_format_to_buf_arg+0x630>
+    if (*buf < end) {
+200008a4:	e15b0007 	cmp	fp, r7
+        *(*buf)++ = c;
+200008a8:	83a01020 	movhi	r1, #32
+200008ac:	84c71001 	strbhi	r1, [r7], #1
+                    while (padding--) {
+200008b0:	e2433001 	sub	r3, r3, #1
+200008b4:	e3730001 	cmn	r3, #1
+200008b8:	1afffff9 	bne	200008a4 <print_format_to_buf_arg+0x618>
+                while (i--) {
+200008bc:	e24c1001 	sub	r1, ip, #1
+200008c0:	e35c0000 	cmp	ip, #0
+200008c4:	1affff41 	bne	200005d0 <print_format_to_buf_arg+0x344>
+200008c8:	eaffff1b 	b	2000053c <print_format_to_buf_arg+0x2b0>
+            if ((flags & FLAG_LEFT) == 0) {
+200008cc:	e2155002 	ands	r5, r5, #2
+200008d0:	0affffea 	beq	20000880 <print_format_to_buf_arg+0x5f4>
+200008d4:	e3a01000 	mov	r1, #0
+            while (index) {
+200008d8:	e35a0000 	cmp	sl, #0
+200008dc:	0affffd3 	beq	20000830 <print_format_to_buf_arg+0x5a4>
+200008e0:	e28d3038 	add	r3, sp, #56	; 0x38
+200008e4:	e083300a 	add	r3, r3, sl
+200008e8:	e59d200c 	ldr	r2, [sp, #12]
+    if (*buf < end) {
+200008ec:	e15b0007 	cmp	fp, r7
+        *(*buf)++ = c;
+200008f0:	85530001 	ldrbhi	r0, [r3, #-1]
+200008f4:	84c70001 	strbhi	r0, [r7], #1
+            while (index) {
+200008f8:	e2433001 	sub	r3, r3, #1
+200008fc:	e1530002 	cmp	r3, r2
+20000900:	1afffff9 	bne	200008ec <print_format_to_buf_arg+0x660>
+            if (flags & FLAG_LEFT) {
+20000904:	e3550000 	cmp	r5, #0
+20000908:	1affffc8 	bne	20000830 <print_format_to_buf_arg+0x5a4>
+            i32 num = (i32)va_arg(arg, int);
+2000090c:	e59d2018 	ldr	r2, [sp, #24]
+20000910:	eaffff09 	b	2000053c <print_format_to_buf_arg+0x2b0>
+
+20000914 <main>:
+
+#include <chaos/types.h>
+#include <chaos/kprint.h>
+#include <sama5d2/regmap.h>
+
+void main() {
+20000914:	e92d4010 	push	{r4, lr}
+
+    kprint("Starting chaos kernel\n");
+20000918:	e3000a14 	movw	r0, #2580	; 0xa14
+2000091c:	e3420000 	movt	r0, #8192	; 0x2000
+20000920:	e3003930 	movw	r3, #2352	; 0x930
+20000924:	e3423000 	movt	r3, #8192	; 0x2000
+20000928:	e12fff33 	blx	r3
+
+    while (1);
+2000092c:	eafffffe 	b	2000092c <main+0x18>
+
+20000930 <kprint>:
+#define KPRINT_BUF_SIZE 1024
+
+// Kernel print buffer
+static char kprint_buf[KPRINT_BUF_SIZE];
+
+void kprint(const char* message, ...) {
+20000930:	e92d000f 	push	{r0, r1, r2, r3}
+20000934:	e92d4030 	push	{r4, r5, lr}
+20000938:	e24dd00c 	sub	sp, sp, #12
+    va_list arg;
+    va_start(arg, message);
+2000093c:	e28d301c 	add	r3, sp, #28
+20000940:	e58d3004 	str	r3, [sp, #4]
+    u32 count =
+        print_format_to_buf_arg(kprint_buf, KPRINT_BUF_SIZE, message, arg);
+20000944:	e3014a68 	movw	r4, #6760	; 0x1a68
+20000948:	e3424000 	movt	r4, #8192	; 0x2000
+2000094c:	e59d2018 	ldr	r2, [sp, #24]
+20000950:	e3a01b01 	mov	r1, #1024	; 0x400
+20000954:	e1a00004 	mov	r0, r4
+20000958:	e300528c 	movw	r5, #652	; 0x28c
+2000095c:	e3425000 	movt	r5, #8192	; 0x2000
+20000960:	e12fff35 	blx	r5
+20000964:	e1a01000 	mov	r1, r0
+    va_end(arg);
+
+    kprint_from_buf(kprint_buf, count);
+20000968:	e1a00004 	mov	r0, r4
+2000096c:	e3003988 	movw	r3, #2440	; 0x988
+20000970:	e3423000 	movt	r3, #8192	; 0x2000
+20000974:	e12fff33 	blx	r3
+}
+20000978:	e28dd00c 	add	sp, sp, #12
+2000097c:	e8bd4030 	pop	{r4, r5, lr}
+20000980:	e28dd010 	add	sp, sp, #16
+20000984:	e12fff1e 	bx	lr
+
+20000988 <kprint_from_buf>:
+#include <sama5d2/regmap.h>
+
+void kprint_from_buf(const char* buf, u32 size) {
+    struct uart_reg* const hw = UART1;
+
+    while (size--) {
+20000988:	e3510000 	cmp	r1, #0
+2000098c:	012fff1e 	bxeq	lr
+void kprint_from_buf(const char* buf, u32 size) {
+20000990:	e52de004 	push	{lr}		; (str lr, [sp, #-4]!)
+20000994:	e241c001 	sub	ip, r1, #1
+20000998:	e2401001 	sub	r1, r0, #1
+2000099c:	e080c00c 	add	ip, r0, ip
+        // Make sure we terminatie the line with CR-LF
+        if (*buf == '\n') {
+            while (!(hw->sr & (1 << 1)));
+200009a0:	e3a02000 	mov	r2, #0
+200009a4:	e34f2802 	movt	r2, #63490	; 0xf802
+            hw->thr = '\r';
+200009a8:	e3a0e00d 	mov	lr, #13
+200009ac:	ea000006 	b	200009cc <kprint_from_buf+0x44>
+        }
+        while (!(hw->sr & (1 << 1)));
+200009b0:	e5923014 	ldr	r3, [r2, #20]
+200009b4:	e3130002 	tst	r3, #2
+200009b8:	0afffffc 	beq	200009b0 <kprint_from_buf+0x28>
+        hw->thr = *buf++;
+200009bc:	e5d03000 	ldrb	r3, [r0]
+200009c0:	e582301c 	str	r3, [r2, #28]
+    while (size--) {
+200009c4:	e151000c 	cmp	r1, ip
+200009c8:	049df004 	popeq	{pc}		; (ldreq pc, [sp], #4)
+        if (*buf == '\n') {
+200009cc:	e2811001 	add	r1, r1, #1
+200009d0:	e1a00001 	mov	r0, r1
+200009d4:	e5d13000 	ldrb	r3, [r1]
+200009d8:	e353000a 	cmp	r3, #10
+200009dc:	1afffff3 	bne	200009b0 <kprint_from_buf+0x28>
+            while (!(hw->sr & (1 << 1)));
+200009e0:	e5923014 	ldr	r3, [r2, #20]
+200009e4:	e3130002 	tst	r3, #2
+200009e8:	0afffffc 	beq	200009e0 <kprint_from_buf+0x58>
+            hw->thr = '\r';
+200009ec:	e582e01c 	str	lr, [r2, #28]
+200009f0:	eaffffee 	b	200009b0 <kprint_from_buf+0x28>
+
+Disassembly of section .init:
+
+200009f4 <_init>:
+200009f4:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+200009f6:	bf00      	nop
+
+Disassembly of section .fini:
+
+200009f8 <_fini>:
+200009f8:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+200009fa:	bf00      	nop

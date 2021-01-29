@@ -30,7 +30,6 @@ u32 print_format_to_buf_arg(char* buf, u32 len, const char* str, va_list arg) {
     char* const end = buf + len;
 
     for (; *str; str++) {
-        
         // Non-formatting character is just printed to the buffer
         if (*str != '{') {
             put_char(*str, &buf, end);
@@ -247,7 +246,7 @@ u32 print_format_to_buf(char* buf, u32 len, const char* str, ...) {
     va_start(arg, str);
 
     // Format the input
-    u32 size = format_print_arg(buf, len, str, arg);
+    u32 size = print_format_to_buf_arg(buf, len, str, arg);
     va_end(arg);
      
     return size;
