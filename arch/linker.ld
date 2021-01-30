@@ -5,13 +5,12 @@ OUTPUT_ARCH(arm)
 SEARCH_DIR(.)
 
 MEMORY {
-    ddr (rwx) : ORIGIN = link_location, LENGTH = 128M
+    ddr (rwx) : ORIGIN = link_location, LENGTH = 32M
 }
 
-/*
- * Stacks sizes in each hardware mode. The kernel will run on the SVC stack 
- * until the first thread starts
- */
+ddr_size = ddr_size_macro;
+ddr_start = ddr_start_macro;
+
 USER_STACK  = 512;
 FIQ_STACK   = 512;
 IRQ_STACK   = 512;
@@ -64,6 +63,17 @@ SECTIONS {
         . = ALIGN(4);
         _data_e = .;
     } > ddr
+    
+    _kernel_e = .;
+
+    .bss (NOLOAD) : {
+        . = ALIGN(4);
+        _bss_s = .;
+        *(.bss)
+        *(.bss*)
+        . = ALIGN(4);
+        _bss_e = .; 
+    } > ddr
 
     .stack (NOLOAD) : {
         . += USER_STACK;
@@ -90,17 +100,6 @@ SECTIONS {
         . = ALIGN(8);
         _undef_stack_e = .;
     } > ddr
-
-    .bss (NOLOAD) : {
-        . = ALIGN(4);
-        _bss_s = .;
-        *(.bss)
-        *(.bss*)
-        . = ALIGN(4);
-        _bss_e = .; 
-    } > ddr
-
-    _kernel_e = .;
 }
 
 _kernel_size = _kernel_e - _kernel_s;

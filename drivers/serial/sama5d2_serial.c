@@ -4,7 +4,7 @@
 #include <sama5d2/regmap.h>
 
 void kprint_from_buf(const char* buf, u32 size) {
-    struct uart_reg* const hw = UART1;
+    struct uart_reg* const hw = UART1_REG;
 
     while (size--) {
         // Make sure we terminatie the line with CR-LF

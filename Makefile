@@ -29,6 +29,7 @@ include $(top)/lib/Makefile
 include $(top)/entry/Makefile
 include $(top)/drivers/Makefile
 include $(top)/include/Makefile
+include $(top)/config/Makefile
 
 # Check that the name variables in the config file are correct
 ifeq ($(folder_name),)
@@ -73,6 +74,8 @@ endif
 # Update the linker flags
 ldflags += -T$(top)/$(linker-script-y)
 ldflags += -Wl,--defsym=link_location=$(link_location)
+ldflags += -Wl,--defsym=ddr_start_macro=$(ddr_start)
+ldflags += -Wl,--defsym=ddr_size_macro=$(ddr_size)
 endif
 
 # Compilers
@@ -99,7 +102,7 @@ asm_path = $(addprefix $(obj_dir)/, $(asm-y))
 obj = $(patsubst %.c,%.o, $(src_path)) $(patsubst %.s,%.o, $(asm_path))
 
 # If a dependency change the entire project will be rebuilt
-deps = $(addprefix $(top)/, $(headers-y))
+deps = $(addprefix $(top)/, $(deps-y))
 
 # Global path of the target to build excluding extension
 global_target_name = $(build_dir)/$(folder_name)/$(target_name)

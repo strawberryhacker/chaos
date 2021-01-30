@@ -2,7 +2,7 @@
 
 #include <chaos/print-format.h>
 
-// 16-bit flags for format flags and option handling
+// Combined format flags and option flags
 #define FLAG_PREFIX      0x0001
 #define FLAG_LEFT        0x0002
 #define FLAG_ZERO        0x0004
@@ -30,7 +30,7 @@ u32 print_format_to_buf_arg(char* buf, u32 len, const char* str, va_list arg) {
     char* const end = buf + len;
 
     for (; *str; str++) {
-        // Non-formatting character is just printed to the buffer
+        // Any non-formatting character is just printed to the buffer
         if (*str != '{') {
             put_char(*str, &buf, end);
             continue;
@@ -54,7 +54,6 @@ u32 print_format_to_buf_arg(char* buf, u32 len, const char* str, va_list arg) {
 
         // Parse the format width. The width will be -1 if no width is given
         i32 width = -1;
-
         if (*str == '_') {
             width = (i32)va_arg(arg, int);
             str++;
@@ -70,9 +69,9 @@ u32 print_format_to_buf_arg(char* buf, u32 len, const char* str, va_list arg) {
             str++;
         }
 
-        // Parse the format option defaulting to base 10
+        // Parse the format option. The number system is defaulting to decimal
         u8 base = 10;
-        switch (*str) {
+        switch (*str++) {
             case 's':
             case 'S':
                 flags |= FLAG_STRING;
@@ -103,9 +102,9 @@ u32 print_format_to_buf_arg(char* buf, u32 len, const char* str, va_list arg) {
                 break;
             case 'r':
             case 'R':
-                flags |= FLAG_PREFIX;
+                flags |= FLAG_PREFIX | FLAG_ZERO;
                 base = 2;
-                width = 32;
+                width = 34;
                 break;
             case '{':
                 flags |= FLAG_BRACKET;
@@ -115,7 +114,7 @@ u32 print_format_to_buf_arg(char* buf, u32 len, const char* str, va_list arg) {
                 continue;
         }
 
-        // Print the result based on flags, number and 
+        // Print the result based on flags, width and option 
         if (flags & FLAG_CHAR) {
             put_char((char)va_arg(arg, int), &buf, end);
 
@@ -160,7 +159,7 @@ u32 print_format_to_buf_arg(char* buf, u32 len, const char* str, va_list arg) {
             }
         } else {
             // Print a number
-            char num_buf[24];
+            char num_buf[35];
             char pad_char = (flags & FLAG_ZERO) ? '0' : ' ';
             char sign = 0;
             u32 index = 0;
@@ -186,31 +185,50 @@ u32 print_format_to_buf_arg(char* buf, u32 len, const char* str, va_list arg) {
 
             // Convert the number to string representation
             u32 num_pos = (u32)num;
-            while (num_pos) {
+            do {
                 num_buf[index++] = number_lookup[num_pos % base] | lowercase;
                 num_pos /= base;
-            }
+            } while(num_pos);
 
-            // Append the prefix in case of hex or binary number
+            // Conditionally append the prefix in case of hex or binary number
+            u8 sign_prefix_pad = 0;
             if (flags & FLAG_PREFIX) {
-                if (base == 16) {
-                    num_buf[index++] = 'x';
-                    num_buf[index++] = '0';
-                } else if (base == 2) {
-                    num_buf[index++] = 'b';
-                    num_buf[index++] = '0';
+                if (base == 16 || base == 2) {
+                    sign_prefix_pad += 2;
                 }
             }
 
             // Append the sign to the buffer
             if (sign) {
-                num_buf[index++] = sign;
+                sign_prefix_pad++;
             }
 
             // Get the padding
             u32 padding = 0;
             if (width >= 0) {
-                padding = (index > width) ? 0 : width - index;
+                padding = ((index + sign_prefix_pad) > width) ? 0 : 
+                    width - index - sign_prefix_pad;
+            }
+
+            // Append the sign
+            if (sign) {
+                put_char(sign, &buf, end);
+            }
+
+            // Append the prefix
+            if (flags & FLAG_PREFIX) {
+                if (base == 16) {
+                    put_char('0', &buf, end);
+                    put_char('x', &buf, end);
+                } else if (base == 2) {
+                    put_char('0', &buf, end);
+                    put_char('b', &buf, end);
+                }
+            }
+
+            // Append the sign to the buffer
+            if (sign) {
+                sign_prefix_pad++;
             }
 
             // Front pad sequence
@@ -233,9 +251,10 @@ u32 print_format_to_buf_arg(char* buf, u32 len, const char* str, va_list arg) {
             }
         }
 
-        // Skip the last bracket if any
-        if (*str == '}') {
-            str++;
+        // If the user don't write ending bracket we don't skrip the next 
+        // character
+        if (*str != '}') {
+            str--;
         }
     }
     return buf + len - end;
