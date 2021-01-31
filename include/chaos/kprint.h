@@ -8,6 +8,8 @@
 
 void kprint(const char* message, ...);
 
+void boot_message(const char* message, ...);
+
 void kprint_from_buf(const char* buf, u32 size);
 
 #endif

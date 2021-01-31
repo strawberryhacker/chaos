@@ -16,9 +16,9 @@ struct netbuf {
     u32 len;
 };
 
-void netbuf_init(void);
+void netbuf_init();
 
-struct netbuf* alloc_netbuf(void);
+struct netbuf* alloc_netbuf();
 
 void free_netbuf(struct netbuf* buf);
 

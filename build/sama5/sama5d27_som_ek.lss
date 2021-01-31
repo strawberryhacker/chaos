@@ -5,41 +5,41 @@ Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
   0 .kernel_entry 000000fc  20000000  20000000  00010000  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .text         00001470  20000100  20000100  00010100  2**3
+  1 .text         0000141c  20000100  20000100  00010100  2**3
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .init         00000004  20001570  20001570  00011570  2**2
+  2 .init         00000004  2000151c  2000151c  0001151c  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  3 .fini         00000004  20001574  20001574  00011574  2**2
+  3 .fini         00000004  20001520  20001520  00011520  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  4 .rodata       000002cc  20001578  20001578  00011578  2**2
+  4 .rodata       00000234  20001524  20001524  00011524  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  5 .data         00000438  20001848  20001848  00011848  2**3
+  5 .data         00000438  20001758  20001758  00011758  2**3
                   CONTENTS, ALLOC, LOAD, DATA
-  6 .bss          00062f00  20001c80  20001c80  00011c80  2**6
+  6 .bss          00063300  20001bc0  20001bc0  00011b90  2**6
                   ALLOC
-  7 .stack        00000c00  20064b80  20064b80  00011c80  2**0
+  7 .stack        00000c00  20064ec0  20064ec0  00011b90  2**0
                   ALLOC
-  8 .ARM.attributes 0000002d  00000000  00000000  00011c80  2**0
+  8 .ARM.attributes 0000002d  00000000  00000000  00011b90  2**0
                   CONTENTS, READONLY
-  9 .comment      000000a7  00000000  00000000  00011cad  2**0
+  9 .comment      000000a7  00000000  00000000  00011bbd  2**0
                   CONTENTS, READONLY
- 10 .debug_line   00002c0d  00000000  00000000  00011d54  2**0
+ 10 .debug_line   00002bde  00000000  00000000  00011c64  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 11 .debug_info   0000780b  00000000  00000000  00014961  2**0
+ 11 .debug_info   0000778b  00000000  00000000  00014842  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 12 .debug_abbrev 00001f38  00000000  00000000  0001c16c  2**0
+ 12 .debug_abbrev 00001f90  00000000  00000000  0001bfcd  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 13 .debug_aranges 00000378  00000000  00000000  0001e0a8  2**3
+ 13 .debug_aranges 00000380  00000000  00000000  0001df60  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_str    00005b96  00000000  00000000  0001e420  2**0
+ 14 .debug_str    00005bee  00000000  00000000  0001e2e0  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_loc    00002132  00000000  00000000  00023fb6  2**0
+ 15 .debug_loc    000020bb  00000000  00000000  00023ece  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_ranges 000003b8  00000000  00000000  000260e8  2**0
+ 16 .debug_ranges 00000390  00000000  00000000  00025f89  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_macro  00001570  00000000  00000000  000264a0  2**0
+ 17 .debug_macro  00001570  00000000  00000000  00026319  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_frame  0000054c  00000000  00000000  00027a10  2**2
+ 18 .debug_frame  00000578  00000000  00000000  0002788c  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .kernel_entry:
@@ -213,9 +213,9 @@ skip_reloc:
     ldr r1, =ddr_start
 200000ec:	20000000 	.word	0x20000000
     ldr r2, =_kernel_size
-200000f0:	00001c80 	.word	0x00001c80
+200000f0:	00001b90 	.word	0x00001b90
     ldr sp, =_svc_stack_e
-200000f4:	20065580 	.word	0x20065580
+200000f4:	200658c0 	.word	0x200658c0
     ldr r0, =main
 200000f8:	20000a40 	.word	0x20000a40
 
@@ -456,7 +456,7 @@ u32 print_format_to_buf_arg(char* buf, u32 len, const char* str, va_list arg) {
             u32 num_pos = (u32)num;
             do {
                 num_buf[index++] = number_lookup[num_pos % base] | lowercase;
-200003a4:	e301357c 	movw	r3, #5500	; 0x157c
+200003a4:	e3013528 	movw	r3, #5416	; 0x1528
 200003a8:	e3423000 	movt	r3, #8192	; 0x2000
 200003ac:	e58d3000 	str	r3, [sp]
 200003b0:	e300335d 	movw	r3, #861	; 0x35d
@@ -1058,14 +1058,14 @@ void main() {
 20000a40:	e92d47f0 	push	{r4, r5, r6, r7, r8, r9, sl, lr}
 
     kprint("\n\nStarting chaos kernel v1.0\n");
-20000a44:	e3010590 	movw	r0, #5520	; 0x1590
+20000a44:	e301053c 	movw	r0, #5436	; 0x153c
 20000a48:	e3420000 	movt	r0, #8192	; 0x2000
 20000a4c:	e3003b08 	movw	r3, #2824	; 0xb08
 20000a50:	e3423000 	movt	r3, #8192	; 0x2000
 20000a54:	e12fff33 	blx	r3
 
     network_start();
-20000a58:	e3003c98 	movw	r3, #3224	; 0xc98
+20000a58:	e3003cf0 	movw	r3, #3312	; 0xcf0
 20000a5c:	e3423000 	movt	r3, #8192	; 0x2000
 20000a60:	e12fff33 	blx	r3
 
@@ -1073,12 +1073,12 @@ void main() {
         for (u32 i = 0; i < 500000; i++) {
             asm ("nop");
         }
-        struct netbuf* buf = nic_recv();
-20000a64:	e30152dc 	movw	r5, #4828	; 0x12dc
+        struct netbuf* buf = nic_receive();
+20000a64:	e301531c 	movw	r5, #4892	; 0x131c
 20000a68:	e3425000 	movt	r5, #8192	; 0x2000
         if (buf) {
             kprint("Got a packet => {d}\n", buf->len);
-20000a6c:	e30185b0 	movw	r8, #5552	; 0x15b0
+20000a6c:	e301855c 	movw	r8, #5468	; 0x155c
 20000a70:	e3428000 	movt	r8, #8192	; 0x2000
 20000a74:	e3006b08 	movw	r6, #2824	; 0xb08
 20000a78:	e3426000 	movt	r6, #8192	; 0x2000
@@ -1087,14 +1087,14 @@ void main() {
                 kprint("{0:2:x} ", buf->buf[i]);
             }
             kprint("\n\n");
-20000a80:	e30105d4 	movw	r0, #5588	; 0x15d4
+20000a80:	e3010580 	movw	r0, #5504	; 0x1580
 20000a84:	e3420000 	movt	r0, #8192	; 0x2000
 20000a88:	e12fff36 	blx	r6
 
             // Free the netbuffer
             free_netbuf(buf);
 20000a8c:	e1a00004 	mov	r0, r4
-20000a90:	e3003c74 	movw	r3, #3188	; 0xc74
+20000a90:	e3003ccc 	movw	r3, #3276	; 0xccc
 20000a94:	e3423000 	movt	r3, #8192	; 0x2000
 20000a98:	e12fff33 	blx	r3
 void main() {
@@ -1105,7 +1105,7 @@ void main() {
         for (u32 i = 0; i < 500000; i++) {
 20000aa8:	e2533001 	subs	r3, r3, #1
 20000aac:	1afffffc 	bne	20000aa4 <main+0x64>
-        struct netbuf* buf = nic_recv();
+        struct netbuf* buf = nic_receive();
 20000ab0:	e12fff35 	blx	r5
         if (buf) {
 20000ab4:	e2504000 	subs	r4, r0, #0
@@ -1120,7 +1120,7 @@ void main() {
 20000ad0:	0affffea 	beq	20000a80 <main+0x40>
 20000ad4:	e244a001 	sub	sl, r4, #1
                 kprint("{0:2:x} ", buf->buf[i]);
-20000ad8:	e30195c8 	movw	r9, #5576	; 0x15c8
+20000ad8:	e3019574 	movw	r9, #5492	; 0x1574
 20000adc:	e3429000 	movt	r9, #8192	; 0x2000
 20000ae0:	e1a0700a 	mov	r7, sl
 20000ae4:	e5fa1001 	ldrb	r1, [sl, #1]!
@@ -1137,8 +1137,8 @@ void main() {
 20000b08 <kprint>:
 #define KPRINT_BUF_SIZE 1024
 
-// Kernel print buffer
 static char kprint_buf[KPRINT_BUF_SIZE];
+static char boot_message_buf[KPRINT_BUF_SIZE];
 
 void kprint(const char* message, ...) {
 20000b08:	e92d000f 	push	{r0, r1, r2, r3}
@@ -1150,7 +1150,7 @@ void kprint(const char* message, ...) {
 20000b18:	e58d3004 	str	r3, [sp, #4]
     u32 count =
         print_format_to_buf_arg(kprint_buf, KPRINT_BUF_SIZE, message, arg);
-20000b1c:	e3014c80 	movw	r4, #7296	; 0x1c80
+20000b1c:	e3014fc0 	movw	r4, #8128	; 0x1fc0
 20000b20:	e3424000 	movt	r4, #8192	; 0x2000
 20000b24:	e59d2018 	ldr	r2, [sp, #24]
 20000b28:	e3a01b01 	mov	r1, #1024	; 0x400
@@ -1163,7 +1163,7 @@ void kprint(const char* message, ...) {
 
     kprint_from_buf(kprint_buf, count);
 20000b40:	e1a00004 	mov	r0, r4
-20000b44:	e3003ccc 	movw	r3, #3276	; 0xccc
+20000b44:	e3003d24 	movw	r3, #3364	; 0xd24
 20000b48:	e3423000 	movt	r3, #8192	; 0x2000
 20000b4c:	e12fff33 	blx	r3
 }
@@ -1172,1088 +1172,1053 @@ void kprint(const char* message, ...) {
 20000b58:	e28dd010 	add	sp, sp, #16
 20000b5c:	e12fff1e 	bx	lr
 
-20000b60 <panic>:
+20000b60 <boot_message>:
+
+void boot_message(const char* message, ...) {
+20000b60:	e92d000f 	push	{r0, r1, r2, r3}
+20000b64:	e92d4030 	push	{r4, r5, lr}
+20000b68:	e24dd00c 	sub	sp, sp, #12
+    // Log any timestamps?
+    
+    va_list arg;
+    va_start(arg, message);
+20000b6c:	e28d301c 	add	r3, sp, #28
+20000b70:	e58d3004 	str	r3, [sp, #4]
+    u32 count =
+        print_format_to_buf_arg(boot_message_buf, KPRINT_BUF_SIZE, message, arg);
+20000b74:	e3014bc0 	movw	r4, #7104	; 0x1bc0
+20000b78:	e3424000 	movt	r4, #8192	; 0x2000
+20000b7c:	e59d2018 	ldr	r2, [sp, #24]
+20000b80:	e3a01b01 	mov	r1, #1024	; 0x400
+20000b84:	e1a00004 	mov	r0, r4
+20000b88:	e300537c 	movw	r5, #892	; 0x37c
+20000b8c:	e3425000 	movt	r5, #8192	; 0x2000
+20000b90:	e12fff35 	blx	r5
+20000b94:	e1a01000 	mov	r1, r0
+    va_end(arg);
+
+    kprint_from_buf(boot_message_buf, count);
+20000b98:	e1a00004 	mov	r0, r4
+20000b9c:	e3003d24 	movw	r3, #3364	; 0xd24
+20000ba0:	e3423000 	movt	r3, #8192	; 0x2000
+20000ba4:	e12fff33 	blx	r3
+}
+20000ba8:	e28dd00c 	add	sp, sp, #12
+20000bac:	e8bd4030 	pop	{r4, r5, lr}
+20000bb0:	e28dd010 	add	sp, sp, #16
+20000bb4:	e12fff1e 	bx	lr
+
+20000bb8 <panic>:
 // Kernel panic implementation
 
 #include <chaos/panic.h>
 #include <chaos/kprint.h>
 
 void panic(const char* message) {
-20000b60:	e92d4010 	push	{r4, lr}
-20000b64:	e1a01000 	mov	r1, r0
+20000bb8:	e92d4010 	push	{r4, lr}
+20000bbc:	e1a01000 	mov	r1, r0
     kprint("Kernel panic!\n\t{s}\n", message);
-20000b68:	e30105d8 	movw	r0, #5592	; 0x15d8
-20000b6c:	e3420000 	movt	r0, #8192	; 0x2000
-20000b70:	e3003b08 	movw	r3, #2824	; 0xb08
-20000b74:	e3423000 	movt	r3, #8192	; 0x2000
-20000b78:	e12fff33 	blx	r3
+20000bc0:	e3010584 	movw	r0, #5508	; 0x1584
+20000bc4:	e3420000 	movt	r0, #8192	; 0x2000
+20000bc8:	e3003b08 	movw	r3, #2824	; 0xb08
+20000bcc:	e3423000 	movt	r3, #8192	; 0x2000
+20000bd0:	e12fff33 	blx	r3
     while (1);
-20000b7c:	eafffffe 	b	20000b7c <panic+0x1c>
+20000bd4:	eafffffe 	b	20000bd4 <panic+0x1c>
 
-20000b80 <assert_handler>:
+20000bd8 <assert_handler>:
 // Kernel assert implementation
 
 #include <chaos/assert.h>
 #include <chaos/kprint.h>
 
 void assert_handler(const char* file, u32 line) {
-20000b80:	e92d4010 	push	{r4, lr}
-20000b84:	e1a02001 	mov	r2, r1
+20000bd8:	e92d4010 	push	{r4, lr}
+20000bdc:	e1a02001 	mov	r2, r1
     kprint("Kernel assert!\n\t{s}: {d}\n", file, line);
-20000b88:	e1a01000 	mov	r1, r0
-20000b8c:	e30105ec 	movw	r0, #5612	; 0x15ec
-20000b90:	e3420000 	movt	r0, #8192	; 0x2000
-20000b94:	e3003b08 	movw	r3, #2824	; 0xb08
-20000b98:	e3423000 	movt	r3, #8192	; 0x2000
-20000b9c:	e12fff33 	blx	r3
+20000be0:	e1a01000 	mov	r1, r0
+20000be4:	e3010598 	movw	r0, #5528	; 0x1598
+20000be8:	e3420000 	movt	r0, #8192	; 0x2000
+20000bec:	e3003b08 	movw	r3, #2824	; 0xb08
+20000bf0:	e3423000 	movt	r3, #8192	; 0x2000
+20000bf4:	e12fff33 	blx	r3
     while (1);
-20000ba0:	eafffffe 	b	20000ba0 <assert_handler+0x20>
+20000bf8:	eafffffe 	b	20000bf8 <assert_handler+0x20>
 
-20000ba4 <netbuf_init>:
+20000bfc <netbuf_init>:
 
 // Allocate the netbuffers
 static alignas(32) struct netbuf buffers[NIC_MAX_BUF];
 
 // Initializes the netbuffers
-void netbuf_init(void) {
-20000ba4:	e92d4010 	push	{r4, lr}
+void netbuf_init() {
+20000bfc:	e92d4010 	push	{r4, lr}
 #define list_get_struct(node, type, member) \
     (type *)((u8 *)node - offsetof(type, member))
 
 // Initializes a list
 static inline void list_init(struct list_node* list) {
     list->prev = list;
-20000ba8:	e3041080 	movw	r1, #16512	; 0x4080
-20000bac:	e3421006 	movt	r1, #8198	; 0x2006
-20000bb0:	e5811004 	str	r1, [r1, #4]
+20000c00:	e30413c0 	movw	r1, #17344	; 0x43c0
+20000c04:	e3421006 	movt	r1, #8198	; 0x2006
+20000c08:	e5811004 	str	r1, [r1, #4]
     // Initialize the netbuffer pool
     list_init(&netbuf_pool);
 
     for (u32 i = 0; i < NIC_MAX_BUF; i++) {
-20000bb4:	e59f3050 	ldr	r3, [pc, #80]	; 20000c0c <netbuf_init+0x68>
-20000bb8:	e283ca62 	add	ip, r3, #401408	; 0x62000
+20000c0c:	e59f3050 	ldr	r3, [pc, #80]	; 20000c64 <netbuf_init+0x68>
+20000c10:	e283ca62 	add	ip, r3, #401408	; 0x62000
 static inline void __list_add(struct list_node* new, struct list_node* prev,
     struct list_node* next) {
     prev->next = new;
     next->prev = new;
     new->next = next;
     new->prev = prev;
-20000bbc:	e1a00001 	mov	r0, r1
+20000c14:	e1a00001 	mov	r0, r1
         list_push_front(&buffers[i].node, &netbuf_pool);
-20000bc0:	e1a02001 	mov	r2, r1
-20000bc4:	e1a01003 	mov	r1, r3
+20000c18:	e1a02001 	mov	r2, r1
+20000c1c:	e1a01003 	mov	r1, r3
     next->prev = new;
-20000bc8:	e5823004 	str	r3, [r2, #4]
+20000c20:	e5823004 	str	r3, [r2, #4]
     new->next = next;
-20000bcc:	e5832000 	str	r2, [r3]
+20000c24:	e5832000 	str	r2, [r3]
     new->prev = prev;
-20000bd0:	e5830004 	str	r0, [r3, #4]
+20000c28:	e5830004 	str	r0, [r3, #4]
     for (u32 i = 0; i < NIC_MAX_BUF; i++) {
-20000bd4:	e2833e62 	add	r3, r3, #1568	; 0x620
-20000bd8:	e153000c 	cmp	r3, ip
-20000bdc:	1afffff7 	bne	20000bc0 <netbuf_init+0x1c>
-20000be0:	e3043080 	movw	r3, #16512	; 0x4080
-20000be4:	e3423006 	movt	r3, #8198	; 0x2006
-20000be8:	e59f2020 	ldr	r2, [pc, #32]	; 20000c10 <netbuf_init+0x6c>
-20000bec:	e5832000 	str	r2, [r3]
+20000c2c:	e2833e62 	add	r3, r3, #1568	; 0x620
+20000c30:	e153000c 	cmp	r3, ip
+20000c34:	1afffff7 	bne	20000c18 <netbuf_init+0x1c>
+20000c38:	e30433c0 	movw	r3, #17344	; 0x43c0
+20000c3c:	e3423006 	movt	r3, #8198	; 0x2006
+20000c40:	e59f2020 	ldr	r2, [pc, #32]	; 20000c68 <netbuf_init+0x6c>
+20000c44:	e5832000 	str	r2, [r3]
     }
 
     kprint("Initialized {d} netbuffers\n", NIC_MAX_BUF);
-20000bf0:	e3a01c01 	mov	r1, #256	; 0x100
-20000bf4:	e3010608 	movw	r0, #5640	; 0x1608
-20000bf8:	e3420000 	movt	r0, #8192	; 0x2000
-20000bfc:	e3003b08 	movw	r3, #2824	; 0xb08
-20000c00:	e3423000 	movt	r3, #8192	; 0x2000
-20000c04:	e12fff33 	blx	r3
+20000c48:	e3a01c01 	mov	r1, #256	; 0x100
+20000c4c:	e30105b4 	movw	r0, #5556	; 0x15b4
+20000c50:	e3420000 	movt	r0, #8192	; 0x2000
+20000c54:	e3003b08 	movw	r3, #2824	; 0xb08
+20000c58:	e3423000 	movt	r3, #8192	; 0x2000
+20000c5c:	e12fff33 	blx	r3
 }
-20000c08:	e8bd8010 	pop	{r4, pc}
-20000c0c:	20002690 	.word	0x20002690
-20000c10:	20064070 	.word	0x20064070
+20000c60:	e8bd8010 	pop	{r4, pc}
+20000c64:	200029d0 	.word	0x200029d0
+20000c68:	200643b0 	.word	0x200643b0
 
-20000c14 <alloc_netbuf>:
+20000c6c <alloc_netbuf>:
     node->prev = NULL;
 }
 
 // Deletes the first node in the list
 static inline struct list_node* list_pop_front(struct list_node* list) {
     if (list->next == list) {
-20000c14:	e3043080 	movw	r3, #16512	; 0x4080
-20000c18:	e3423006 	movt	r3, #8198	; 0x2006
-20000c1c:	e5930000 	ldr	r0, [r3]
-20000c20:	e1500003 	cmp	r0, r3
-20000c24:	0a000008 	beq	20000c4c <alloc_netbuf+0x38>
+20000c6c:	e30433c0 	movw	r3, #17344	; 0x43c0
+20000c70:	e3423006 	movt	r3, #8198	; 0x2006
+20000c74:	e5930000 	ldr	r0, [r3]
+20000c78:	e1500003 	cmp	r0, r3
+20000c7c:	0a000008 	beq	20000ca4 <alloc_netbuf+0x38>
     __list_delete(node->prev, node->next);
-20000c28:	e5902004 	ldr	r2, [r0, #4]
-20000c2c:	e5903000 	ldr	r3, [r0]
+20000c80:	e5902004 	ldr	r2, [r0, #4]
+20000c84:	e5903000 	ldr	r3, [r0]
     prev->next = next;
-20000c30:	e5823000 	str	r3, [r2]
+20000c88:	e5823000 	str	r3, [r2]
     next->prev = prev;
-20000c34:	e5832004 	str	r2, [r3, #4]
+20000c8c:	e5832004 	str	r2, [r3, #4]
     node->next = NULL;
-20000c38:	e3a03000 	mov	r3, #0
-20000c3c:	e5803000 	str	r3, [r0]
+20000c90:	e3a03000 	mov	r3, #0
+20000c94:	e5803000 	str	r3, [r0]
     node->prev = NULL;
-20000c40:	e5803004 	str	r3, [r0, #4]
+20000c98:	e5803004 	str	r3, [r0, #4]
     struct list_node* node = list_pop_front(&netbuf_pool);
     assert(node);
 
     // Convert the list node to a netbuf and return it
     return list_get_struct(node, struct netbuf, node);
 }
-20000c44:	e2400e61 	sub	r0, r0, #1552	; 0x610
-20000c48:	e12fff1e 	bx	lr
-struct netbuf* alloc_netbuf(void) {
-20000c4c:	e92d4010 	push	{r4, lr}
+20000c9c:	e2400e61 	sub	r0, r0, #1552	; 0x610
+20000ca0:	e12fff1e 	bx	lr
+struct netbuf* alloc_netbuf() {
+20000ca4:	e92d4010 	push	{r4, lr}
     assert(node);
-20000c50:	e3a01020 	mov	r1, #32
-20000c54:	e3010624 	movw	r0, #5668	; 0x1624
-20000c58:	e3420000 	movt	r0, #8192	; 0x2000
-20000c5c:	e3003b80 	movw	r3, #2944	; 0xb80
-20000c60:	e3423000 	movt	r3, #8192	; 0x2000
-20000c64:	e12fff33 	blx	r3
-20000c68:	e3a00000 	mov	r0, #0
+20000ca8:	e3a01020 	mov	r1, #32
+20000cac:	e30105d0 	movw	r0, #5584	; 0x15d0
+20000cb0:	e3420000 	movt	r0, #8192	; 0x2000
+20000cb4:	e3003bd8 	movw	r3, #3032	; 0xbd8
+20000cb8:	e3423000 	movt	r3, #8192	; 0x2000
+20000cbc:	e12fff33 	blx	r3
+20000cc0:	e3a00000 	mov	r0, #0
 }
-20000c6c:	e2400e61 	sub	r0, r0, #1552	; 0x610
-20000c70:	e8bd8010 	pop	{r4, pc}
+20000cc4:	e2400e61 	sub	r0, r0, #1552	; 0x610
+20000cc8:	e8bd8010 	pop	{r4, pc}
 
-20000c74 <free_netbuf>:
+20000ccc <free_netbuf>:
 
 void free_netbuf(struct netbuf* buf) {
     // Get the first free netbuf list node
     list_push_back(&buf->node, &netbuf_pool);
-20000c74:	e2801e61 	add	r1, r0, #1552	; 0x610
+20000ccc:	e2801e61 	add	r1, r0, #1552	; 0x610
     __list_add(new, list->prev, list);
-20000c78:	e3043080 	movw	r3, #16512	; 0x4080
-20000c7c:	e3423006 	movt	r3, #8198	; 0x2006
-20000c80:	e5932004 	ldr	r2, [r3, #4]
+20000cd0:	e30433c0 	movw	r3, #17344	; 0x43c0
+20000cd4:	e3423006 	movt	r3, #8198	; 0x2006
+20000cd8:	e5932004 	ldr	r2, [r3, #4]
     prev->next = new;
-20000c84:	e5821000 	str	r1, [r2]
+20000cdc:	e5821000 	str	r1, [r2]
     next->prev = new;
-20000c88:	e5831004 	str	r1, [r3, #4]
+20000ce0:	e5831004 	str	r1, [r3, #4]
     new->next = next;
-20000c8c:	e5803610 	str	r3, [r0, #1552]	; 0x610
+20000ce4:	e5803610 	str	r3, [r0, #1552]	; 0x610
     new->prev = prev;
-20000c90:	e5802614 	str	r2, [r0, #1556]	; 0x614
+20000ce8:	e5802614 	str	r2, [r0, #1556]	; 0x614
 }
-20000c94:	e12fff1e 	bx	lr
+20000cec:	e12fff1e 	bx	lr
 
-20000c98 <network_start>:
+20000cf0 <network_start>:
 #include <chaos/network.h>
 #include <chaos/netbuf.h>
 #include <chaos/kprint.h>
 #include <chaos/nic.h>
 
-void network_start(void) {
-20000c98:	e92d4010 	push	{r4, lr}
+void network_start() {
+20000cf0:	e92d4010 	push	{r4, lr}
 
     kprint("Starting networking\n");
-20000c9c:	e3010650 	movw	r0, #5712	; 0x1650
-20000ca0:	e3420000 	movt	r0, #8192	; 0x2000
-20000ca4:	e3003b08 	movw	r3, #2824	; 0xb08
-20000ca8:	e3423000 	movt	r3, #8192	; 0x2000
-20000cac:	e12fff33 	blx	r3
+20000cf4:	e30105fc 	movw	r0, #5628	; 0x15fc
+20000cf8:	e3420000 	movt	r0, #8192	; 0x2000
+20000cfc:	e3003b08 	movw	r3, #2824	; 0xb08
+20000d00:	e3423000 	movt	r3, #8192	; 0x2000
+20000d04:	e12fff33 	blx	r3
 
     netbuf_init();
-20000cb0:	e3003ba4 	movw	r3, #2980	; 0xba4
-20000cb4:	e3423000 	movt	r3, #8192	; 0x2000
-20000cb8:	e12fff33 	blx	r3
+20000d08:	e3003bfc 	movw	r3, #3068	; 0xbfc
+20000d0c:	e3423000 	movt	r3, #8192	; 0x2000
+20000d10:	e12fff33 	blx	r3
     nic_init();
-20000cbc:	e301341c 	movw	r3, #5148	; 0x141c
-20000cc0:	e3423000 	movt	r3, #8192	; 0x2000
-20000cc4:	e12fff33 	blx	r3
+20000d14:	e3013410 	movw	r3, #5136	; 0x1410
+20000d18:	e3423000 	movt	r3, #8192	; 0x2000
+20000d1c:	e12fff33 	blx	r3
 }
-20000cc8:	e8bd8010 	pop	{r4, pc}
+20000d20:	e8bd8010 	pop	{r4, pc}
 
-20000ccc <kprint_from_buf>:
+20000d24 <kprint_from_buf>:
 #include <sama5d2/regmap.h>
 
 void kprint_from_buf(const char* buf, u32 size) {
     struct uart_reg* const hw = UART1_REG;
 
     while (size--) {
-20000ccc:	e3510000 	cmp	r1, #0
-20000cd0:	012fff1e 	bxeq	lr
+20000d24:	e3510000 	cmp	r1, #0
+20000d28:	012fff1e 	bxeq	lr
 void kprint_from_buf(const char* buf, u32 size) {
-20000cd4:	e52de004 	push	{lr}		; (str lr, [sp, #-4]!)
-20000cd8:	e241c001 	sub	ip, r1, #1
-20000cdc:	e2401001 	sub	r1, r0, #1
-20000ce0:	e080c00c 	add	ip, r0, ip
+20000d2c:	e52de004 	push	{lr}		; (str lr, [sp, #-4]!)
+20000d30:	e241c001 	sub	ip, r1, #1
+20000d34:	e2401001 	sub	r1, r0, #1
+20000d38:	e080c00c 	add	ip, r0, ip
         // Make sure we terminatie the line with CR-LF
         if (*buf == '\n') {
             while (!(hw->sr & (1 << 1)));
-20000ce4:	e3a02000 	mov	r2, #0
-20000ce8:	e34f2802 	movt	r2, #63490	; 0xf802
+20000d3c:	e3a02000 	mov	r2, #0
+20000d40:	e34f2802 	movt	r2, #63490	; 0xf802
             hw->thr = '\r';
-20000cec:	e3a0e00d 	mov	lr, #13
-20000cf0:	ea000006 	b	20000d10 <kprint_from_buf+0x44>
+20000d44:	e3a0e00d 	mov	lr, #13
+20000d48:	ea000006 	b	20000d68 <kprint_from_buf+0x44>
         }
         while (!(hw->sr & (1 << 1)));
-20000cf4:	e5923014 	ldr	r3, [r2, #20]
-20000cf8:	e3130002 	tst	r3, #2
-20000cfc:	0afffffc 	beq	20000cf4 <kprint_from_buf+0x28>
+20000d4c:	e5923014 	ldr	r3, [r2, #20]
+20000d50:	e3130002 	tst	r3, #2
+20000d54:	0afffffc 	beq	20000d4c <kprint_from_buf+0x28>
         hw->thr = *buf++;
-20000d00:	e5d03000 	ldrb	r3, [r0]
-20000d04:	e582301c 	str	r3, [r2, #28]
+20000d58:	e5d03000 	ldrb	r3, [r0]
+20000d5c:	e582301c 	str	r3, [r2, #28]
     while (size--) {
-20000d08:	e151000c 	cmp	r1, ip
-20000d0c:	049df004 	popeq	{pc}		; (ldreq pc, [sp], #4)
+20000d60:	e151000c 	cmp	r1, ip
+20000d64:	049df004 	popeq	{pc}		; (ldreq pc, [sp], #4)
         if (*buf == '\n') {
-20000d10:	e2811001 	add	r1, r1, #1
-20000d14:	e1a00001 	mov	r0, r1
-20000d18:	e5d13000 	ldrb	r3, [r1]
-20000d1c:	e353000a 	cmp	r3, #10
-20000d20:	1afffff3 	bne	20000cf4 <kprint_from_buf+0x28>
+20000d68:	e2811001 	add	r1, r1, #1
+20000d6c:	e1a00001 	mov	r0, r1
+20000d70:	e5d13000 	ldrb	r3, [r1]
+20000d74:	e353000a 	cmp	r3, #10
+20000d78:	1afffff3 	bne	20000d4c <kprint_from_buf+0x28>
             while (!(hw->sr & (1 << 1)));
-20000d24:	e5923014 	ldr	r3, [r2, #20]
-20000d28:	e3130002 	tst	r3, #2
-20000d2c:	0afffffc 	beq	20000d24 <kprint_from_buf+0x58>
+20000d7c:	e5923014 	ldr	r3, [r2, #20]
+20000d80:	e3130002 	tst	r3, #2
+20000d84:	0afffffc 	beq	20000d7c <kprint_from_buf+0x58>
             hw->thr = '\r';
-20000d30:	e582e01c 	str	lr, [r2, #28]
-20000d34:	eaffffee 	b	20000cf4 <kprint_from_buf+0x28>
+20000d88:	e582e01c 	str	lr, [r2, #28]
+20000d8c:	eaffffee 	b	20000d4c <kprint_from_buf+0x28>
 
-20000d38 <sama5d2_gpio_set_func>:
+20000d90 <sama5d2_gpio_set_func>:
 // // GPIO kernel driver for the SAMA5D2 chip
 
 #include <sama5d2/sama5d2_gpio.h>
 #include <chaos/assert.h>
 
 void sama5d2_gpio_set_func(struct gpio_reg* hw, u32 pin, enum gpio_func func) {
-20000d38:	e92d4070 	push	{r4, r5, r6, lr}
-20000d3c:	e1a04000 	mov	r4, r0
-20000d40:	e1a05001 	mov	r5, r1
-20000d44:	e1a06002 	mov	r6, r2
+20000d90:	e92d4070 	push	{r4, r5, r6, lr}
+20000d94:	e1a04000 	mov	r4, r0
+20000d98:	e1a05001 	mov	r5, r1
+20000d9c:	e1a06002 	mov	r6, r2
     assert(pin < 32);
-20000d48:	e351001f 	cmp	r1, #31
-20000d4c:	8a000004 	bhi	20000d64 <sama5d2_gpio_set_func+0x2c>
+20000da0:	e351001f 	cmp	r1, #31
+20000da4:	8a000004 	bhi	20000dbc <sama5d2_gpio_set_func+0x2c>
 
     hw->mskr = (1 << pin);
-20000d50:	e3a01001 	mov	r1, #1
-20000d54:	e1a05511 	lsl	r5, r1, r5
-20000d58:	e5845000 	str	r5, [r4]
+20000da8:	e3a01001 	mov	r1, #1
+20000dac:	e1a05511 	lsl	r5, r1, r5
+20000db0:	e5845000 	str	r5, [r4]
     hw->cfgr = func;
-20000d5c:	e5846004 	str	r6, [r4, #4]
+20000db4:	e5846004 	str	r6, [r4, #4]
 }
-20000d60:	e8bd8070 	pop	{r4, r5, r6, pc}
+20000db8:	e8bd8070 	pop	{r4, r5, r6, pc}
     assert(pin < 32);
-20000d64:	e3a01007 	mov	r1, #7
-20000d68:	e3010668 	movw	r0, #5736	; 0x1668
-20000d6c:	e3420000 	movt	r0, #8192	; 0x2000
-20000d70:	e3003b80 	movw	r3, #2944	; 0xb80
-20000d74:	e3423000 	movt	r3, #8192	; 0x2000
-20000d78:	e12fff33 	blx	r3
-20000d7c:	eafffff3 	b	20000d50 <sama5d2_gpio_set_func+0x18>
+20000dbc:	e3a01007 	mov	r1, #7
+20000dc0:	e3010614 	movw	r0, #5652	; 0x1614
+20000dc4:	e3420000 	movt	r0, #8192	; 0x2000
+20000dc8:	e3003bd8 	movw	r3, #3032	; 0xbd8
+20000dcc:	e3423000 	movt	r3, #8192	; 0x2000
+20000dd0:	e12fff33 	blx	r3
+20000dd4:	eafffff3 	b	20000da8 <sama5d2_gpio_set_func+0x18>
 
-20000d80 <sama5d2_per_clk_en>:
+20000dd8 <sama5d2_per_clk_en>:
 #include <chaos/assert.h>
 
 // These functions takes in PID numbers defined in the Periheral chapter in the
 // datasheet (SAMA5D2 page 57)
 
 void sama5d2_per_clk_en(u32 pid) {
-20000d80:	e92d4010 	push	{r4, lr}
-20000d84:	e1a04000 	mov	r4, r0
+20000dd8:	e92d4010 	push	{r4, lr}
+20000ddc:	e1a04000 	mov	r4, r0
     assert(pid >= 2 && pid < 64);
-20000d88:	e2403002 	sub	r3, r0, #2
-20000d8c:	e353003d 	cmp	r3, #61	; 0x3d
-20000d90:	8a000007 	bhi	20000db4 <sama5d2_per_clk_en+0x34>
+20000de0:	e2403002 	sub	r3, r0, #2
+20000de4:	e353003d 	cmp	r3, #61	; 0x3d
+20000de8:	8a000007 	bhi	20000e0c <sama5d2_per_clk_en+0x34>
 
     // Get a pointer to the hardware
     struct pmc_reg* hw = PMC_REG;
 
     if (pid < 32) {
-20000d94:	e354001f 	cmp	r4, #31
-20000d98:	8a00000c 	bhi	20000dd0 <sama5d2_per_clk_en+0x50>
+20000dec:	e354001f 	cmp	r4, #31
+20000df0:	8a00000c 	bhi	20000e28 <sama5d2_per_clk_en+0x50>
         hw->pcer0 = (1 << pid);
-20000d9c:	e3a00001 	mov	r0, #1
-20000da0:	e1a04410 	lsl	r4, r0, r4
-20000da4:	e3a03901 	mov	r3, #16384	; 0x4000
-20000da8:	e34f3001 	movt	r3, #61441	; 0xf001
-20000dac:	e5834010 	str	r4, [r3, #16]
-20000db0:	e8bd8010 	pop	{r4, pc}
+20000df4:	e3a00001 	mov	r0, #1
+20000df8:	e1a04410 	lsl	r4, r0, r4
+20000dfc:	e3a03901 	mov	r3, #16384	; 0x4000
+20000e00:	e34f3001 	movt	r3, #61441	; 0xf001
+20000e04:	e5834010 	str	r4, [r3, #16]
+20000e08:	e8bd8010 	pop	{r4, pc}
     assert(pid >= 2 && pid < 64);
-20000db4:	e3a0100b 	mov	r1, #11
-20000db8:	e301069c 	movw	r0, #5788	; 0x169c
-20000dbc:	e3420000 	movt	r0, #8192	; 0x2000
-20000dc0:	e3003b80 	movw	r3, #2944	; 0xb80
-20000dc4:	e3423000 	movt	r3, #8192	; 0x2000
-20000dc8:	e12fff33 	blx	r3
-20000dcc:	eafffff0 	b	20000d94 <sama5d2_per_clk_en+0x14>
+20000e0c:	e3a0100b 	mov	r1, #11
+20000e10:	e3010648 	movw	r0, #5704	; 0x1648
+20000e14:	e3420000 	movt	r0, #8192	; 0x2000
+20000e18:	e3003bd8 	movw	r3, #3032	; 0xbd8
+20000e1c:	e3423000 	movt	r3, #8192	; 0x2000
+20000e20:	e12fff33 	blx	r3
+20000e24:	eafffff0 	b	20000dec <sama5d2_per_clk_en+0x14>
     } else {
         pid -= 32;
-20000dd0:	e2444020 	sub	r4, r4, #32
+20000e28:	e2444020 	sub	r4, r4, #32
         hw->pcer1 = (1 << pid);
-20000dd4:	e3a00001 	mov	r0, #1
-20000dd8:	e1a04410 	lsl	r4, r0, r4
-20000ddc:	e3a03901 	mov	r3, #16384	; 0x4000
-20000de0:	e34f3001 	movt	r3, #61441	; 0xf001
-20000de4:	e5834100 	str	r4, [r3, #256]	; 0x100
+20000e2c:	e3a00001 	mov	r0, #1
+20000e30:	e1a04410 	lsl	r4, r0, r4
+20000e34:	e3a03901 	mov	r3, #16384	; 0x4000
+20000e38:	e34f3001 	movt	r3, #61441	; 0xf001
+20000e3c:	e5834100 	str	r4, [r3, #256]	; 0x100
     }
 }
-20000de8:	e8bd8010 	pop	{r4, pc}
+20000e40:	e8bd8010 	pop	{r4, pc}
 
-20000dec <nic_setup_dma_queues>:
-        .rx_count = NIC_NUM_UNUSED_RX_DESC,
-        .tx_count = NIC_NUM_UNUSED_TX_DESC,
-    }
+20000e44 <nic_setup_dma_queues>:
 };
 
-void nic_setup_dma_queues(void) {
-20000dec:	e92d4ff0 	push	{r4, r5, r6, r7, r8, r9, sl, fp, lr}
-20000df0:	e24dd014 	sub	sp, sp, #20
-
-    // Map in netbuffers and initialize the queues
+// Configures all the NIC queues (rings). This will allocate a netbuf for each DMA 
+// descriptor and link the DMA descriptor to the netbuf->buf. This also configures the 
+// hardware registers for each queue
+void nic_setup_dma_queues() {
+20000e44:	e92d4ff0 	push	{r4, r5, r6, r7, r8, r9, sl, fp, lr}
+20000e48:	e24dd014 	sub	sp, sp, #20
     for (u32 i = 0; i < NIC_QUEUES; i++) {
-20000df4:	e3013814 	movw	r3, #6164	; 0x1814
-20000df8:	e3423000 	movt	r3, #8192	; 0x2000
-20000dfc:	e58d3000 	str	r3, [sp]
-        struct netbuf* buf;
+20000e4c:	e3013728 	movw	r3, #5928	; 0x1728
+20000e50:	e3423000 	movt	r3, #8192	; 0x2000
+20000e54:	e58d3000 	str	r3, [sp]
+        const struct netbuf* netbuf;
         const struct nic_queue* queue = &queues[i];
 
-        // Setup the TX queue
+        // Configure the TX queue
         for (u32 j = 0; j < queue->tx_count; j++) {
-            buf = alloc_netbuf();
-20000e00:	e300ac14 	movw	sl, #3092	; 0xc14
-20000e04:	e342a000 	movt	sl, #8192	; 0x2000
+            netbuf = alloc_netbuf();
+20000e58:	e300ac6c 	movw	sl, #3180	; 0xc6c
+20000e5c:	e342a000 	movt	sl, #8192	; 0x2000
             struct nic_tx_desc* tx = &queue->tx[j];
 
-            // Link the descriptor to the netbuffer
-            // TODO: should use physical address and not virtual
+            // Link the descriptor to the netbuf
+            // TODO: when the MMU is on we must convert to physical address
             tx->status_word = 0;
-20000e08:	e3a08000 	mov	r8, #0
-            buf = alloc_netbuf();
+20000e60:	e3a08000 	mov	r8, #0
+            netbuf = alloc_netbuf();
             struct nic_rx_desc* rx = &queue->rx[j];
 
-            // Link the descriptor to the netbuffer
-            // TODO: should use physical address and not virtual
-            assert(((u32)buf & 0b11) == 0);
-20000e0c:	e3003b80 	movw	r3, #2944	; 0xb80
-20000e10:	e3423000 	movt	r3, #8192	; 0x2000
-20000e14:	e58d3004 	str	r3, [sp, #4]
-20000e18:	e30136d0 	movw	r3, #5840	; 0x16d0
-20000e1c:	e3423000 	movt	r3, #8192	; 0x2000
-20000e20:	e58d3008 	str	r3, [sp, #8]
-20000e24:	ea000026 	b	20000ec4 <nic_setup_dma_queues+0xd8>
-20000e28:	e3a010a0 	mov	r1, #160	; 0xa0
-20000e2c:	e59d0008 	ldr	r0, [sp, #8]
-20000e30:	e59d3004 	ldr	r3, [sp, #4]
-20000e34:	e12fff33 	blx	r3
+            // Link the descriptor to the netbuf
+            // TODO: when the MMU is on we must convert to physical address
+            assert(((u32)netbuf & 0b11) == 0);
+20000e64:	e3003bd8 	movw	r3, #3032	; 0xbd8
+20000e68:	e3423000 	movt	r3, #8192	; 0x2000
+20000e6c:	e58d3004 	str	r3, [sp, #4]
+20000e70:	e301367c 	movw	r3, #5756	; 0x167c
+20000e74:	e3423000 	movt	r3, #8192	; 0x2000
+20000e78:	e58d3008 	str	r3, [sp, #8]
+20000e7c:	ea000026 	b	20000f1c <nic_setup_dma_queues+0xd8>
+20000e80:	e3a010b6 	mov	r1, #182	; 0xb6
+20000e84:	e59d0008 	ldr	r0, [sp, #8]
+20000e88:	e59d3004 	ldr	r3, [sp, #4]
+20000e8c:	e12fff33 	blx	r3
 
             rx->addr_word = 0;
             rx->status_word = 0;
-20000e38:	e5858004 	str	r8, [r5, #4]
-            rx->addr = (u32)buf >> 2;
-20000e3c:	e1a04124 	lsr	r4, r4, #2
-20000e40:	e1a03008 	mov	r3, r8
-20000e44:	e7df3114 	bfi	r3, r4, #2, #30
-20000e48:	e5853000 	str	r3, [r5]
+20000e90:	e5858004 	str	r8, [r5, #4]
+
+            // The address is in bits 32..2
+            rx->addr = (u32)netbuf >> 2;
+20000e94:	e1a04124 	lsr	r4, r4, #2
+20000e98:	e1a03008 	mov	r3, r8
+20000e9c:	e7df3114 	bfi	r3, r4, #2, #30
+20000ea0:	e5853000 	str	r3, [r5]
         for (u32 j = 0; j < queue->rx_count; j++) {
-20000e4c:	e2877001 	add	r7, r7, #1
-20000e50:	e2866014 	add	r6, r6, #20
-20000e54:	e157000b 	cmp	r7, fp
-20000e58:	0a000006 	beq	20000e78 <nic_setup_dma_queues+0x8c>
-            buf = alloc_netbuf();
-20000e5c:	e12fff3a 	blx	sl
-20000e60:	e1a04000 	mov	r4, r0
+20000ea4:	e2877001 	add	r7, r7, #1
+20000ea8:	e2866014 	add	r6, r6, #20
+20000eac:	e157000b 	cmp	r7, fp
+20000eb0:	0a000006 	beq	20000ed0 <nic_setup_dma_queues+0x8c>
+            netbuf = alloc_netbuf();
+20000eb4:	e12fff3a 	blx	sl
+20000eb8:	e1a04000 	mov	r4, r0
             struct nic_rx_desc* rx = &queue->rx[j];
-20000e64:	e5995000 	ldr	r5, [r9]
-20000e68:	e0855006 	add	r5, r5, r6
-            assert(((u32)buf & 0b11) == 0);
-20000e6c:	e3100003 	tst	r0, #3
-20000e70:	0afffff0 	beq	20000e38 <nic_setup_dma_queues+0x4c>
-20000e74:	eaffffeb 	b	20000e28 <nic_setup_dma_queues+0x3c>
+20000ebc:	e5995000 	ldr	r5, [r9]
+20000ec0:	e0855006 	add	r5, r5, r6
+            assert(((u32)netbuf & 0b11) == 0);
+20000ec4:	e3100003 	tst	r0, #3
+20000ec8:	0afffff0 	beq	20000e90 <nic_setup_dma_queues+0x4c>
+20000ecc:	eaffffeb 	b	20000e80 <nic_setup_dma_queues+0x3c>
         }
 
-        // Set the wrap bit on all queues
+        // Mark the end descriptor with the wrap bit, causing the DMA to fetch the base
+        // descriptor on the next read
         queue->rx[queue->rx_count - 1].wrap = 1;
-20000e78:	e5993000 	ldr	r3, [r9]
-20000e7c:	e3a02014 	mov	r2, #20
-20000e80:	e02b3b92 	mla	fp, r2, fp, r3
-20000e84:	e55b3014 	ldrb	r3, [fp, #-20]	; 0xffffffec
-20000e88:	e3833002 	orr	r3, r3, #2
-20000e8c:	e54b3014 	strb	r3, [fp, #-20]	; 0xffffffec
+20000ed0:	e5993000 	ldr	r3, [r9]
+20000ed4:	e3a02014 	mov	r2, #20
+20000ed8:	e02b3b92 	mla	fp, r2, fp, r3
+20000edc:	e55b3014 	ldrb	r3, [fp, #-20]	; 0xffffffec
+20000ee0:	e3833002 	orr	r3, r3, #2
+20000ee4:	e54b3014 	strb	r3, [fp, #-20]	; 0xffffffec
         queue->tx[queue->tx_count - 1].wrap = 1;
-20000e90:	e59d300c 	ldr	r3, [sp, #12]
-20000e94:	e243221e 	sub	r2, r3, #-536870911	; 0xe0000001
-20000e98:	e5993004 	ldr	r3, [r9, #4]
-20000e9c:	e0833182 	add	r3, r3, r2, lsl #3
-20000ea0:	e5d32007 	ldrb	r2, [r3, #7]
-20000ea4:	e3822040 	orr	r2, r2, #64	; 0x40
-20000ea8:	e5c32007 	strb	r2, [r3, #7]
+20000ee8:	e59d300c 	ldr	r3, [sp, #12]
+20000eec:	e243221e 	sub	r2, r3, #-536870911	; 0xe0000001
+20000ef0:	e5993004 	ldr	r3, [r9, #4]
+20000ef4:	e0833182 	add	r3, r3, r2, lsl #3
+20000ef8:	e5d32007 	ldrb	r2, [r3, #7]
+20000efc:	e3822040 	orr	r2, r2, #64	; 0x40
+20000f00:	e5c32007 	strb	r2, [r3, #7]
     for (u32 i = 0; i < NIC_QUEUES; i++) {
-20000eac:	e59d3000 	ldr	r3, [sp]
-20000eb0:	e2833010 	add	r3, r3, #16
-20000eb4:	e58d3000 	str	r3, [sp]
-20000eb8:	e59f20bc 	ldr	r2, [pc, #188]	; 20000f7c <nic_setup_dma_queues+0x190>
-20000ebc:	e1530002 	cmp	r3, r2
-20000ec0:	0a000017 	beq	20000f24 <nic_setup_dma_queues+0x138>
+20000f04:	e59d3000 	ldr	r3, [sp]
+20000f08:	e2833010 	add	r3, r3, #16
+20000f0c:	e58d3000 	str	r3, [sp]
+20000f10:	e59f20cc 	ldr	r2, [pc, #204]	; 20000fe4 <nic_setup_dma_queues+0x1a0>
+20000f14:	e1530002 	cmp	r3, r2
+20000f18:	0a000017 	beq	20000f7c <nic_setup_dma_queues+0x138>
         for (u32 j = 0; j < queue->tx_count; j++) {
-20000ec4:	e59d3000 	ldr	r3, [sp]
-20000ec8:	e1a09003 	mov	r9, r3
-20000ecc:	e5933008 	ldr	r3, [r3, #8]
-20000ed0:	e58d300c 	str	r3, [sp, #12]
-20000ed4:	e3530000 	cmp	r3, #0
-20000ed8:	13a04000 	movne	r4, #0
-20000edc:	159d500c 	ldrne	r5, [sp, #12]
-20000ee0:	0a000009 	beq	20000f0c <nic_setup_dma_queues+0x120>
-            buf = alloc_netbuf();
-20000ee4:	e12fff3a 	blx	sl
+20000f1c:	e59d3000 	ldr	r3, [sp]
+20000f20:	e1a09003 	mov	r9, r3
+20000f24:	e5933008 	ldr	r3, [r3, #8]
+20000f28:	e58d300c 	str	r3, [sp, #12]
+20000f2c:	e3530000 	cmp	r3, #0
+20000f30:	13a04000 	movne	r4, #0
+20000f34:	159d500c 	ldrne	r5, [sp, #12]
+20000f38:	0a000009 	beq	20000f64 <nic_setup_dma_queues+0x120>
+            netbuf = alloc_netbuf();
+20000f3c:	e12fff3a 	blx	sl
             struct nic_tx_desc* tx = &queue->tx[j];
-20000ee8:	e5993004 	ldr	r3, [r9, #4]
-20000eec:	e0832184 	add	r2, r3, r4, lsl #3
+20000f40:	e5992004 	ldr	r2, [r9, #4]
+20000f44:	e0823184 	add	r3, r2, r4, lsl #3
             tx->status_word = 0;
-20000ef0:	e5828004 	str	r8, [r2, #4]
+20000f48:	e5838004 	str	r8, [r3, #4]
+            tx->addr = (u32)netbuf;
+20000f4c:	e7820184 	str	r0, [r2, r4, lsl #3]
             tx->used = 1;
-20000ef4:	e3a01080 	mov	r1, #128	; 0x80
-20000ef8:	e5c21007 	strb	r1, [r2, #7]
-            tx->addr = (u32)buf;
-20000efc:	e7830184 	str	r0, [r3, r4, lsl #3]
+20000f50:	e3a02080 	mov	r2, #128	; 0x80
+20000f54:	e5c32007 	strb	r2, [r3, #7]
         for (u32 j = 0; j < queue->tx_count; j++) {
-20000f00:	e2844001 	add	r4, r4, #1
-20000f04:	e1540005 	cmp	r4, r5
-20000f08:	1afffff5 	bne	20000ee4 <nic_setup_dma_queues+0xf8>
+20000f58:	e2844001 	add	r4, r4, #1
+20000f5c:	e1540005 	cmp	r4, r5
+20000f60:	1afffff5 	bne	20000f3c <nic_setup_dma_queues+0xf8>
         for (u32 j = 0; j < queue->rx_count; j++) {
-20000f0c:	e599b00c 	ldr	fp, [r9, #12]
-20000f10:	e35b0000 	cmp	fp, #0
-20000f14:	0affffd7 	beq	20000e78 <nic_setup_dma_queues+0x8c>
-20000f18:	e3a06000 	mov	r6, #0
-20000f1c:	e1a07006 	mov	r7, r6
-20000f20:	eaffffcd 	b	20000e5c <nic_setup_dma_queues+0x70>
+20000f64:	e599b00c 	ldr	fp, [r9, #12]
+20000f68:	e35b0000 	cmp	fp, #0
+20000f6c:	0affffd7 	beq	20000ed0 <nic_setup_dma_queues+0x8c>
+20000f70:	e3a06000 	mov	r6, #0
+20000f74:	e1a07006 	mov	r7, r6
+20000f78:	eaffffcd 	b	20000eb4 <nic_setup_dma_queues+0x70>
     }
 
     // Map in the queues in the NIC hardware
-    struct gmac_reg* hw = GMAC_REG;
+    struct nic_reg* const nic_reg = NIC_REG;
 
-    hw->rbqb = (u32)&rx_desc[0];
-20000f24:	e30420c0 	movw	r2, #16576	; 0x40c0
-20000f28:	e3422006 	movt	r2, #8198	; 0x2006
-20000f2c:	e3a03902 	mov	r3, #32768	; 0x8000
-20000f30:	e34f3800 	movt	r3, #63488	; 0xf800
-20000f34:	e5832018 	str	r2, [r3, #24]
-    hw->tbqb = (u32)tx_desc;
-20000f38:	e3042880 	movw	r2, #18560	; 0x4880
-20000f3c:	e3422006 	movt	r2, #8198	; 0x2006
-20000f40:	e583201c 	str	r2, [r3, #28]
-    hw->rbqbapq[0] = (u32)rx_desc_q1;
-20000f44:	e3042340 	movw	r2, #17216	; 0x4340
-20000f48:	e3422006 	movt	r2, #8198	; 0x2006
-20000f4c:	e583247c 	str	r2, [r3, #1148]	; 0x47c
-    hw->tbqbapq[0] = (u32)tx_desc_q1;
-20000f50:	e3042980 	movw	r2, #18816	; 0x4980
-20000f54:	e3422006 	movt	r2, #8198	; 0x2006
-20000f58:	e583243c 	str	r2, [r3, #1084]	; 0x43c
-    hw->rbqbapq[1] = (u32)rx_desc_q2;
-20000f5c:	e30425c0 	movw	r2, #17856	; 0x45c0
-20000f60:	e3422006 	movt	r2, #8198	; 0x2006
-20000f64:	e5832480 	str	r2, [r3, #1152]	; 0x480
-    hw->tbqbapq[1] = (u32)tx_desc_q2;
-20000f68:	e3042a80 	movw	r2, #19072	; 0x4a80
-20000f6c:	e3422006 	movt	r2, #8198	; 0x2006
-20000f70:	e5832440 	str	r2, [r3, #1088]	; 0x440
+    nic_reg->rbqb       = (u32)rx_descs;
+20000f7c:	e3042400 	movw	r2, #17408	; 0x4400
+20000f80:	e3422006 	movt	r2, #8198	; 0x2006
+20000f84:	e3a03902 	mov	r3, #32768	; 0x8000
+20000f88:	e34f3800 	movt	r3, #63488	; 0xf800
+20000f8c:	e5832018 	str	r2, [r3, #24]
+    nic_reg->tbqb       = (u32)tx_descs;
+20000f90:	e3042bc0 	movw	r2, #19392	; 0x4bc0
+20000f94:	e3422006 	movt	r2, #8198	; 0x2006
+20000f98:	e583201c 	str	r2, [r3, #28]
+    nic_reg->rbqbapq[0] = (u32)rx_descs_q1;
+20000f9c:	e3042680 	movw	r2, #18048	; 0x4680
+20000fa0:	e3422006 	movt	r2, #8198	; 0x2006
+20000fa4:	e583247c 	str	r2, [r3, #1148]	; 0x47c
+    nic_reg->tbqbapq[0] = (u32)tx_descs_q1;
+20000fa8:	e3042cc0 	movw	r2, #19648	; 0x4cc0
+20000fac:	e3422006 	movt	r2, #8198	; 0x2006
+20000fb0:	e583243c 	str	r2, [r3, #1084]	; 0x43c
+    nic_reg->rbqbapq[1] = (u32)rx_descs_q2;
+20000fb4:	e3042900 	movw	r2, #18688	; 0x4900
+20000fb8:	e3422006 	movt	r2, #8198	; 0x2006
+20000fbc:	e5832480 	str	r2, [r3, #1152]	; 0x480
+    nic_reg->tbqbapq[1] = (u32)tx_descs_q2;
+20000fc0:	e3042dc0 	movw	r2, #19904	; 0x4dc0
+20000fc4:	e3422006 	movt	r2, #8198	; 0x2006
+20000fc8:	e5832440 	str	r2, [r3, #1088]	; 0x440
 
-
+    // Make sure we start reading from the base descriptor
+    rx_index = 0;
+20000fcc:	e3043b80 	movw	r3, #19328	; 0x4b80
+20000fd0:	e3423006 	movt	r3, #8198	; 0x2006
+20000fd4:	e3a02000 	mov	r2, #0
+20000fd8:	e5832000 	str	r2, [r3]
+    tx_index = 0;
 }
-20000f74:	e28dd014 	add	sp, sp, #20
-20000f78:	e8bd8ff0 	pop	{r4, r5, r6, r7, r8, r9, sl, fp, pc}
-20000f7c:	20001844 	.word	0x20001844
+20000fdc:	e28dd014 	add	sp, sp, #20
+20000fe0:	e8bd8ff0 	pop	{r4, r5, r6, r7, r8, r9, sl, fp, pc}
+20000fe4:	20001758 	.word	0x20001758
 
-20000f80 <phy_read>:
+20000fe8 <ethernet_phy_read>:
 
-u16 phy_read(u8 phy, u8 reg) {
-20000f80:	e92d4070 	push	{r4, r5, r6, lr}
-20000f84:	e1a05000 	mov	r5, r0
-20000f88:	e1a04001 	mov	r4, r1
-    struct gmac_reg* const hw = GMAC_REG;
-
+// Reads a 16-bit register from the addressed ethernet PHY. Both the register address and 
+// the etnernet PHY address should be in range 0..31
+u16 ethernet_phy_read(u8 phy, u8 reg) {
+20000fe8:	e92d4070 	push	{r4, r5, r6, lr}
+20000fec:	e1a05000 	mov	r5, r0
+20000ff0:	e1a04001 	mov	r4, r1
     assert(phy < 32);
-20000f8c:	e350001f 	cmp	r0, #31
-20000f90:	8a000012 	bhi	20000fe0 <phy_read+0x60>
+20000ff4:	e350001f 	cmp	r0, #31
+20000ff8:	8a000012 	bhi	20001048 <ethernet_phy_read+0x60>
     assert(reg < 32);
-20000f94:	e354001f 	cmp	r4, #31
-20000f98:	8a000017 	bhi	20000ffc <phy_read+0x7c>
+20000ffc:	e354001f 	cmp	r4, #31
+20001000:	8a000017 	bhi	20001064 <ethernet_phy_read+0x7c>
+    
+    struct nic_reg* const nic_reg = NIC_REG;
 
-    hw->man = (1 << 30) | (1 << 29) | (1 << 17) | (phy << 23) | (reg << 18);
-20000f9c:	e1a03904 	lsl	r3, r4, #18
-20000fa0:	e1833b85 	orr	r3, r3, r5, lsl #23
-20000fa4:	e3833206 	orr	r3, r3, #1610612736	; 0x60000000
-20000fa8:	e3833802 	orr	r3, r3, #131072	; 0x20000
-20000fac:	e3a02902 	mov	r2, #32768	; 0x8000
-20000fb0:	e34f2800 	movt	r2, #63488	; 0xf800
-20000fb4:	e5823034 	str	r3, [r2, #52]	; 0x34
-    while ((hw->nsr & (1 << 2)) == 0);
-20000fb8:	e3a02902 	mov	r2, #32768	; 0x8000
-20000fbc:	e34f2800 	movt	r2, #63488	; 0xf800
-20000fc0:	e5923008 	ldr	r3, [r2, #8]
-20000fc4:	e3130004 	tst	r3, #4
-20000fc8:	0afffffc 	beq	20000fc0 <phy_read+0x40>
+    nic_reg->man = (1 << 30) | (1 << 29) | (1 << 17) | (phy << 23) | (reg << 18);
+20001004:	e1a03904 	lsl	r3, r4, #18
+20001008:	e1833b85 	orr	r3, r3, r5, lsl #23
+2000100c:	e3833206 	orr	r3, r3, #1610612736	; 0x60000000
+20001010:	e3833802 	orr	r3, r3, #131072	; 0x20000
+20001014:	e3a02902 	mov	r2, #32768	; 0x8000
+20001018:	e34f2800 	movt	r2, #63488	; 0xf800
+2000101c:	e5823034 	str	r3, [r2, #52]	; 0x34
+    while ((nic_reg->nsr & (1 << 2)) == 0);
+20001020:	e3a02902 	mov	r2, #32768	; 0x8000
+20001024:	e34f2800 	movt	r2, #63488	; 0xf800
+20001028:	e5923008 	ldr	r3, [r2, #8]
+2000102c:	e3130004 	tst	r3, #4
+20001030:	0afffffc 	beq	20001028 <ethernet_phy_read+0x40>
 
-    // Return the result
-    return (u16)hw->man;
-20000fcc:	e3a03902 	mov	r3, #32768	; 0x8000
-20000fd0:	e34f3800 	movt	r3, #63488	; 0xf800
-20000fd4:	e5930034 	ldr	r0, [r3, #52]	; 0x34
+    return (u16)nic_reg->man;
+20001034:	e3a03902 	mov	r3, #32768	; 0x8000
+20001038:	e34f3800 	movt	r3, #63488	; 0xf800
+2000103c:	e5930034 	ldr	r0, [r3, #52]	; 0x34
 }
-20000fd8:	e6ff0070 	uxth	r0, r0
-20000fdc:	e8bd8070 	pop	{r4, r5, r6, pc}
+20001040:	e6ff0070 	uxth	r0, r0
+20001044:	e8bd8070 	pop	{r4, r5, r6, pc}
     assert(phy < 32);
-20000fe0:	e3a010bc 	mov	r1, #188	; 0xbc
-20000fe4:	e30106d0 	movw	r0, #5840	; 0x16d0
-20000fe8:	e3420000 	movt	r0, #8192	; 0x2000
-20000fec:	e3003b80 	movw	r3, #2944	; 0xb80
-20000ff0:	e3423000 	movt	r3, #8192	; 0x2000
-20000ff4:	e12fff33 	blx	r3
-20000ff8:	eaffffe5 	b	20000f94 <phy_read+0x14>
+20001048:	e3a010d7 	mov	r1, #215	; 0xd7
+2000104c:	e301067c 	movw	r0, #5756	; 0x167c
+20001050:	e3420000 	movt	r0, #8192	; 0x2000
+20001054:	e3003bd8 	movw	r3, #3032	; 0xbd8
+20001058:	e3423000 	movt	r3, #8192	; 0x2000
+2000105c:	e12fff33 	blx	r3
+20001060:	eaffffe5 	b	20000ffc <ethernet_phy_read+0x14>
     assert(reg < 32);
-20000ffc:	e3a010bd 	mov	r1, #189	; 0xbd
-20001000:	e30106d0 	movw	r0, #5840	; 0x16d0
-20001004:	e3420000 	movt	r0, #8192	; 0x2000
-20001008:	e3003b80 	movw	r3, #2944	; 0xb80
-2000100c:	e3423000 	movt	r3, #8192	; 0x2000
-20001010:	e12fff33 	blx	r3
-20001014:	eaffffe0 	b	20000f9c <phy_read+0x1c>
+20001064:	e3a010d8 	mov	r1, #216	; 0xd8
+20001068:	e301067c 	movw	r0, #5756	; 0x167c
+2000106c:	e3420000 	movt	r0, #8192	; 0x2000
+20001070:	e3003bd8 	movw	r3, #3032	; 0xbd8
+20001074:	e3423000 	movt	r3, #8192	; 0x2000
+20001078:	e12fff33 	blx	r3
+2000107c:	eaffffe0 	b	20001004 <ethernet_phy_read+0x1c>
 
-20001018 <phy_write>:
+20001080 <ethernet_phy_write>:
 
-void phy_write(u8 phy, u8 reg, u16 val) {
-20001018:	e92d4070 	push	{r4, r5, r6, lr}
-2000101c:	e1a06000 	mov	r6, r0
-20001020:	e1a05001 	mov	r5, r1
-20001024:	e1a04002 	mov	r4, r2
-    struct gmac_reg* const hw = GMAC_REG;
-
+// Writes a 16-bit register to the address ethernet PHY. Both the register address and 
+// the etnernet PHY address should be in range 0..31
+void ethernet_phy_write(u8 phy, u8 reg, u16 val) {
+20001080:	e92d4070 	push	{r4, r5, r6, lr}
+20001084:	e1a06000 	mov	r6, r0
+20001088:	e1a05001 	mov	r5, r1
+2000108c:	e1a04002 	mov	r4, r2
     assert(phy < 32);
-20001028:	e350001f 	cmp	r0, #31
-2000102c:	8a00000e 	bhi	2000106c <phy_write+0x54>
+20001090:	e350001f 	cmp	r0, #31
+20001094:	8a00000e 	bhi	200010d4 <ethernet_phy_write+0x54>
     assert(reg < 32);
-20001030:	e355001f 	cmp	r5, #31
-20001034:	8a000013 	bhi	20001088 <phy_write+0x70>
+20001098:	e355001f 	cmp	r5, #31
+2000109c:	8a000013 	bhi	200010f0 <ethernet_phy_write+0x70>
 
-    hw->man = (1 << 30) | (1 << 28) | (1 << 17) | (phy << 23) | (reg << 18) | val;
-20001038:	e1843b86 	orr	r3, r4, r6, lsl #23
-2000103c:	e1833905 	orr	r3, r3, r5, lsl #18
-20001040:	e3833205 	orr	r3, r3, #1342177280	; 0x50000000
-20001044:	e3833802 	orr	r3, r3, #131072	; 0x20000
-20001048:	e3a02902 	mov	r2, #32768	; 0x8000
-2000104c:	e34f2800 	movt	r2, #63488	; 0xf800
-20001050:	e5823034 	str	r3, [r2, #52]	; 0x34
-    while ((hw->nsr & (1 << 2)) == 0);
-20001054:	e3a02902 	mov	r2, #32768	; 0x8000
-20001058:	e34f2800 	movt	r2, #63488	; 0xf800
-2000105c:	e5923008 	ldr	r3, [r2, #8]
-20001060:	e3130004 	tst	r3, #4
-20001064:	0afffffc 	beq	2000105c <phy_write+0x44>
-20001068:	e8bd8070 	pop	{r4, r5, r6, pc}
+    struct nic_reg* const nic_reg = NIC_REG;
+
+    nic_reg->man = (1 << 30) | (1 << 28) | (1 << 17) | (phy << 23) | (reg << 18) | val;
+200010a0:	e1843b86 	orr	r3, r4, r6, lsl #23
+200010a4:	e1833905 	orr	r3, r3, r5, lsl #18
+200010a8:	e3833205 	orr	r3, r3, #1342177280	; 0x50000000
+200010ac:	e3833802 	orr	r3, r3, #131072	; 0x20000
+200010b0:	e3a02902 	mov	r2, #32768	; 0x8000
+200010b4:	e34f2800 	movt	r2, #63488	; 0xf800
+200010b8:	e5823034 	str	r3, [r2, #52]	; 0x34
+    while ((nic_reg->nsr & (1 << 2)) == 0);
+200010bc:	e3a02902 	mov	r2, #32768	; 0x8000
+200010c0:	e34f2800 	movt	r2, #63488	; 0xf800
+200010c4:	e5923008 	ldr	r3, [r2, #8]
+200010c8:	e3130004 	tst	r3, #4
+200010cc:	0afffffc 	beq	200010c4 <ethernet_phy_write+0x44>
+200010d0:	e8bd8070 	pop	{r4, r5, r6, pc}
     assert(phy < 32);
-2000106c:	e3a010c9 	mov	r1, #201	; 0xc9
-20001070:	e30106d0 	movw	r0, #5840	; 0x16d0
-20001074:	e3420000 	movt	r0, #8192	; 0x2000
-20001078:	e3003b80 	movw	r3, #2944	; 0xb80
-2000107c:	e3423000 	movt	r3, #8192	; 0x2000
-20001080:	e12fff33 	blx	r3
-20001084:	eaffffe9 	b	20001030 <phy_write+0x18>
+200010d4:	e3a010e5 	mov	r1, #229	; 0xe5
+200010d8:	e301067c 	movw	r0, #5756	; 0x167c
+200010dc:	e3420000 	movt	r0, #8192	; 0x2000
+200010e0:	e3003bd8 	movw	r3, #3032	; 0xbd8
+200010e4:	e3423000 	movt	r3, #8192	; 0x2000
+200010e8:	e12fff33 	blx	r3
+200010ec:	eaffffe9 	b	20001098 <ethernet_phy_write+0x18>
     assert(reg < 32);
-20001088:	e3a010ca 	mov	r1, #202	; 0xca
-2000108c:	e30106d0 	movw	r0, #5840	; 0x16d0
-20001090:	e3420000 	movt	r0, #8192	; 0x2000
-20001094:	e3003b80 	movw	r3, #2944	; 0xb80
-20001098:	e3423000 	movt	r3, #8192	; 0x2000
-2000109c:	e12fff33 	blx	r3
-200010a0:	eaffffe4 	b	20001038 <phy_write+0x20>
+200010f0:	e3a010e6 	mov	r1, #230	; 0xe6
+200010f4:	e301067c 	movw	r0, #5756	; 0x167c
+200010f8:	e3420000 	movt	r0, #8192	; 0x2000
+200010fc:	e3003bd8 	movw	r3, #3032	; 0xbd8
+20001100:	e3423000 	movt	r3, #8192	; 0x2000
+20001104:	e12fff33 	blx	r3
+20001108:	eaffffe4 	b	200010a0 <ethernet_phy_write+0x20>
 
-200010a4 <phy_scan>:
+2000110c <ethernet_phy_scan>:
 }
 
-void phy_scan(u8* phy_addr) {
-200010a4:	e92d47f0 	push	{r4, r5, r6, r7, r8, r9, sl, lr}
-200010a8:	e1a09000 	mov	r9, r0
+// Performs a scan after available ethernet PHYs and return the address of the first 
+// responding PHY
+u8 ethernet_phy_scan() {
+2000110c:	e92d41f0 	push	{r4, r5, r6, r7, r8, lr}
     for (u32 i = 0; i < 32; i++) {
-200010ac:	e3a04000 	mov	r4, #0
-        u16 val = phy_read(i, 2);
-200010b0:	e3a08002 	mov	r8, #2
-200010b4:	e3006f80 	movw	r6, #3968	; 0xf80
-200010b8:	e3426000 	movt	r6, #8192	; 0x2000
-        if (val != 0xFFFF) {
-200010bc:	e30f7fff 	movw	r7, #65535	; 0xffff
-        u16 val = phy_read(i, 2);
-200010c0:	e6ef5074 	uxtb	r5, r4
-200010c4:	e1a01008 	mov	r1, r8
-200010c8:	e1a00005 	mov	r0, r5
-200010cc:	e12fff36 	blx	r6
-        if (val != 0xFFFF) {
-200010d0:	e1500007 	cmp	r0, r7
-200010d4:	1a000008 	bne	200010fc <phy_scan+0x58>
+20001110:	e3a04000 	mov	r4, #0
+
+        // Read the PHY ID reg
+        if (ethernet_phy_read(i, 2) != 0xFFFF) {
+20001114:	e3a08002 	mov	r8, #2
+20001118:	e3006fe8 	movw	r6, #4072	; 0xfe8
+2000111c:	e3426000 	movt	r6, #8192	; 0x2000
+20001120:	e30f7fff 	movw	r7, #65535	; 0xffff
+20001124:	e6ef5074 	uxtb	r5, r4
+20001128:	e1a01008 	mov	r1, r8
+2000112c:	e1a00005 	mov	r0, r5
+20001130:	e12fff36 	blx	r6
+20001134:	e1500007 	cmp	r0, r7
+20001138:	1a000008 	bne	20001160 <ethernet_phy_scan+0x54>
     for (u32 i = 0; i < 32; i++) {
-200010d8:	e2844001 	add	r4, r4, #1
-200010dc:	e3540020 	cmp	r4, #32
-200010e0:	1afffff6 	bne	200010c0 <phy_scan+0x1c>
-            *phy_addr = i;
-            return;
+2000113c:	e2844001 	add	r4, r4, #1
+20001140:	e3540020 	cmp	r4, #32
+20001144:	1afffff6 	bne	20001124 <ethernet_phy_scan+0x18>
+            return i;
         }
     }
     panic("No phy\n");
-200010e4:	e3010704 	movw	r0, #5892	; 0x1704
-200010e8:	e3420000 	movt	r0, #8192	; 0x2000
-200010ec:	e3003b60 	movw	r3, #2912	; 0xb60
-200010f0:	e3423000 	movt	r3, #8192	; 0x2000
-200010f4:	e12fff33 	blx	r3
+20001148:	e30106b0 	movw	r0, #5808	; 0x16b0
+2000114c:	e3420000 	movt	r0, #8192	; 0x2000
+20001150:	e3003bb8 	movw	r3, #3000	; 0xbb8
+20001154:	e3423000 	movt	r3, #8192	; 0x2000
+20001158:	e12fff33 	blx	r3
+    return 0;
+2000115c:	e3a05000 	mov	r5, #0
 }
-200010f8:	e8bd87f0 	pop	{r4, r5, r6, r7, r8, r9, sl, pc}
-            *phy_addr = i;
-200010fc:	e5c95000 	strb	r5, [r9]
-            return;
-20001100:	e8bd87f0 	pop	{r4, r5, r6, r7, r8, r9, sl, pc}
+20001160:	e1a00005 	mov	r0, r5
+20001164:	e8bd81f0 	pop	{r4, r5, r6, r7, r8, pc}
 
-20001104 <phy_establish_link>:
+20001168 <phy_establish_link>:
 
+// Configures the ethernet PHY for full-duplex, 100 Mbps opration and returns when the 
+// auto-negotiation is complete and the link is up 
 void phy_establish_link(u8 addr) {
-20001104:	e92d41f0 	push	{r4, r5, r6, r7, r8, lr}
-20001108:	e1a04000 	mov	r4, r0
+20001168:	e92d4070 	push	{r4, r5, r6, lr}
+2000116c:	e1a04000 	mov	r4, r0
     // Check if the link is already up
-    if ((phy_read(addr, 1) & (1 << 5)) == 0) {
-2000110c:	e3a01001 	mov	r1, #1
-20001110:	e3003f80 	movw	r3, #3968	; 0xf80
-20001114:	e3423000 	movt	r3, #8192	; 0x2000
-20001118:	e12fff33 	blx	r3
-2000111c:	e3100020 	tst	r0, #32
-20001120:	0a000008 	beq	20001148 <phy_establish_link+0x44>
-
-        kprint("Auto-neg completed after {d} of retries\n", count);
+    if ((ethernet_phy_read(addr, 1) & (1 << 5)) == 0) {
+20001170:	e3a01001 	mov	r1, #1
+20001174:	e3003fe8 	movw	r3, #4072	; 0xfe8
+20001178:	e3423000 	movt	r3, #8192	; 0x2000
+2000117c:	e12fff33 	blx	r3
+20001180:	e3100020 	tst	r0, #32
+20001184:	0a000008 	beq	200011ac <phy_establish_link+0x44>
+        ethernet_phy_write(addr, 0, ethernet_phy_read(addr, 0) | (1 << 9));
+        while ((ethernet_phy_read(addr, 1) & (1 << 5)) == 0);
     }
 
-    // Wait for the link
-    while ((phy_read(addr, 1) & (1 << 2)) == 0);
-20001124:	e3a06001 	mov	r6, #1
-20001128:	e3005f80 	movw	r5, #3968	; 0xf80
-2000112c:	e3425000 	movt	r5, #8192	; 0x2000
-20001130:	e1a01006 	mov	r1, r6
-20001134:	e1a00004 	mov	r0, r4
-20001138:	e12fff35 	blx	r5
-2000113c:	e3100004 	tst	r0, #4
-20001140:	0afffffa 	beq	20001130 <phy_establish_link+0x2c>
-20001144:	e8bd81f0 	pop	{r4, r5, r6, r7, r8, pc}
-        phy_write(addr, 4, phy_read(addr, 4) | (0b1111 << 5));
-20001148:	e3a01004 	mov	r1, #4
-2000114c:	e1a00004 	mov	r0, r4
-20001150:	e3006f80 	movw	r6, #3968	; 0xf80
-20001154:	e3426000 	movt	r6, #8192	; 0x2000
-20001158:	e12fff36 	blx	r6
-2000115c:	e3802e1e 	orr	r2, r0, #480	; 0x1e0
-20001160:	e6ff2072 	uxth	r2, r2
-20001164:	e3a01004 	mov	r1, #4
-20001168:	e1a00004 	mov	r0, r4
-2000116c:	e3015018 	movw	r5, #4120	; 0x1018
-20001170:	e3425000 	movt	r5, #8192	; 0x2000
-20001174:	e12fff35 	blx	r5
-        phy_write(addr, 0, phy_read(addr, 0) | (1 << 9));
-20001178:	e3a01000 	mov	r1, #0
-2000117c:	e1a00004 	mov	r0, r4
-20001180:	e12fff36 	blx	r6
-20001184:	e3802c02 	orr	r2, r0, #512	; 0x200
-20001188:	e6ff2072 	uxth	r2, r2
-2000118c:	e3a01000 	mov	r1, #0
-20001190:	e1a00004 	mov	r0, r4
-20001194:	e12fff35 	blx	r5
-        u32 count = 0;
-20001198:	e3a05000 	mov	r5, #0
-        while ((phy_read(addr, 1) & (1 << 5)) == 0) {
-2000119c:	e3a07001 	mov	r7, #1
-200011a0:	e3006f80 	movw	r6, #3968	; 0xf80
-200011a4:	e3426000 	movt	r6, #8192	; 0x2000
-200011a8:	e1a01007 	mov	r1, r7
-200011ac:	e1a00004 	mov	r0, r4
-200011b0:	e12fff36 	blx	r6
-200011b4:	e3100020 	tst	r0, #32
-            count++;
-200011b8:	02855001 	addeq	r5, r5, #1
-200011bc:	0afffff9 	beq	200011a8 <phy_establish_link+0xa4>
-        kprint("Auto-neg completed after {d} of retries\n", count);
-200011c0:	e1a01005 	mov	r1, r5
-200011c4:	e301070c 	movw	r0, #5900	; 0x170c
-200011c8:	e3420000 	movt	r0, #8192	; 0x2000
-200011cc:	e3003b08 	movw	r3, #2824	; 0xb08
-200011d0:	e3423000 	movt	r3, #8192	; 0x2000
-200011d4:	e12fff33 	blx	r3
-200011d8:	eaffffd1 	b	20001124 <phy_establish_link+0x20>
+    // Wait for the link-up status
+    while ((ethernet_phy_read(addr, 1) & (1 << 2)) == 0);
+20001188:	e3a06001 	mov	r6, #1
+2000118c:	e3005fe8 	movw	r5, #4072	; 0xfe8
+20001190:	e3425000 	movt	r5, #8192	; 0x2000
+20001194:	e1a01006 	mov	r1, r6
+20001198:	e1a00004 	mov	r0, r4
+2000119c:	e12fff35 	blx	r5
+200011a0:	e3100004 	tst	r0, #4
+200011a4:	0afffffa 	beq	20001194 <phy_establish_link+0x2c>
+200011a8:	e8bd8070 	pop	{r4, r5, r6, pc}
+        ethernet_phy_write(addr, 4, ethernet_phy_read(addr, 4) | (0b1111 << 5));
+200011ac:	e3a01004 	mov	r1, #4
+200011b0:	e1a00004 	mov	r0, r4
+200011b4:	e3006fe8 	movw	r6, #4072	; 0xfe8
+200011b8:	e3426000 	movt	r6, #8192	; 0x2000
+200011bc:	e12fff36 	blx	r6
+200011c0:	e3802e1e 	orr	r2, r0, #480	; 0x1e0
+200011c4:	e6ff2072 	uxth	r2, r2
+200011c8:	e3a01004 	mov	r1, #4
+200011cc:	e1a00004 	mov	r0, r4
+200011d0:	e3015080 	movw	r5, #4224	; 0x1080
+200011d4:	e3425000 	movt	r5, #8192	; 0x2000
+200011d8:	e12fff35 	blx	r5
+        ethernet_phy_write(addr, 0, ethernet_phy_read(addr, 0) | (1 << 9));
+200011dc:	e3a01000 	mov	r1, #0
+200011e0:	e1a00004 	mov	r0, r4
+200011e4:	e12fff36 	blx	r6
+200011e8:	e3802c02 	orr	r2, r0, #512	; 0x200
+200011ec:	e6ff2072 	uxth	r2, r2
+200011f0:	e3a01000 	mov	r1, #0
+200011f4:	e1a00004 	mov	r0, r4
+200011f8:	e12fff35 	blx	r5
+        while ((ethernet_phy_read(addr, 1) & (1 << 5)) == 0);
+200011fc:	e3a06001 	mov	r6, #1
+20001200:	e3005fe8 	movw	r5, #4072	; 0xfe8
+20001204:	e3425000 	movt	r5, #8192	; 0x2000
+20001208:	e1a01006 	mov	r1, r6
+2000120c:	e1a00004 	mov	r0, r4
+20001210:	e12fff35 	blx	r5
+20001214:	e3100020 	tst	r0, #32
+20001218:	0afffffa 	beq	20001208 <phy_establish_link+0xa0>
+2000121c:	eaffffd9 	b	20001188 <phy_establish_link+0x20>
 
-200011dc <get_phy_settings>:
+20001220 <get_phy_settings>:
 }
 
 // Get the speed and duplex setting from the link partner
-void get_phy_settings(u8 addr, enum nic_speed* speed, enum nic_duplex* dup) {
-200011dc:	e92d4070 	push	{r4, r5, r6, lr}
-200011e0:	e1a05001 	mov	r5, r1
-200011e4:	e1a04002 	mov	r4, r2
-    u16 reg = phy_read(addr, 5);
-200011e8:	e3a01005 	mov	r1, #5
-200011ec:	e3003f80 	movw	r3, #3968	; 0xf80
-200011f0:	e3423000 	movt	r3, #8192	; 0x2000
-200011f4:	e12fff33 	blx	r3
+void get_phy_settings(u8 addr, struct nic_link_setting* link_setting) {
+20001220:	e92d4010 	push	{r4, lr}
+20001224:	e1a04001 	mov	r4, r1
+    // Read the link partner status register
+    u16 reg = ethernet_phy_read(addr, 5);
+20001228:	e3a01005 	mov	r1, #5
+2000122c:	e3003fe8 	movw	r3, #4072	; 0xfe8
+20001230:	e3423000 	movt	r3, #8192	; 0x2000
+20001234:	e12fff33 	blx	r3
 
     if (reg & (0b11 << 7)) {
-200011f8:	e3100d06 	tst	r0, #384	; 0x180
-        *speed = NIC_100Mbps;
-200011fc:	13a03000 	movne	r3, #0
-20001200:	15c53000 	strbne	r3, [r5]
-        *dup = (reg & (1 << 8)) ? NIC_DUPLEX_FULL : NIC_DUPLEX_HALF;
-20001204:	12200c01 	eorne	r0, r0, #256	; 0x100
-20001208:	17e00450 	ubfxne	r0, r0, #8, #1
+20001238:	e3100d06 	tst	r0, #384	; 0x180
+        link_setting->speed = NIC_100Mbps;
+2000123c:	13a03000 	movne	r3, #0
+20001240:	15c43000 	strbne	r3, [r4]
+        link_setting->duplex = (reg & (1 << 8)) ? NIC_DUPLEX_FULL : NIC_DUPLEX_HALF;
+20001244:	12200c01 	eorne	r0, r0, #256	; 0x100
+20001248:	17e00450 	ubfxne	r0, r0, #8, #1
     } else {
-        *speed = NIC_10Mbps;
-2000120c:	03a03001 	moveq	r3, #1
-20001210:	05c53000 	strbeq	r3, [r5]
-        *dup = (reg & (1 << 6)) ? NIC_DUPLEX_FULL : NIC_DUPLEX_HALF;
-20001214:	02200040 	eoreq	r0, r0, #64	; 0x40
-20001218:	07e00350 	ubfxeq	r0, r0, #6, #1
-2000121c:	e5c40000 	strb	r0, [r4]
+        link_setting->speed = NIC_10Mbps;
+2000124c:	03a03001 	moveq	r3, #1
+20001250:	05c43000 	strbeq	r3, [r4]
+        link_setting->duplex = (reg & (1 << 6)) ? NIC_DUPLEX_FULL : NIC_DUPLEX_HALF;
+20001254:	02200040 	eoreq	r0, r0, #64	; 0x40
+20001258:	07e00350 	ubfxeq	r0, r0, #6, #1
+2000125c:	e5c40001 	strb	r0, [r4, #1]
     }
 }
-20001220:	e8bd8070 	pop	{r4, r5, r6, pc}
+20001260:	e8bd8010 	pop	{r4, pc}
 
-20001224 <nic_pin_init>:
+20001264 <nic_pin_init>:
 
 // Configure the NIC pins
-void nic_pin_init(void) {
-20001224:	e92d4070 	push	{r4, r5, r6, lr}
+void nic_pin_init() {
+20001264:	e92d4070 	push	{r4, r5, r6, lr}
     sama5d2_gpio_set_func(GPIOD_REG,  9, GPIO_FUNC_D);
-20001228:	e30850c0 	movw	r5, #32960	; 0x80c0
-2000122c:	e34f5c03 	movt	r5, #64515	; 0xfc03
-20001230:	e3a02004 	mov	r2, #4
-20001234:	e3a01009 	mov	r1, #9
-20001238:	e1a00005 	mov	r0, r5
-2000123c:	e3004d38 	movw	r4, #3384	; 0xd38
-20001240:	e3424000 	movt	r4, #8192	; 0x2000
-20001244:	e12fff34 	blx	r4
-    sama5d2_gpio_set_func(GPIOD_REG, 10, GPIO_FUNC_D);
-20001248:	e3a02004 	mov	r2, #4
-2000124c:	e3a0100a 	mov	r1, #10
-20001250:	e1a00005 	mov	r0, r5
-20001254:	e12fff34 	blx	r4
-    sama5d2_gpio_set_func(GPIOD_REG, 11, GPIO_FUNC_D);
-20001258:	e3a02004 	mov	r2, #4
-2000125c:	e3a0100b 	mov	r1, #11
-20001260:	e1a00005 	mov	r0, r5
-20001264:	e12fff34 	blx	r4
-    sama5d2_gpio_set_func(GPIOD_REG, 12, GPIO_FUNC_D);
-20001268:	e3a02004 	mov	r2, #4
-2000126c:	e3a0100c 	mov	r1, #12
-20001270:	e1a00005 	mov	r0, r5
-20001274:	e12fff34 	blx	r4
-    sama5d2_gpio_set_func(GPIOD_REG, 13, GPIO_FUNC_D);
-20001278:	e3a02004 	mov	r2, #4
-2000127c:	e3a0100d 	mov	r1, #13
-20001280:	e1a00005 	mov	r0, r5
+20001268:	e30850c0 	movw	r5, #32960	; 0x80c0
+2000126c:	e34f5c03 	movt	r5, #64515	; 0xfc03
+20001270:	e3a02004 	mov	r2, #4
+20001274:	e3a01009 	mov	r1, #9
+20001278:	e1a00005 	mov	r0, r5
+2000127c:	e3004d90 	movw	r4, #3472	; 0xd90
+20001280:	e3424000 	movt	r4, #8192	; 0x2000
 20001284:	e12fff34 	blx	r4
-    sama5d2_gpio_set_func(GPIOD_REG, 14, GPIO_FUNC_D);
+    sama5d2_gpio_set_func(GPIOD_REG, 10, GPIO_FUNC_D);
 20001288:	e3a02004 	mov	r2, #4
-2000128c:	e3a0100e 	mov	r1, #14
+2000128c:	e3a0100a 	mov	r1, #10
 20001290:	e1a00005 	mov	r0, r5
 20001294:	e12fff34 	blx	r4
-    sama5d2_gpio_set_func(GPIOD_REG, 15, GPIO_FUNC_D);
+    sama5d2_gpio_set_func(GPIOD_REG, 11, GPIO_FUNC_D);
 20001298:	e3a02004 	mov	r2, #4
-2000129c:	e3a0100f 	mov	r1, #15
+2000129c:	e3a0100b 	mov	r1, #11
 200012a0:	e1a00005 	mov	r0, r5
 200012a4:	e12fff34 	blx	r4
-    sama5d2_gpio_set_func(GPIOD_REG, 16, GPIO_FUNC_D);
+    sama5d2_gpio_set_func(GPIOD_REG, 12, GPIO_FUNC_D);
 200012a8:	e3a02004 	mov	r2, #4
-200012ac:	e3a01010 	mov	r1, #16
+200012ac:	e3a0100c 	mov	r1, #12
 200012b0:	e1a00005 	mov	r0, r5
 200012b4:	e12fff34 	blx	r4
-    sama5d2_gpio_set_func(GPIOD_REG, 17, GPIO_FUNC_D);
+    sama5d2_gpio_set_func(GPIOD_REG, 13, GPIO_FUNC_D);
 200012b8:	e3a02004 	mov	r2, #4
-200012bc:	e3a01011 	mov	r1, #17
+200012bc:	e3a0100d 	mov	r1, #13
 200012c0:	e1a00005 	mov	r0, r5
 200012c4:	e12fff34 	blx	r4
-    sama5d2_gpio_set_func(GPIOD_REG, 18, GPIO_FUNC_D);
+    sama5d2_gpio_set_func(GPIOD_REG, 14, GPIO_FUNC_D);
 200012c8:	e3a02004 	mov	r2, #4
-200012cc:	e3a01012 	mov	r1, #18
+200012cc:	e3a0100e 	mov	r1, #14
 200012d0:	e1a00005 	mov	r0, r5
 200012d4:	e12fff34 	blx	r4
+    sama5d2_gpio_set_func(GPIOD_REG, 15, GPIO_FUNC_D);
+200012d8:	e3a02004 	mov	r2, #4
+200012dc:	e3a0100f 	mov	r1, #15
+200012e0:	e1a00005 	mov	r0, r5
+200012e4:	e12fff34 	blx	r4
+    sama5d2_gpio_set_func(GPIOD_REG, 16, GPIO_FUNC_D);
+200012e8:	e3a02004 	mov	r2, #4
+200012ec:	e3a01010 	mov	r1, #16
+200012f0:	e1a00005 	mov	r0, r5
+200012f4:	e12fff34 	blx	r4
+    sama5d2_gpio_set_func(GPIOD_REG, 17, GPIO_FUNC_D);
+200012f8:	e3a02004 	mov	r2, #4
+200012fc:	e3a01011 	mov	r1, #17
+20001300:	e1a00005 	mov	r0, r5
+20001304:	e12fff34 	blx	r4
+    sama5d2_gpio_set_func(GPIOD_REG, 18, GPIO_FUNC_D);
+20001308:	e3a02004 	mov	r2, #4
+2000130c:	e3a01012 	mov	r1, #18
+20001310:	e1a00005 	mov	r0, r5
+20001314:	e12fff34 	blx	r4
 }
-200012d8:	e8bd8070 	pop	{r4, r5, r6, pc}
+20001318:	e8bd8070 	pop	{r4, r5, r6, pc}
 
-200012dc <nic_recv>:
+2000131c <nic_receive>:
 
-static u8 phy_addr;
-static u32 rx_index;
-static u32 tx_index;
+// Tries to receive a IEEE 802.3 ethernet packet from the NIC hardware. This will either
+// return a netbuf with the packet data, or NULL. The netbuf will be completely unlinked 
+// adfter this call, so the user must free the netbuf manually when done reading 
+struct netbuf* nic_receive() {
+2000131c:	e92d41f0 	push	{r4, r5, r6, r7, r8, lr}
+    struct nic_rx_desc* rx_desc = &rx_descs[rx_index];
+20001320:	e3043b80 	movw	r3, #19328	; 0x4b80
+20001324:	e3423006 	movt	r3, #8198	; 0x2006
+20001328:	e5935000 	ldr	r5, [r3]
 
-struct netbuf* nic_recv(void) {
-200012dc:	e92d41f0 	push	{r4, r5, r6, r7, r8, lr}
-    struct gmac_reg* const hw = GMAC_REG;
-
-    // Clear any bits in the status register
-    u32 reg = hw->rsr;
-200012e0:	e3a04902 	mov	r4, #32768	; 0x8000
-200012e4:	e34f4800 	movt	r4, #63488	; 0xf800
-200012e8:	e5945020 	ldr	r5, [r4, #32]
-    kprint("NIC status => {r}\n", reg);
-200012ec:	e1a01005 	mov	r1, r5
-200012f0:	e3010738 	movw	r0, #5944	; 0x1738
-200012f4:	e3420000 	movt	r0, #8192	; 0x2000
-200012f8:	e3003b08 	movw	r3, #2824	; 0xb08
-200012fc:	e3423000 	movt	r3, #8192	; 0x2000
-20001300:	e12fff33 	blx	r3
-    hw->rsr = reg;
-20001304:	e5845020 	str	r5, [r4, #32]
-
-    // Check the descriptor number rx_index
-    if (reg & (1 << 1)) {
-20001308:	e2154002 	ands	r4, r5, #2
-2000130c:	1a00000f 	bne	20001350 <nic_recv+0x74>
-
-        // Invalidate the cache before returning !!!!!!!!!!
-        return buf;
+    if (rx_desc->owner) {
+2000132c:	e3042400 	movw	r2, #17408	; 0x4400
+20001330:	e3422006 	movt	r2, #8198	; 0x2006
+20001334:	e3a03014 	mov	r3, #20
+20001338:	e0030593 	mul	r3, r3, r5
+2000133c:	e7d23003 	ldrb	r3, [r2, r3]
+20001340:	e3130001 	tst	r3, #1
+        // TODO: invalidate the cache before returning !!!!!!!!!!
+        return netbuf;
     }
-
-    if (reg & (1 << 0)) {
-20001310:	e3150001 	tst	r5, #1
-20001314:	0a00003e 	beq	20001414 <nic_recv+0x138>
-20001318:	e30450c0 	movw	r5, #16576	; 0x40c0
-2000131c:	e3425006 	movt	r5, #8198	; 0x2006
-        for (u32 i = 0; i < 32; i++) {
-            kprint("Status {2:d} is {r}\n", i, rx_desc[i].addr_word);
-20001320:	e301774c 	movw	r7, #5964	; 0x174c
-20001324:	e3427000 	movt	r7, #8192	; 0x2000
-20001328:	e3006b08 	movw	r6, #2824	; 0xb08
-2000132c:	e3426000 	movt	r6, #8192	; 0x2000
-20001330:	e4952014 	ldr	r2, [r5], #20
-20001334:	e1a01004 	mov	r1, r4
-20001338:	e1a00007 	mov	r0, r7
-2000133c:	e12fff36 	blx	r6
-        for (u32 i = 0; i < 32; i++) {
-20001340:	e2844001 	add	r4, r4, #1
-20001344:	e3540020 	cmp	r4, #32
-20001348:	1afffff8 	bne	20001330 <nic_recv+0x54>
-        }
-        while (1);
-2000134c:	eafffffe 	b	2000134c <nic_recv+0x70>
-        struct nic_rx_desc* desc = &rx_desc[rx_index];
-20001350:	e3043840 	movw	r3, #18496	; 0x4840
-20001354:	e3423006 	movt	r3, #8198	; 0x2006
-20001358:	e5935000 	ldr	r5, [r3]
-        struct netbuf* buf = (struct netbuf *)(desc->addr << 2);
-2000135c:	e30420c0 	movw	r2, #16576	; 0x40c0
-20001360:	e3422006 	movt	r2, #8198	; 0x2006
-20001364:	e3a03014 	mov	r3, #20
-20001368:	e0030593 	mul	r3, r3, r5
-2000136c:	e7924003 	ldr	r4, [r2, r3]
-20001370:	e3c44003 	bic	r4, r4, #3
-        if (++rx_index >= NIC_NUM_RX_DESC) {
-20001374:	e2852001 	add	r2, r5, #1
-20001378:	e352001f 	cmp	r2, #31
-2000137c:	e3043840 	movw	r3, #18496	; 0x4840
-20001380:	e3423006 	movt	r3, #8198	; 0x2006
-            rx_index = 0;
-20001384:	83a02000 	movhi	r2, #0
-20001388:	e5832000 	str	r2, [r3]
-        assert(desc->sof && desc->eof);
-2000138c:	e30420c0 	movw	r2, #16576	; 0x40c0
-20001390:	e3422006 	movt	r2, #8198	; 0x2006
-20001394:	e3a03014 	mov	r3, #20
-20001398:	e0232593 	mla	r3, r3, r5, r2
-2000139c:	e5d33005 	ldrb	r3, [r3, #5]
-200013a0:	e20330c0 	and	r3, r3, #192	; 0xc0
-200013a4:	e35300c0 	cmp	r3, #192	; 0xc0
-200013a8:	1a000012 	bne	200013f8 <nic_recv+0x11c>
-        buf->len = desc->len;
-200013ac:	e30460c0 	movw	r6, #16576	; 0x40c0
-200013b0:	e3426006 	movt	r6, #8198	; 0x2006
-200013b4:	e3a03014 	mov	r3, #20
-200013b8:	e0050593 	mul	r5, r3, r5
-200013bc:	e0867005 	add	r7, r6, r5
-200013c0:	e1d730b4 	ldrh	r3, [r7, #4]
-200013c4:	e7ec3053 	ubfx	r3, r3, #0, #13
-200013c8:	e584361c 	str	r3, [r4, #1564]	; 0x61c
-        buf->ptr = buf->buf;
-200013cc:	e5844618 	str	r4, [r4, #1560]	; 0x618
-        struct netbuf* new = alloc_netbuf();
-200013d0:	e3003c14 	movw	r3, #3092	; 0xc14
-200013d4:	e3423000 	movt	r3, #8192	; 0x2000
-200013d8:	e12fff33 	blx	r3
-        desc->addr_word = 0;
-200013dc:	e3a03000 	mov	r3, #0
-        desc->status_word = 0;
-200013e0:	e5873004 	str	r3, [r7, #4]
-        desc->addr = (u32)new->buf >> 2;
-200013e4:	e1a02120 	lsr	r2, r0, #2
-200013e8:	e7df3112 	bfi	r3, r2, #2, #30
-200013ec:	e7863005 	str	r3, [r6, r5]
-    }
-
 
     // Any error handling?
     return NULL;
+20001344:	03a04000 	moveq	r4, #0
+    if (rx_desc->owner) {
+20001348:	0a000027 	beq	200013ec <nic_receive+0xd0>
+        struct netbuf* netbuf = (struct netbuf *)(rx_desc->addr << 2);
+2000134c:	e3042400 	movw	r2, #17408	; 0x4400
+20001350:	e3422006 	movt	r2, #8198	; 0x2006
+20001354:	e3a03014 	mov	r3, #20
+20001358:	e0030593 	mul	r3, r3, r5
+2000135c:	e7924003 	ldr	r4, [r2, r3]
+20001360:	e3c44003 	bic	r4, r4, #3
+        if (++rx_index >= NIC_NUM_RX_DESC) {
+20001364:	e2853001 	add	r3, r5, #1
+20001368:	e353001f 	cmp	r3, #31
+2000136c:	93042b80 	movwls	r2, #19328	; 0x4b80
+20001370:	93422006 	movtls	r2, #8198	; 0x2006
+20001374:	95823000 	strls	r3, [r2]
+            rx_index = 0;
+20001378:	83043b80 	movwhi	r3, #19328	; 0x4b80
+2000137c:	83423006 	movthi	r3, #8198	; 0x2006
+20001380:	83a02000 	movhi	r2, #0
+20001384:	85832000 	strhi	r2, [r3]
+        assert(rx_desc->sof && rx_desc->eof);
+20001388:	e3042400 	movw	r2, #17408	; 0x4400
+2000138c:	e3422006 	movt	r2, #8198	; 0x2006
+20001390:	e3a03014 	mov	r3, #20
+20001394:	e0232593 	mla	r3, r3, r5, r2
+20001398:	e5d33005 	ldrb	r3, [r3, #5]
+2000139c:	e20330c0 	and	r3, r3, #192	; 0xc0
+200013a0:	e35300c0 	cmp	r3, #192	; 0xc0
+200013a4:	1a000012 	bne	200013f4 <nic_receive+0xd8>
+        netbuf->len = rx_desc->len;
+200013a8:	e3046400 	movw	r6, #17408	; 0x4400
+200013ac:	e3426006 	movt	r6, #8198	; 0x2006
+200013b0:	e3a03014 	mov	r3, #20
+200013b4:	e0050593 	mul	r5, r3, r5
+200013b8:	e0867005 	add	r7, r6, r5
+200013bc:	e1d730b4 	ldrh	r3, [r7, #4]
+200013c0:	e7ec3053 	ubfx	r3, r3, #0, #13
+200013c4:	e584361c 	str	r3, [r4, #1564]	; 0x61c
+        netbuf->ptr = netbuf->buf;
+200013c8:	e5844618 	str	r4, [r4, #1560]	; 0x618
+        struct netbuf* new = alloc_netbuf();
+200013cc:	e3003c6c 	movw	r3, #3180	; 0xc6c
+200013d0:	e3423000 	movt	r3, #8192	; 0x2000
+200013d4:	e12fff33 	blx	r3
+        rx_desc->addr_word = 0;
+200013d8:	e3a03000 	mov	r3, #0
+        rx_desc->status_word = 0;
+200013dc:	e5873004 	str	r3, [r7, #4]
+        rx_desc->addr = (u32)new->buf >> 2;
+200013e0:	e1a00120 	lsr	r0, r0, #2
+200013e4:	e7df3110 	bfi	r3, r0, #2, #30
+200013e8:	e7863005 	str	r3, [r6, r5]
 }
-200013f0:	e1a00004 	mov	r0, r4
-200013f4:	e8bd81f0 	pop	{r4, r5, r6, r7, r8, pc}
-        assert(desc->sof && desc->eof);
-200013f8:	e3001127 	movw	r1, #295	; 0x127
-200013fc:	e30106d0 	movw	r0, #5840	; 0x16d0
-20001400:	e3420000 	movt	r0, #8192	; 0x2000
-20001404:	e3003b80 	movw	r3, #2944	; 0xb80
-20001408:	e3423000 	movt	r3, #8192	; 0x2000
-2000140c:	e12fff33 	blx	r3
-20001410:	eaffffe5 	b	200013ac <nic_recv+0xd0>
-    return NULL;
-20001414:	e3a04000 	mov	r4, #0
-20001418:	eafffff4 	b	200013f0 <nic_recv+0x114>
+200013ec:	e1a00004 	mov	r0, r4
+200013f0:	e8bd81f0 	pop	{r4, r5, r6, r7, r8, pc}
+        assert(rx_desc->sof && rx_desc->eof);
+200013f4:	e3001139 	movw	r1, #313	; 0x139
+200013f8:	e301067c 	movw	r0, #5756	; 0x167c
+200013fc:	e3420000 	movt	r0, #8192	; 0x2000
+20001400:	e3003bd8 	movw	r3, #3032	; 0xbd8
+20001404:	e3423000 	movt	r3, #8192	; 0x2000
+20001408:	e12fff33 	blx	r3
+2000140c:	eaffffe5 	b	200013a8 <nic_receive+0x8c>
 
-2000141c <nic_init>:
+20001410 <nic_init>:
 void nic_send(struct netbuf* buf) {
 
 }
 
 // Configures the NIC hardware and enables the NIC interface
-void nic_init(void) {
-2000141c:	e92d4070 	push	{r4, r5, r6, lr}
-20001420:	e24dd008 	sub	sp, sp, #8
-
-    kprint("Size of netbuffer => {d}\n", sizeof(struct netbuf));
-20001424:	e3a01e62 	mov	r1, #1568	; 0x620
-20001428:	e3010764 	movw	r0, #5988	; 0x1764
-2000142c:	e3420000 	movt	r0, #8192	; 0x2000
-20001430:	e3005b08 	movw	r5, #2824	; 0xb08
-20001434:	e3425000 	movt	r5, #8192	; 0x2000
-20001438:	e12fff35 	blx	r5
-
-    kprint("Setting up SAMA5D2 NIC\n");
-2000143c:	e3010780 	movw	r0, #6016	; 0x1780
-20001440:	e3420000 	movt	r0, #8192	; 0x2000
-20001444:	e12fff35 	blx	r5
-
-    // Enable the NIC clock
+void nic_init() {
+20001410:	e92d4070 	push	{r4, r5, r6, lr}
+20001414:	e24dd008 	sub	sp, sp, #8
+    // Enable clock and pins
     sama5d2_per_clk_en(5);
-20001448:	e3a00005 	mov	r0, #5
-2000144c:	e3003d80 	movw	r3, #3456	; 0xd80
-20001450:	e3423000 	movt	r3, #8192	; 0x2000
-20001454:	e12fff33 	blx	r3
-
-    // Enable the NIC pins
+20001418:	e3a00005 	mov	r0, #5
+2000141c:	e3003dd8 	movw	r3, #3544	; 0xdd8
+20001420:	e3423000 	movt	r3, #8192	; 0x2000
+20001424:	e12fff33 	blx	r3
     nic_pin_init();
-20001458:	e3013224 	movw	r3, #4644	; 0x1224
-2000145c:	e3423000 	movt	r3, #8192	; 0x2000
-20001460:	e12fff33 	blx	r3
+20001428:	e3013264 	movw	r3, #4708	; 0x1264
+2000142c:	e3423000 	movt	r3, #8192	; 0x2000
+20001430:	e12fff33 	blx	r3
 
     //Setup the DMA queues
     nic_setup_dma_queues();
-20001464:	e3003dec 	movw	r3, #3564	; 0xdec
+20001434:	e3003e44 	movw	r3, #3652	; 0xe44
+20001438:	e3423000 	movt	r3, #8192	; 0x2000
+2000143c:	e12fff33 	blx	r3
+
+    struct nic_reg* const nic_reg = NIC_REG;
+    
+    // Enable the PHY management interface and set the bus speed
+    nic_reg->ncr |= (1 << 4);
+20001440:	e3a04902 	mov	r4, #32768	; 0x8000
+20001444:	e34f4800 	movt	r4, #63488	; 0xf800
+20001448:	e5943000 	ldr	r3, [r4]
+2000144c:	e3833010 	orr	r3, r3, #16
+20001450:	e5843000 	str	r3, [r4]
+    nic_reg->ncfgr = (nic_reg->ncfgr & ~(0x7 << 18)) | (5 << 18);
+20001454:	e5943004 	ldr	r3, [r4, #4]
+20001458:	e3c33707 	bic	r3, r3, #1835008	; 0x1c0000
+2000145c:	e3833705 	orr	r3, r3, #1310720	; 0x140000
+20001460:	e5843004 	str	r3, [r4, #4]
+    
+    phy_addr = ethernet_phy_scan();
+20001464:	e301310c 	movw	r3, #4364	; 0x110c
 20001468:	e3423000 	movt	r3, #8192	; 0x2000
 2000146c:	e12fff33 	blx	r3
-
-    // Get a pointer to the NIC hardware
-    struct gmac_reg* const hw = GMAC_REG;
-    
-    // Setup the ethernet PHY
-    hw->ncr |= (1 << 4);
-20001470:	e3a04902 	mov	r4, #32768	; 0x8000
-20001474:	e34f4800 	movt	r4, #63488	; 0xf800
-20001478:	e5943000 	ldr	r3, [r4]
-2000147c:	e3833010 	orr	r3, r3, #16
-20001480:	e5843000 	str	r3, [r4]
-    hw->ncfgr = (hw->ncfgr & ~(0x7 << 18)) | (5 << 18);
-20001484:	e5943004 	ldr	r3, [r4, #4]
-20001488:	e3c33707 	bic	r3, r3, #1835008	; 0x1c0000
-2000148c:	e3833705 	orr	r3, r3, #1310720	; 0x140000
-20001490:	e5843004 	str	r3, [r4, #4]
-    phy_scan(&phy_addr);
-20001494:	e3046088 	movw	r6, #16520	; 0x4088
-20001498:	e3426006 	movt	r6, #8198	; 0x2006
-2000149c:	e1a00006 	mov	r0, r6
-200014a0:	e30130a4 	movw	r3, #4260	; 0x10a4
-200014a4:	e3423000 	movt	r3, #8192	; 0x2000
-200014a8:	e12fff33 	blx	r3
-    kprint("Found ethenet PHY on address {d}\n", phy_addr);
-200014ac:	e5d61000 	ldrb	r1, [r6]
-200014b0:	e3010798 	movw	r0, #6040	; 0x1798
-200014b4:	e3420000 	movt	r0, #8192	; 0x2000
-200014b8:	e12fff35 	blx	r5
-
-    // Wait for the link
+20001470:	e30463c8 	movw	r6, #17352	; 0x43c8
+20001474:	e3426006 	movt	r6, #8198	; 0x2006
+20001478:	e5c60000 	strb	r0, [r6]
     phy_establish_link(phy_addr);
-200014bc:	e5d60000 	ldrb	r0, [r6]
-200014c0:	e3013104 	movw	r3, #4356	; 0x1104
-200014c4:	e3423000 	movt	r3, #8192	; 0x2000
-200014c8:	e12fff33 	blx	r3
+2000147c:	e3013168 	movw	r3, #4456	; 0x1168
+20001480:	e3423000 	movt	r3, #8192	; 0x2000
+20001484:	e12fff33 	blx	r3
     kprint("Link is up\n");
-200014cc:	e30107bc 	movw	r0, #6076	; 0x17bc
-200014d0:	e3420000 	movt	r0, #8192	; 0x2000
-200014d4:	e12fff35 	blx	r5
+20001488:	e30106b8 	movw	r0, #5816	; 0x16b8
+2000148c:	e3420000 	movt	r0, #8192	; 0x2000
+20001490:	e3005b08 	movw	r5, #2824	; 0xb08
+20001494:	e3425000 	movt	r5, #8192	; 0x2000
+20001498:	e12fff35 	blx	r5
 
-    enum nic_speed speed;
-    enum nic_duplex dup;
+    struct nic_link_setting link_setting;
 
-    get_phy_settings(phy_addr, &speed, &dup);
-200014d8:	e28d2006 	add	r2, sp, #6
-200014dc:	e28d1007 	add	r1, sp, #7
-200014e0:	e5d60000 	ldrb	r0, [r6]
-200014e4:	e30131dc 	movw	r3, #4572	; 0x11dc
-200014e8:	e3423000 	movt	r3, #8192	; 0x2000
-200014ec:	e12fff33 	blx	r3
+    get_phy_settings(phy_addr, &link_setting);
+2000149c:	e28d1004 	add	r1, sp, #4
+200014a0:	e5d60000 	ldrb	r0, [r6]
+200014a4:	e3013220 	movw	r3, #4640	; 0x1220
+200014a8:	e3423000 	movt	r3, #8192	; 0x2000
+200014ac:	e12fff33 	blx	r3
 
-    kprint("Print speed setting => {d}\n", speed);
-200014f0:	e5dd1007 	ldrb	r1, [sp, #7]
-200014f4:	e30107c8 	movw	r0, #6088	; 0x17c8
-200014f8:	e3420000 	movt	r0, #8192	; 0x2000
-200014fc:	e12fff35 	blx	r5
-    kprint("Print duplex setting => {d}\n", dup);
-20001500:	e5dd1006 	ldrb	r1, [sp, #6]
-20001504:	e30107e4 	movw	r0, #6116	; 0x17e4
-20001508:	e3420000 	movt	r0, #8192	; 0x2000
-2000150c:	e12fff35 	blx	r5
+    kprint("Print speed setting => {d}\n", link_setting.speed);
+200014b0:	e5dd1004 	ldrb	r1, [sp, #4]
+200014b4:	e30106c4 	movw	r0, #5828	; 0x16c4
+200014b8:	e3420000 	movt	r0, #8192	; 0x2000
+200014bc:	e12fff35 	blx	r5
+    kprint("Print duplex setting => {d}\n", link_setting.duplex);
+200014c0:	e5dd1005 	ldrb	r1, [sp, #5]
+200014c4:	e30106e0 	movw	r0, #5856	; 0x16e0
+200014c8:	e3420000 	movt	r0, #8192	; 0x2000
+200014cc:	e12fff35 	blx	r5
 
-    rx_index = 0;
-20001510:	e3043840 	movw	r3, #18496	; 0x4840
-20001514:	e3423006 	movt	r3, #8198	; 0x2006
-20001518:	e3a02000 	mov	r2, #0
-2000151c:	e5832000 	str	r2, [r3]
-    tx_index = 0;
+    // Copy all frames, 100Mbps and full-duplex configuration
+    nic_reg->ncfgr = (1 << 0) | (1 << 1) | (1 << 4);
+200014d0:	e3a03013 	mov	r3, #19
+200014d4:	e5843004 	str	r3, [r4, #4]
 
-    // Setup the NIC - copy all frames, 100Mbps and full-duplex
-    hw->ncfgr = (1 << 0) | (1 << 1) | (1 << 4);
-20001520:	e3a03013 	mov	r3, #19
-20001524:	e5843004 	str	r3, [r4, #4]
+    // Configure for RMII mode
+    nic_reg->ur = (1 << 0);
+200014d8:	e3a03001 	mov	r3, #1
+200014dc:	e584300c 	str	r3, [r4, #12]
 
-    // Enable RMII
-    hw->ur = (1 << 0);
-20001528:	e3a03001 	mov	r3, #1
-2000152c:	e584300c 	str	r3, [r4, #12]
+    // DMA configuration
+    nic_reg->dcfgr = (4 << 0) | (3 << 8) | (1 << 10) | (0x18 << 16);
+200014e0:	e3003704 	movw	r3, #1796	; 0x704
+200014e4:	e3403018 	movt	r3, #24
+200014e8:	e5843010 	str	r3, [r4, #16]
 
-    // Setup the DMA configuration
-    hw->dcfgr = (4 << 0) | (3 << 8) | (1 << 10) | (0x18 << 16);
-20001530:	e3003704 	movw	r3, #1796	; 0x704
-20001534:	e3403018 	movt	r3, #24
-20001538:	e5843010 	str	r3, [r4, #16]
+    // Ignore interrupts
+    nic_reg->idr = 0xFFFFFFFF;
+200014ec:	e3e03000 	mvn	r3, #0
+200014f0:	e584302c 	str	r3, [r4, #44]	; 0x2c
 
-    // Disable all the interrupt
-    hw->idr = 0xFFFFFFFF;
-2000153c:	e3e03000 	mvn	r3, #0
-20001540:	e584302c 	str	r3, [r4, #44]	; 0x2c
+    // Enable receiver and transmitter
+    nic_reg->ncr |= (1 << 2) | (1 << 3);
+200014f4:	e5943000 	ldr	r3, [r4]
+200014f8:	e383300c 	orr	r3, r3, #12
+200014fc:	e5843000 	str	r3, [r4]
 
-    hw->ncr |= (1 << 2) | (1 << 3);
-20001544:	e5943000 	ldr	r3, [r4]
-20001548:	e383300c 	orr	r3, r3, #12
-2000154c:	e5843000 	str	r3, [r4]
-
-    kprint("Done setup NIC\n");
-20001550:	e3010804 	movw	r0, #6148	; 0x1804
-20001554:	e3420000 	movt	r0, #8192	; 0x2000
-20001558:	e12fff35 	blx	r5
-
-    hw->ncr |= (1 << 9);
-2000155c:	e5943000 	ldr	r3, [r4]
-20001560:	e3833c02 	orr	r3, r3, #512	; 0x200
-20001564:	e5843000 	str	r3, [r4]
+    boot_message("Started kernel NIC driver for SAMA5D2\n");
+20001500:	e3010700 	movw	r0, #5888	; 0x1700
+20001504:	e3420000 	movt	r0, #8192	; 0x2000
+20001508:	e3003b60 	movw	r3, #2912	; 0xb60
+2000150c:	e3423000 	movt	r3, #8192	; 0x2000
+20001510:	e12fff33 	blx	r3
 }
-20001568:	e28dd008 	add	sp, sp, #8
-2000156c:	e8bd8070 	pop	{r4, r5, r6, pc}
+20001514:	e28dd008 	add	sp, sp, #8
+20001518:	e8bd8070 	pop	{r4, r5, r6, pc}
 
 Disassembly of section .init:
 
-20001570 <_init>:
-20001570:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
-20001572:	bf00      	nop
+2000151c <_init>:
+2000151c:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+2000151e:	bf00      	nop
 
 Disassembly of section .fini:
 
-20001574 <_fini>:
-20001574:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
-20001576:	bf00      	nop
+20001520 <_fini>:
+20001520:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+20001522:	bf00      	nop

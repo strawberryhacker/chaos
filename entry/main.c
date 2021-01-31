@@ -17,7 +17,7 @@ void main() {
         for (u32 i = 0; i < 500000; i++) {
             asm ("nop");
         }
-        struct netbuf* buf = nic_recv();
+        struct netbuf* buf = nic_receive();
         if (buf) {
             kprint("Got a packet => {d}\n", buf->len);
             for (u32 i = 0; i < buf->len; i++) {

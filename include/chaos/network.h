@@ -5,6 +5,6 @@
 
 #include <chaos/types.h>
 
-void network_start(void);
+void network_start();
 
 #endif

@@ -6,7 +6,7 @@
 
 // This functions invalidates and enables the instruction cache
 //
-// void icache_enable(void)
+// void icache_enable()
 
 .global icache_enable
 .type icache_enable, %function
@@ -24,7 +24,7 @@ icache_enable:
 
 // Disables the instructions cache and invalidates it.
 //
-// void icache_disable(void)
+// void icache_disable()
 
 .global icache_disable
 .type icache_disable, %function
@@ -42,7 +42,7 @@ icache_disable:
 
 // Invalidated all instruction caches to PoU and flushed the target branch cache
 //
-// void icache_invalidate(void)
+// void icache_invalidate()
 
 .global icache_invalidate
 .type icache_invalidate, %function
@@ -56,7 +56,7 @@ icache_invalidate:
 
 // Enables and invalidates the L1 data cache
 //
-// void dcache_enable(void)
+// void dcache_enable()
 
 .global dcache_enable
 .type dcache_enable, %function
@@ -74,7 +74,7 @@ dcache_enable:
 
 // Cleans and disables the entire L1 data cache
 //
-// void dcache_disable(void)
+// void dcache_disable()
 
 .global dcache_disable
 .type dcache_disable, %function
@@ -92,7 +92,7 @@ dcache_disable:
 
 // Cleans the entire L1 data cache
 //
-// void dcache_clean(void)
+// void dcache_clean()
 
 .global dcache_clean
 .type dcache_clean, %function
@@ -133,7 +133,7 @@ dcache_clean_range:
 
 // Invalidates the entrie L1 data cache
 //
-// void dcache_invalidate(void)
+// void dcache_invalidate()
 
 .global dcache_invalidate
 .type dcache_invalidate, %function

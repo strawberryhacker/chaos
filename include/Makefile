@@ -2,7 +2,7 @@
 
 cpflags += -I$(top)/include
 
-deps-y += include/chaos/print-format.h
+deps-y += include/chaos/print_format.h
 deps-y += include/chaos/types.h
 deps-y += include/chaos/panic.h
 deps-y += include/chaos/assert.h

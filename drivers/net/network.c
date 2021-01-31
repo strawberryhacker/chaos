@@ -5,7 +5,7 @@
 #include <chaos/kprint.h>
 #include <chaos/nic.h>
 
-void network_start(void) {
+void network_start() {
 
     kprint("Starting networking\n");
 

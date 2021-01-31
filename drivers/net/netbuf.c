@@ -15,7 +15,7 @@ static struct list_node netbuf_pool;
 static alignas(32) struct netbuf buffers[NIC_MAX_BUF];
 
 // Initializes the netbuffers
-void netbuf_init(void) {
+void netbuf_init() {
     // Initialize the netbuffer pool
     list_init(&netbuf_pool);
 
@@ -26,7 +26,7 @@ void netbuf_init(void) {
     kprint("Initialized {d} netbuffers\n", NIC_MAX_BUF);
 }
 
-struct netbuf* alloc_netbuf(void) {
+struct netbuf* alloc_netbuf() {
     // Get the first free netbuf list node
     struct list_node* node = list_pop_front(&netbuf_pool);
     assert(node);

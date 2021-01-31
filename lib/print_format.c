@@ -1,6 +1,6 @@
 // Formatted print to sized buffer implementation
 
-#include <chaos/print-format.h>
+#include <chaos/print_format.h>
 
 // Combined format flags and option flags
 #define FLAG_PREFIX      0x0001
