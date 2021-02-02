@@ -1,4 +1,4 @@
-// Netbuf interface for the kernel TFTP stack
+// Netbuf interface for the kernel network stack
 
 #ifndef NETBUF_H
 #define NETBUF_H
@@ -8,7 +8,10 @@
 
 // Must be aligned with at least 64-bytes
 struct netbuf {
-    u8 buf[1552];  // This must be the first node
+    // This must be the first node
+    u8 buf[1552];
+
+    // Allow to link netbuf's together. This also open for IP fragmenting
     struct list_node node;
 
     // Allways pointing to the current protocol header start

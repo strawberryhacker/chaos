@@ -6,8 +6,8 @@
 #include <chaos/types.h>
 #include <stddef.h>
 
-// This structure will represent both a list and a list node. This implies that
-// the list will be circular
+// This structure will represent both a list and a list node. This implies that the list 
+// will be circular
 struct list_node {
     struct list_node* next;
     struct list_node* prev;
@@ -24,7 +24,7 @@ static inline void list_init(struct list_node* list) {
 }
 
 static inline void list_node_init(struct list_node* list) {
-    // TODO: add MPU protected address, issue #50 
+    // TODO: NULL trap
     list->next = NULL;
     list->prev = NULL;
 }

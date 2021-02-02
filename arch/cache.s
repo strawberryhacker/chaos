@@ -4,10 +4,7 @@
 .cpu cortex-a5
 .arm
 
-// This functions invalidates and enables the instruction cache
-//
-// void icache_enable()
-
+// Invalidates and enables the instruction cache
 .global icache_enable
 .type icache_enable, %function
 icache_enable:
@@ -18,21 +15,18 @@ icache_enable:
     
     mrc p15, 0, r0, c1, c0, 0
     orr r0, r0, #(1 << 12)
-    mcr p15, 0, r0, c1, c0, 0    // Enable the I-cache
+    mcr p15, 0, r0, c1, c0, 0    // Enable the instruction cache
      
     bx lr
 
-// Disables the instructions cache and invalidates it.
-//
-// void icache_disable()
-
+// Disable instruction cache and invalidates it
 .global icache_disable
 .type icache_disable, %function
 icache_disable:
     
     mrc p15, 0, r0, c1, c0, 0
     bic r0, r0, #(1 << 12)
-    mcr p15, 0, r0, c1, c0, 0    // Disable the I-cache
+    mcr p15, 0, r0, c1, c0, 0    // Disable the instruction cache
 
     stmdb sp!, {lr}
     bl icache_invalidate
@@ -40,10 +34,7 @@ icache_disable:
 
     bx lr
 
-// Invalidated all instruction caches to PoU and flushed the target branch cache
-//
-// void icache_invalidate()
-
+// Invalidates all instruction caches to PoU and flushed the target branch cache
 .global icache_invalidate
 .type icache_invalidate, %function
 icache_invalidate:
@@ -54,10 +45,7 @@ icache_invalidate:
     isb
     bx lr
 
-// Enables and invalidates the L1 data cache
-//
-// void dcache_enable()
-
+// Invalidates and enables the L1 data cache
 .global dcache_enable
 .type dcache_enable, %function
 dcache_enable:
@@ -68,14 +56,11 @@ dcache_enable:
 
     mrc p15, 0, r0, c1, c0, 0
     orr r0, #(1 << 2)
-    mcr p15, 0, r0, c1, c0, 0   // Enable the D-cache
+    mcr p15, 0, r0, c1, c0, 0   // enable the data cache
 
     bx lr
 
 // Cleans and disables the entire L1 data cache
-//
-// void dcache_disable()
-
 .global dcache_disable
 .type dcache_disable, %function
 dcache_disable:
@@ -86,14 +71,11 @@ dcache_disable:
 
     mrc p15, 0, r0, c1, c0, 0
     bic r0, #(1 << 2)
-    mcr p15, 0, r0, c1, c0, 0   // Disable the D-cache
+    mcr p15, 0, r0, c1, c0, 0   // Disable the data cache
 
     bx lr
 
 // Cleans the entire L1 data cache
-//
-// void dcache_clean()
-
 .global dcache_clean
 .type dcache_clean, %function
 dcache_clean:
@@ -116,12 +98,12 @@ dcache_clean:
     isb
     bx lr
 
-// Taking in the start address in r0, and the end address in r1 and cleans the 
-// data cache between these two virtual addresses
-
-.global dcache_clean_range
-.type dcache_clean_range, %function
-dcache_clean_range:
+// Clenans the date cache for a virtual range. The start address must be placed in r0
+// and the end address must be placed in r1. Any address not aligned to a cache line will
+// cause additional bytes to be affected
+.global dcache_clean_virt_range
+.type dcache_clean_virt_range, %function
+dcache_clean_virt_range:
 
     bic r0, r0, #31              // Align the start address by a cache line
 1:  
@@ -132,9 +114,6 @@ dcache_clean_range:
     bx lr
 
 // Invalidates the entrie L1 data cache
-//
-// void dcache_invalidate()
-
 .global dcache_invalidate
 .type dcache_invalidate, %function
 dcache_invalidate:
@@ -155,15 +134,12 @@ dcache_invalidate:
     bne 1b
     bx lr
 
-// Taking in the start address in r0, and the end address in r1 and invalidates
-// the data cache between these two virtual addresses. This might invalidate
-// additional bytes is the address is not aligned with a cache line
-//
-// void dcache_invalidate_range(u32 start, u32 end)
-
-.global dcache_invalidate_range
-.type dcache_invalidate_range, %function
-dcache_invalidate_range:
+// Invalidates the date cache for a virtual range. The start address must be placed in r0
+// and the end address must be placed in r1. Any address not aligned to a cache line will
+// cause additional bytes to be affected
+.global dcache_invalidate_virt_range
+.type dcache_invalidate_virt_range, %function
+dcache_invalidate_virt_range:
    
     bic r0, r0, #31          // Align by cache line
 1:  
@@ -175,12 +151,7 @@ dcache_invalidate_range:
     isb
     bx lr
 
-// Taking in the start address in r0, and the end address in r1 and cleans
-// the data cache between these two virtual addresses. This might clean
-// additional bytes is the address is not aligned with a cache line
-//
-// void dcache_clean_range(u32 start, u32 end)
-
+// Cleans and invalidates the entire data cache
 .global dcache_clean_invalidate
 .type dcache_clean_invalidate, %function
 dcache_clean_invalidate:
@@ -201,11 +172,12 @@ dcache_clean_invalidate:
     bne 1b
     bx lr
 
-// Taking in the start address in r0, and the end address in r1 and cleans and 
-// and invalidates the data cache between these two virtual addresses
-.global dcache_clean_invalidate_range
-.type dcache_clean_invalidate_range, %function
-dcache_clean_invalidate_range:
+// Cleans and invalidates the date cache for a virtual range. The start address must be 
+// placed in r0 and the end address must be placed in r1. Any address not aligned to a
+// cache line will cause additional bytes to be affected
+.global dcache_clean_invalidate_virt_range
+.type dcache_clean_invalidate_virt_range, %function
+dcache_clean_invalidate_virt_range:
 
     bic r0, r0, #31          // Align the start address by a cache line
 1:  

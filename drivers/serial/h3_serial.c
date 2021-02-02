@@ -1,4 +1,4 @@
-// Serial kernel driver for Allwinner H3 chips
+// Serial driver for Allwinner H3 chips (kernel driver)
 
 #include <chaos/kprint.h>
 #include <h3/regmap.h>

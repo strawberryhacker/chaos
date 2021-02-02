@@ -1,4 +1,4 @@
-// GPIO kernel driver for the SAMA5D2 chip
+// GPIO driver for SAMA5D2 chips (kernel driver)
 
 #ifndef SAMA5D2_GPIO_H
 #define SAMA5D2_GPIO_H
@@ -14,11 +14,6 @@ enum gpio_func {
     GPIO_FUNC_E,
     GPIO_FUNC_F,
     GPIO_FUNC_G
-};
-
-struct gpio {
-    struct gpio_reg* hw;
-    u32 pin;
 };
 
 void sama5d2_gpio_set_func(struct gpio_reg* hw, u32 pin, enum gpio_func func);

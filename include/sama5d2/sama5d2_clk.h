@@ -1,4 +1,4 @@
-// Clock kernel driver for the SAMA5D2 chip
+// Clock driver for SAMA5D2 chips (kernel driver)
 
 #ifndef SAMA5D2_CLK_H
 #define SAMA5D2_CLK_H

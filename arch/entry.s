@@ -1,34 +1,44 @@
-// Main entry point for the ARMv7-A kernel
+// Entry point for the ARMv7-A kernel
 
 .syntax unified
 .cpu cortex-a5
 .arm
 
 .extern main
+
+// Extern variables from the linker script
 .extern _svc_stack_e
 .extern _kernel_size
 
-
+// Extern variables from the targer configuration file
 .extern ddr_size
 .extern ddr_start
 
+// This is where u-boot (or any bootloader) will hand off execution
 .section .kernel_entry, "ax", %progbits
 kernel_entry:
-    // In ARMv7-A the PC is pointing 8 bytes ahead in ARM mode
-    sub r0, pc, #8    // This has to be the first instruction
+
+    // Get the program load address
+    sub r0, pc, #8
     ldr r1, =ddr_start
 
+    // Turn off all interrupts
     cpsid afi
 
     // Check if a relocation is needed
     cmp r0, r1
-    bne reloc
-    beq skip_reloc
+    beq skip_kernel_relocation
 
-reloc:
+relocate_kernel:
+    // Check if the relocation will overwrite executing code
     ldr r2, =_kernel_size
+    add r3, r2, #4
+    add r4, r1, r2                     // r4 hold the upper address affected by the relocation
+    cmp r4, r0
+    bls .
+
     lsr r2, r2, #2
-    add r2, r2, #1          // Kernel size in words
+    add r2, r2, #1                     // Kernel size in words
 
     // Relocate the kernel to the start of DDR memory
 1:  ldr r3, [r0], #4
@@ -77,7 +87,6 @@ reloc:
     isb
     
 skip_disable_dcache:
-
     // Check if the icache is enabled
     mrc p15, 0, r0, c1, c0, 0
     tst r0, #(1 << 12)
@@ -97,15 +106,19 @@ skip_invalidate_icache:
     isb
     bx r1
 
-skip_reloc:
-    // We require that MMU, interrupt and D-cache is disabled at this point. 
-    // This will be the main entry point for the kernel
+skip_kernel_relocation:
+    // We are done relocating the kernel. We require that MMU, interrupt and D-cache is
+    // disabled at this point. This will be the main entry point for the kernel
 
-    // Setup the stack for the kernel SVC entry
+    // Setup the stack for the SVC mode
     ldr sp, =_svc_stack_e
     isb
 
     // Remember to init the .bss
+
+    // Setup early kernel pagetables for upper 2 GB
+
+    // Might have to do a physical to virtual address switch before the branch
 
     ldr r0, =main
     bx r0

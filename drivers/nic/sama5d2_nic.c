@@ -34,14 +34,8 @@ struct nic_rx_desc {
             u32 vlan_pri             : 3;
             u32 pri_tag_detected     : 1;
             u32 vlan_tag_detected    : 1;
-            union {
-                u32 type_id          : 2;
-                u32 crc_status       : 2;
-            };
-            union {
-                u32 type_id_match    : 1;
-                u32 snap_status      : 1;
-            };
+            u32 type_id              : 2;
+            u32 type_id_match        : 1;
             u32 addr_match_reg       : 2;
             u32 addr_match           : 1;
             u32 reserved             : 1;
@@ -98,15 +92,17 @@ struct nic_link_setting {
 #define NIC_NUM_TX_DESC 32
 #define NIC_NUM_UNUSED_TX_DESC 2
 #define NIC_NUM_UNUSED_RX_DESC 2
-#define NIC_QUEUES 3
+#define NIC_QUEUES 4
 
-// Setup static descriptors
-static alignas(64) struct nic_rx_desc rx_descs[NIC_NUM_RX_DESC];
-static alignas(64) struct nic_tx_desc tx_descs[NIC_NUM_TX_DESC];
-static alignas(64) struct nic_rx_desc rx_descs_q1[NIC_NUM_RX_DESC];
-static alignas(64) struct nic_tx_desc tx_descs_q1[NIC_NUM_TX_DESC];
-static alignas(64) struct nic_rx_desc rx_descs_q2[NIC_NUM_RX_DESC];
-static alignas(64) struct nic_tx_desc tx_descs_q2[NIC_NUM_TX_DESC];
+// Setup static descriptors aligned on a cache line
+static alignas(8) struct nic_rx_desc rx_descs[NIC_NUM_RX_DESC];
+static alignas(8) struct nic_tx_desc tx_descs[NIC_NUM_TX_DESC];
+static alignas(8) struct nic_rx_desc rx_descs_q1[NIC_NUM_UNUSED_RX_DESC];
+static alignas(8) struct nic_tx_desc tx_descs_q1[NIC_NUM_UNUSED_TX_DESC];
+static alignas(8) struct nic_rx_desc rx_descs_q2[NIC_NUM_UNUSED_RX_DESC];
+static alignas(8) struct nic_tx_desc tx_descs_q2[NIC_NUM_UNUSED_TX_DESC];
+static alignas(8) struct nic_rx_desc rx_descs_q3[NIC_NUM_UNUSED_RX_DESC];
+static alignas(8) struct nic_tx_desc tx_descs_q3[NIC_NUM_UNUSED_TX_DESC];
 
 // These keep track of the current active TX / RX descriptor
 static u32 rx_index = 0;
@@ -146,6 +142,13 @@ static const struct nic_queue queues[NIC_QUEUES] = {
         .tx = tx_descs_q2,
         .rx_count = NIC_NUM_UNUSED_RX_DESC,
         .tx_count = NIC_NUM_UNUSED_TX_DESC,
+    },
+    {
+        // Queue 3
+        .rx = rx_descs_q3,
+        .tx = tx_descs_q3,
+        .rx_count = NIC_NUM_UNUSED_RX_DESC,
+        .tx_count = NIC_NUM_UNUSED_TX_DESC,
     }
 };
 
@@ -165,8 +168,8 @@ void nic_setup_dma_queues() {
 
             // Link the descriptor to the netbuf
             // TODO: when the MMU is on we must convert to physical address
-            tx->status_word = 0;
             tx->addr = (u32)netbuf;
+            tx->status_word = 0;
 
             // This will make sure the DMA can't use the buffer
             tx->used = 1;
@@ -203,6 +206,8 @@ void nic_setup_dma_queues() {
     nic_reg->tbqbapq[0] = (u32)tx_descs_q1;
     nic_reg->rbqbapq[1] = (u32)rx_descs_q2;
     nic_reg->tbqbapq[1] = (u32)tx_descs_q2;
+    nic_reg->rbqbapq[2] = (u32)rx_descs_q3;
+    nic_reg->tbqbapq[2] = (u32)tx_descs_q3;
 
     // Make sure we start reading from the base descriptor
     rx_index = 0;
@@ -301,8 +306,12 @@ void nic_pin_init() {
 struct netbuf* nic_receive() {
     struct nic_rx_desc* rx_desc = &rx_descs[rx_index];
 
+    // Read and clear the status flags
+    u32 reg = NIC_REG->rsr;
+    NIC_REG->rsr = reg;
+
     if (rx_desc->owner) {
-        // Convert the DMA descriptor address pointer (32..2) into a netbuf
+        // Convert the DMA descriptor address pointer 32..2 into a netbuf
         struct netbuf* netbuf = (struct netbuf *)(rx_desc->addr << 2);
 
         if (++rx_index >= NIC_NUM_RX_DESC) {
@@ -319,10 +328,8 @@ struct netbuf* nic_receive() {
         // Since the current netbuf should be returned, we must allocate a new one and 
         // replace the old one
         struct netbuf* new = alloc_netbuf();
-        
-        rx_desc->addr_word = 0;
-        rx_desc->status_word = 0;
         rx_desc->addr = (u32)new->buf >> 2;
+        rx_desc->owner = 0;
 
         // TODO: invalidate the cache before returning !!!!!!!!!!
         return netbuf;
@@ -332,36 +339,83 @@ struct netbuf* nic_receive() {
     return NULL;
 }
 
-// TODO
+// Sends a IEEE 802.3 network packet from the NIC. This should be called with an allocated
+// netbuf. This function will take care of freeing the netbuffers after they have been
+// transmitted
 void nic_send(struct netbuf* buf) {
+    struct nic_tx_desc* tx_desc = &tx_descs[tx_index];
+    struct nic_reg* const nic_reg = NIC_REG;
 
+    // Check the transmit status
+    if (nic_reg->tsr & ((1 << 4) | (1 << 8) | 0x110)) {
+        panic("Warning: NIC TX error");
+    }
+
+    // This buffer should be owned by us, if not, we have saturated the network card. In 
+    // this case we wait for the packet to be transmitted
+    if (tx_desc->used == 0) {
+        panic("Warning: network card saturated\n");
+        while (tx_desc->used == 0);
+    }
+
+    // The NIC transmit ring should always contain a linked netbuf on each node
+    struct netbuf* netbuf = (struct netbuf *)tx_desc->addr;
+    free_netbuf(netbuf);
+
+    tx_desc->addr = (u32)buf;
+    tx_desc->len = buf->len;
+    tx_desc->last = 1;
+
+    // Clean any cached regions here !!!!!!
+    tx_desc->used = 0;
+
+    // If the NIC is idle we start a new transfer
+    nic_reg->ncr |= (1 << 9);
+
+    // Get the next entry in the ring
+    if (++tx_index >= NIC_NUM_TX_DESC) {
+        tx_index = 0;
+    }
 }
 
-// Configures the NIC hardware and enables the NIC interface
+// Configures the NIC hardware and enables the NIC interface. This will setup the NIC in
+// a non-interrupt driven mode. Polling is the only way of sending / receiving packets
 void nic_init() {
+    boot_message("Starting kernel NIC driver for SAMA5D2\n");
+
     // Enable clock and pins
     sama5d2_per_clk_en(5);
     nic_pin_init();
 
+    // Reset the interface
+    struct nic_reg* const nic_reg = NIC_REG;
+    nic_reg->ncr = 0;
+    nic_reg->ncfgr = 0;
+
+    // Disable interrupts
+    nic_reg->idr = ~0;
+    nic_reg->idrpq[0] = ~0;
+    nic_reg->idrpq[1] = ~0;
+
+    // Clear interrupts
+    (void)nic_reg->isr;
+    (void)nic_reg->isrpq[0];
+    (void)nic_reg->isrpq[1];
+
     //Setup the DMA queues
     nic_setup_dma_queues();
-
-    struct nic_reg* const nic_reg = NIC_REG;
     
     // Enable the PHY management interface and set the bus speed
     nic_reg->ncr |= (1 << 4);
     nic_reg->ncfgr = (nic_reg->ncfgr & ~(0x7 << 18)) | (5 << 18);
     
+    // Wait for the link-up status
     phy_addr = ethernet_phy_scan();
     phy_establish_link(phy_addr);
-    kprint("Link is up\n");
 
+    // Get the highest link setting
     struct nic_link_setting link_setting;
-
     get_phy_settings(phy_addr, &link_setting);
-
-    kprint("Print speed setting => {d}\n", link_setting.speed);
-    kprint("Print duplex setting => {d}\n", link_setting.duplex);
 
     // Copy all frames, 100Mbps and full-duplex configuration
     nic_reg->ncfgr = (1 << 0) | (1 << 1) | (1 << 4);
@@ -377,8 +431,4 @@ void nic_init() {
 
     // Enable receiver and transmitter
     nic_reg->ncr |= (1 << 2) | (1 << 3);
-
-    boot_message("Started kernel NIC driver for SAMA5D2\n");
 }
-
- 

@@ -1,4 +1,4 @@
-// Top level networking module
+// Network interface for the kernel network stack
 
 #ifndef NETWORK_H
 #define NETWORK_H

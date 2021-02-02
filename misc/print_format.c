@@ -14,7 +14,7 @@
 #define FLAG_CHAR        0x0100
 #define FLAG_BRACKET     0x0200
 
-// Look up table for upper-case hex, set bit 5 to convert to lower-case
+// Look up table for upper-case hex. Set bit 5 to convert to lower-case
 const char number_lookup[] = "0123456789ABCDEF";
 
 // Writes one character to the buf double pointer and increments the buf pointer
@@ -122,10 +122,10 @@ u32 print_format_to_buf_arg(char* buf, u32 len, const char* str, va_list arg) {
             // Get the string pointer
             const char* ptr = (const char *)va_arg(arg, char *);
 
-            // If no width is given we assume the string is terminated and print
-            // the entire string. If the width is given, we print exectly width
-            // number of bytes. If the string is smaller than width bytes we'll
-            // fill in padding characters
+            // If no width is given we assume the string is terminated and print the
+            // entire string. If the width is given, we print exectly width number of
+            // bytes. If the string is smaller than width bytes we'll fill in padding
+            // characters
             if (width < 0) {
                 while (*ptr) {
                     put_char(*ptr++, &buf, end);
@@ -134,8 +134,8 @@ u32 print_format_to_buf_arg(char* buf, u32 len, const char* str, va_list arg) {
                 u32 i;
                 for (i = 0; (i < width) && ptr[i]; i++);
 
-                // Padding holds the number of padding characters to be written
-                // and i holds the number of bytes to print from the given string
+                // Padding holds the number of padding characters to be written and i
+                // holds the number of bytes to print from the given string
                 u32 padding = width - i;
 
                 // Front pad sequence
@@ -160,14 +160,14 @@ u32 print_format_to_buf_arg(char* buf, u32 len, const char* str, va_list arg) {
         } else {
             // Print a number
             char num_buf[35];
-            char pad_char = (flags & FLAG_ZERO) ? '0' : ' ';
             char sign = 0;
             u32 index = 0;
+            char pad_char = (flags & FLAG_ZERO) ? '0' : ' ';
             i32 num = (i32)va_arg(arg, int);
             u8 lowercase = (flags & FLAG_LOWERCASE) ? FLAG_LOWERCASE : 0;
             
-            // If the numer is negative and given with the i option we flip the 
-            // number and add the sign
+            // If the numer is negative and given with the i option we flip the number and
+            // add the sign
             if (num < 0 && (flags & FLAG_SIGN)) {
                 sign = '-';
                 num = -num;
@@ -251,8 +251,7 @@ u32 print_format_to_buf_arg(char* buf, u32 len, const char* str, va_list arg) {
             }
         }
 
-        // If the user don't write ending bracket we don't skrip the next 
-        // character
+        // If the user don't write ending bracket we don't skrip the next character
         if (*str != '}') {
             str--;
         }

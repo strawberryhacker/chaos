@@ -1,11 +1,11 @@
-// Clock kernel driver for the SAMA5D2 chip
+// Clock driver for SAMA5D2 chips (kernel driver)
 
 #include <sama5d2/sama5d2_clk.h>
 #include <sama5d2/regmap.h>
 #include <chaos/assert.h>
 
-// These functions takes in PID numbers defined in the Periheral chapter in the
-// datasheet (SAMA5D2 page 57)
+// These functions takes in PID numbers defined in the Periheral chapter in the datasheet
+// (SAMA5D2 datasheet page 57)
 
 void sama5d2_per_clk_en(u32 pid) {
     assert(pid >= 2 && pid < 64);
@@ -56,8 +56,11 @@ void sama5d2_genricc_clk_en(u32 pid, u8 div, enum gck_clk_source src) {
     // Select the peripheral
     reg |= pid;
 
-    // Write operation
+    // Enable clock
     reg |= (1 << 29);
+
+    // Write operation
+    reg |= (1 << 12);
 
     // Configure the generic clock
     hw->pcr = reg;

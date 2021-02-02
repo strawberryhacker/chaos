@@ -1,4 +1,4 @@
-// Chaos kernel main function
+// Chaos kernel
 
 #include <chaos/types.h>
 #include <chaos/kprint.h>
@@ -6,29 +6,14 @@
 #include <chaos/network.h>
 #include <chaos/nic.h>
 #include <chaos/cache.h>
+#include <chaos/timer.h>
+#include <chaos/boot.h>
 
 void main() {
 
     kprint("\n\nStarting chaos kernel v1.0\n");
-
+    boot_start_timer();
     network_start();
-
-    while (1) {
-        for (u32 i = 0; i < 500000; i++) {
-            asm ("nop");
-        }
-        struct netbuf* buf = nic_receive();
-        if (buf) {
-            kprint("Got a packet => {d}\n", buf->len);
-            for (u32 i = 0; i < buf->len; i++) {
-                kprint("{0:2:x} ", buf->buf[i]);
-            }
-            kprint("\n\n");
-
-            // Free the netbuffer
-            free_netbuf(buf);
-        }
-    }
 
     while (1);
 }

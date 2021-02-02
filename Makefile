@@ -1,20 +1,23 @@
 # Top level makefile
 
-top = $(shell pwd)
+top       = $(shell pwd)
 build_dir = $(top)/build
-obj_dir = $(build_dir)/objects
-tftp_dir = /home/strawberry/tftp
-com = /dev/ttyUSB0
+obj_dir   = $(build_dir)/objects
+tftp_dir  = /home/strawberry/tftp
+com       = /dev/ttyUSB0
 
 # Location of the configuration files
-config_dir = $(top)/config
+config_dir  = $(top)/config
 config_file = $(config_dir)/$(board).cfg
 
-# List over targets that doesn't require the configuration file to be present
+# Generally we require a configuration file to be present when the build starts. In some
+# cases it's no necessary. These targets are the exception 
 target_list = help clean objclean qemu
 
 # Check if the user has provided a configuration file
 ifeq ($(filter $(MAKECMDGOALS), $(target_list)),)
+
+# Test if the config file exist
 ifneq ($(shell test -e $(config_file) && echo -n yes), yes)
 $(error Please provide a valid config file)
 endif
@@ -25,60 +28,43 @@ include $(config_file)
 # Include the required dependencies
 include $(top)/arch/Makefile
 include $(top)/kernel/Makefile
-include $(top)/lib/Makefile
+include $(top)/misc/Makefile
 include $(top)/entry/Makefile
 include $(top)/drivers/Makefile
 include $(top)/include/Makefile
 include $(top)/config/Makefile
 
-# Check that the name variables in the config file are correct
+# Check that the configuration file defines all the required variables
 ifeq ($(folder_name),)
 $(error Error in configuration file)
 endif
-
-# Check for a valid TFTP file name
 ifeq ($(tftp_name),)
 $(error Error in configuration file)
 endif
-
-# Check for a valid target name
 ifeq ($(target_name),)
 $(error Error in configuration file)
 endif
-
-# Verify that we have a valid linker script
 ifeq ($(linker-script-y),)
 $(error Linker script is not provided)
 endif
-
-# Check that we have a valid link location
 ifeq ($(link_location),)
 $(error Link location is not specified)
 endif
-
-# Check that we have a valid load address
-ifeq ($(load_location),)
-$(error Load location is not specified)
-endif
-
-# Check that we have a valid DDR size
 ifeq ($(ddr_size),)
 $(error DDR size is not given)
 endif
-
-# Check that we have a valid DDR start address
 ifeq ($(ddr_start),)
 $(error DDR size is not given)
 endif
 
-# Update the linker flags
+# Pass some information to the linker such as the link location and DDR info
 ldflags += -T$(top)/$(linker-script-y)
 ldflags += -Wl,--defsym=link_location=$(link_location)
 ldflags += -Wl,--defsym=ddr_start_macro=$(ddr_start)
 ldflags += -Wl,--defsym=ddr_size_macro=$(ddr_size)
 endif
 
-# Compilers
+# ARM cross-compilers
 cc      = arm-none-eabi-gcc
 objdump = arm-none-eabi-objdump
 objcopy = arm-none-eabi-objcopy
@@ -99,10 +85,8 @@ asflags += -march=armv7-a -g3
 # Process the build dependencies
 src_path = $(addprefix $(obj_dir)/, $(src-y))
 asm_path = $(addprefix $(obj_dir)/, $(asm-y))
-obj = $(patsubst %.c,%.o, $(src_path)) $(patsubst %.s,%.o, $(asm_path))
-
-# If a dependency change the entire project will be rebuilt
-deps = $(addprefix $(top)/, $(deps-y))
+obj      = $(patsubst %.c,%.o, $(src_path)) $(patsubst %.s,%.o, $(asm_path))
+deps     = $(addprefix $(top)/, $(deps-y))
 
 # Global path of the target to build excluding extension
 global_target_name = $(build_dir)/$(folder_name)/$(target_name)
@@ -110,8 +94,10 @@ global_target_name = $(build_dir)/$(folder_name)/$(target_name)
 .PHONY: clean help elf lss bin all start objclean debug
 .SECONDARY: $(obj)
 
+# Main build rule
 all: start elf lss bin debug
 
+# This is the files we have to build
 elf: $(global_target_name).elf
 lss: $(global_target_name).lss
 bin: $(global_target_name).bin
@@ -160,13 +146,31 @@ debug:
 	@echo Debugging currently not supported
 endif
 
+# Deletes all object files, but leaves the binaries untouched 
 objclean:
 	@rm -r -f $(obj_dir)/
 
+# Deletes all build objects
 clean:
 	@rm -r -f $(build_dir)
 
 help:
-	@echo "Just provide a configuraton file and run makefile"
-	@echo "- either make board = <your board>"
-	@echo " - or exte"
+	@echo "In order to build, you must provide some information about "
+	@echo "the board. We have written some configuration files to help"
+	@echo "you with that. These are placed in: "
+	@echo
+	@echo "   > project_dir/config"
+	@echo
+	@echo "You need to set the board variable equal the configuration file "
+	@echo "you want to use. Note that the extension should be excluded. "
+	@echo "This can be done in two ways: "
+	@echo
+	@echo "   > make board=some_configuration_file"
+	@echo
+	@echo or
+	@echo 
+	@echo "   > export board=some_configuration_file"
+	@echo "   > make"
+	@echo
+	@echo "Using the last option you don't need to specify the board "
+	@echo "each time, and you can enjoy the simplicity of make"

@@ -1,4 +1,4 @@
-// Netbuf interface for the kernel TFTP stack
+// Netbuf interface for the kernel network stack
 
 #include <chaos/netbuf.h>
 #include <chaos/assert.h>
@@ -8,10 +8,7 @@
 // Set this to the number of packets to buffer
 #define NIC_MAX_BUF 256
 
-// Pool of network buffers
 static struct list_node netbuf_pool;
-
-// Allocate the netbuffers
 static alignas(32) struct netbuf buffers[NIC_MAX_BUF];
 
 // Initializes the netbuffers
@@ -22,8 +19,6 @@ void netbuf_init() {
     for (u32 i = 0; i < NIC_MAX_BUF; i++) {
         list_push_front(&buffers[i].node, &netbuf_pool);
     }
-
-    kprint("Initialized {d} netbuffers\n", NIC_MAX_BUF);
 }
 
 struct netbuf* alloc_netbuf() {

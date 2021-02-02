@@ -7,7 +7,7 @@
 
 #define assert(condition)                         \
     do {                                          \
-        if (!(condition)) {                         \
+        if (!(condition)) {                       \
             assert_handler(__FILE__, __LINE__);   \
         }                                         \
     } while (0)                                   \

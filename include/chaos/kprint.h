@@ -1,4 +1,4 @@
-// Kernel print functionality
+// Kernel print implementation
 
 #ifndef KPRINT_H
 #define KPRINT_H
@@ -7,6 +7,8 @@
 #include <stdarg.h>
 
 void kprint(const char* message, ...);
+
+void boot_start_timer();
 
 void boot_message(const char* message, ...);
 

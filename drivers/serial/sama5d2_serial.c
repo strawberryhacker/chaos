@@ -1,4 +1,4 @@
-// Serial kernel driver for SAMA5D2 chips
+// Serial driver for SAMA5D2 chips (kernel driver)
 
 #include <chaos/kprint.h>
 #include <sama5d2/regmap.h>
