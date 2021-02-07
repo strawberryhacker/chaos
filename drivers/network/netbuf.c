@@ -5,6 +5,8 @@
 #include <chaos/kprint.h>
 #include <stdalign.h>
 
+#define MAX_HEADER_SIZE 134
+
 // Set this to the number of packets to buffer
 #define NIC_MAX_BUF 256
 
@@ -27,7 +29,9 @@ struct netbuf* alloc_netbuf() {
     assert(node);
 
     // Convert the list node to a netbuf and return it
-    return list_get_struct(node, struct netbuf, node);
+    struct netbuf* buf = list_get_struct(node, struct netbuf, node);
+    buf->ptr = buf->buf + MAX_HEADER_SIZE;
+    return buf;
 }
 
 void free_netbuf(struct netbuf* buf) {

@@ -73,35 +73,30 @@ u32 print_format_to_buf_arg(char* buf, u32 len, const char* str, va_list arg) {
         u8 base = 10;
         switch (*str++) {
             case 's':
-            case 'S':
                 flags |= FLAG_STRING;
                 break;
             case 'c':
-            case 'C':
                 flags |= FLAG_CHAR;
                 break;
             case 'i':
                 flags |= FLAG_SIGN;
             case 'u':
-            case 'd':
                 break;
-            case 'x':
+            case 'h':
                 flags |= FLAG_LOWERCASE;
-            case 'X':
+            case 'H':
                 base = 16;
                 break;
             case 'b':
-            case 'B':
                 base = 2;
                 break;
             case 'p':
             case 'P':
-                flags |= FLAG_PREFIX;
                 base = 16;
                 width = 8;
+                flags |= FLAG_PREFIX | FLAG_ZERO;
                 break;
             case 'r':
-            case 'R':
                 flags |= FLAG_PREFIX | FLAG_ZERO;
                 base = 2;
                 width = 34;
@@ -114,10 +109,15 @@ u32 print_format_to_buf_arg(char* buf, u32 len, const char* str, va_list arg) {
                 continue;
         }
 
-        // Print the result based on flags, width and option 
+        // Print a char
         if (flags & FLAG_CHAR) {
             put_char((char)va_arg(arg, int), &buf, end);
 
+        // Print a bracket
+        } else if (flags & FLAG_BRACKET) {
+            put_char('{', &buf, end);
+
+        // Print a string
         } else if (flags & FLAG_STRING) {
             // Get the string pointer
             const char* ptr = (const char *)va_arg(arg, char *);
@@ -157,8 +157,9 @@ u32 print_format_to_buf_arg(char* buf, u32 len, const char* str, va_list arg) {
                     }
                 }
             }
+        
+        // Print a number
         } else {
-            // Print a number
             char num_buf[35];
             char sign = 0;
             u32 index = 0;

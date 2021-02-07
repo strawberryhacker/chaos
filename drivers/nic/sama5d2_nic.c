@@ -88,8 +88,8 @@ struct nic_link_setting {
 
 // Note that even though we don't use the queues, we still have to configure them. 
 // Otherwise the DMA will not work properly
-#define NIC_NUM_RX_DESC 32
-#define NIC_NUM_TX_DESC 32
+#define NIC_NUM_RX_DESC 4
+#define NIC_NUM_TX_DESC 4
 #define NIC_NUM_UNUSED_TX_DESC 2
 #define NIC_NUM_UNUSED_RX_DESC 2
 #define NIC_QUEUES 4
@@ -107,6 +107,9 @@ static alignas(8) struct nic_tx_desc tx_descs_q3[NIC_NUM_UNUSED_TX_DESC];
 // These keep track of the current active TX / RX descriptor
 static u32 rx_index = 0;
 static u32 tx_index = 0;
+
+static struct netbuf* rx_desc_map[NIC_NUM_RX_DESC];
+static struct netbuf* tx_desc_map[NIC_NUM_TX_DESC];
 
 // Holds the address of our connected ethernet phy
 static u8 phy_addr;
@@ -158,12 +161,15 @@ static const struct nic_queue queues[NIC_QUEUES] = {
 void nic_setup_dma_queues() {
     for (u32 i = 0; i < NIC_QUEUES; i++) {
         
-        const struct netbuf* netbuf;
+        struct netbuf* netbuf;
         const struct nic_queue* queue = &queues[i];
 
         // Configure the TX queue
         for (u32 j = 0; j < queue->tx_count; j++) {
             netbuf = alloc_netbuf();
+            if (i == 0) {
+                tx_desc_map[j] = netbuf;
+            }
             struct nic_tx_desc* tx = &queue->tx[j];
 
             // Link the descriptor to the netbuf
@@ -178,6 +184,9 @@ void nic_setup_dma_queues() {
         // Configure the RX queue
         for (u32 j = 0; j < queue->rx_count; j++) {
             netbuf = alloc_netbuf();
+            if (i == 0) {
+                rx_desc_map[j] = netbuf;
+            }
             struct nic_rx_desc* rx = &queue->rx[j];
 
             // Link the descriptor to the netbuf
@@ -312,11 +321,7 @@ struct netbuf* nic_receive() {
 
     if (rx_desc->owner) {
         // Convert the DMA descriptor address pointer 32..2 into a netbuf
-        struct netbuf* netbuf = (struct netbuf *)(rx_desc->addr << 2);
-
-        if (++rx_index >= NIC_NUM_RX_DESC) {
-            rx_index = 0;
-        }
+        struct netbuf* netbuf = rx_desc_map[rx_index];
 
         // We don't support packet linking
         assert(rx_desc->sof && rx_desc->eof);
@@ -328,8 +333,13 @@ struct netbuf* nic_receive() {
         // Since the current netbuf should be returned, we must allocate a new one and 
         // replace the old one
         struct netbuf* new = alloc_netbuf();
+        rx_desc_map[rx_index] = new;
         rx_desc->addr = (u32)new->buf >> 2;
         rx_desc->owner = 0;
+
+        if (++rx_index >= NIC_NUM_RX_DESC) {
+            rx_index = 0;
+        }
 
         // TODO: invalidate the cache before returning !!!!!!!!!!
         return netbuf;
@@ -351,6 +361,8 @@ void nic_send(struct netbuf* buf) {
         panic("Warning: NIC TX error");
     }
 
+    nic_reg->tsr = nic_reg->tsr;
+
     // This buffer should be owned by us, if not, we have saturated the network card. In 
     // this case we wait for the packet to be transmitted
     if (tx_desc->used == 0) {
@@ -359,11 +371,15 @@ void nic_send(struct netbuf* buf) {
     }
 
     // The NIC transmit ring should always contain a linked netbuf on each node
-    struct netbuf* netbuf = (struct netbuf *)tx_desc->addr;
+    struct netbuf* netbuf = tx_desc_map[tx_index];
     free_netbuf(netbuf);
 
-    tx_desc->addr = (u32)buf;
+    // Map in the new descriptor
+    tx_desc_map[tx_index] = buf;
+
+    tx_desc->addr = (u32)buf->ptr;
     tx_desc->len = buf->len;
+    tx_desc->ignore_crc = 0;
     tx_desc->last = 1;
 
     // Clean any cached regions here !!!!!!
@@ -406,8 +422,8 @@ void nic_init() {
     nic_setup_dma_queues();
     
     // Enable the PHY management interface and set the bus speed
-    nic_reg->ncr |= (1 << 4);
     nic_reg->ncfgr = (nic_reg->ncfgr & ~(0x7 << 18)) | (5 << 18);
+    nic_reg->ncr |= (1 << 4);
     
     // Wait for the link-up status
     phy_addr = ethernet_phy_scan();
@@ -423,8 +439,11 @@ void nic_init() {
     // Configure for RMII mode
     nic_reg->ur = (1 << 0);
 
+    // Enable TCP/UDP/IP CRC engine
+    nic_reg->ncfgr |= (1 << 24);
+
     // DMA configuration
-    nic_reg->dcfgr = (4 << 0) | (3 << 8) | (1 << 10) | (0x18 << 16);
+    nic_reg->dcfgr = (4 << 0) | (3 << 8) | (1 << 10) | (1 << 11) | (0x18 << 16);
 
     // Ignore interrupts
     nic_reg->idr = 0xFFFFFFFF;

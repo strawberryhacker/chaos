@@ -30,7 +30,7 @@ void boot_message(const char* message, ...) {
     if (timer) {
         if (timer->get_time) {
             u32 time = timer->get_time();
-            kprint("[{3:d}.{0:3:d}] ", time / 1000, time % 1000);
+            kprint("[{3:u}.{0:3:u}] ", time / 1000, time % 1000);
         }
     }
     

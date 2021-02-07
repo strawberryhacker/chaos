@@ -63,6 +63,7 @@ SECTIONS {
         . = ALIGN(4);
         _data_e = .;
     } > ddr
+
     
     _kernel_e = .;
 
@@ -100,6 +101,8 @@ SECTIONS {
         . = ALIGN(8);
         _undef_stack_e = .;
     } > ddr
+
+    linker_kernel_end = .;
 }
 
 _kernel_size = _kernel_e - _kernel_s;

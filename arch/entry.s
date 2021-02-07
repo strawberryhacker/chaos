@@ -45,6 +45,7 @@ relocate_kernel:
     str r3, [r1], #4
     subs r2, r2, #1
     bne 1b
+    b skip_invalidate_icache
 
     // Check if the dcache is enabled
     mrc p15, 0, r0, c1, c0, 0

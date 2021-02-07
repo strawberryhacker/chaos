@@ -8,7 +8,7 @@ com       = /dev/ttyUSB0
 
 # Location of the configuration files
 config_dir  = $(top)/config
-config_file = $(config_dir)/$(board).cfg
+config_file = $(config_dir)/$(target).cfg
 
 # Generally we require a configuration file to be present when the build starts. In some
 # cases it's no necessary. These targets are the exception 
@@ -124,12 +124,12 @@ start:
 
 $(obj_dir)/%.o: $(top)/%.c $(deps)
 	@mkdir -p $(dir $@)
-	@echo " " CC $(patsubst $(dir $(top))%,%, $<)
+	@echo " " CC $(patsubst $(top)/%,%, $<)
 	@$(cc) $(cpflags) $(cflags) -c $< -o $@
 
 $(obj_dir)/%.o: $(top)/%.s $(deps)
 	@mkdir -p $(dir $@)
-	@echo " " AS $(patsubst $(dir $(top))%,%, $<)
+	@echo " " AS $(patsubst $(top)/%,%, $<)
 	@$(as) $(asflags) -c $< -o $@
 
 # This is only used during developement to talk to the custom SAMA5 bootloader

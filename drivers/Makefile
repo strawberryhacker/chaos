@@ -7,6 +7,10 @@ src-y += drivers/boot.c
 
 src-y += drivers/network/netbuf.c
 src-y += drivers/network/network.c
+src-y += drivers/network/arp.c
+src-y += drivers/network/ipv4.c
+src-y += drivers/network/mac.c
+src-y += drivers/network/tftp.c
 
 src-$(sama5d2) += drivers/serial/sama5d2_serial.c
 src-$(sama5d2) += drivers/gpio/sama5d2_gpio.c
