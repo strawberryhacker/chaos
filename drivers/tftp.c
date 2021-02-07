@@ -106,8 +106,6 @@ static u32 tftp_server_port;
 static u32 tftp_client_ip;
 static u32 tftp_done;
 
-//----------------------------------------------
-
 // Hex lookup table for use in MAC address conversion
 static const char hex_lookup[] = "0123456789ABCDEF";
 

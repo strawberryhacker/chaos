@@ -11,10 +11,7 @@
 
 // This is the memory padding between successive kernels
 #define KERNEL_PADDING 1000
-
 extern u32 linker_kernel_end;
-
-char message[] = "Hello World";
 
 void main() {
 

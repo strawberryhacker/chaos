@@ -91,7 +91,7 @@ ldflags += -Wl,--defsym=ddr_start_macro=$(ddr_start)
 ldflags += -Wl,--defsym=ddr_size_macro=$(ddr_size)
 endif
 
-# ARM cross-compilers
+# ARMv7 cross-compilers
 cc      = arm-none-eabi-gcc
 objdump = arm-none-eabi-objdump
 objcopy = arm-none-eabi-objcopy
@@ -149,11 +149,13 @@ start:
 	@cp $@ $(tftp_dir)/$(tftp_name)
 	@echo Binary is copied to TFTP directory
 
+# Rule for compiling C files
 $(obj_dir)/%.o: $(top)/%.c $(deps)
 	@mkdir -p $(dir $@)
 	@echo " " CC $(patsubst $(top)/%,%, $<)
 	@$(cc) $(cpflags) $(cflags) -c $< -o $@
 
+# Rule for compiling ASM files
 $(obj_dir)/%.o: $(top)/%.s $(deps)
 	@mkdir -p $(dir $@)
 	@echo " " AS $(patsubst $(top)/%,%, $<)

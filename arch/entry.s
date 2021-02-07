@@ -14,7 +14,11 @@
 .extern ddr_size
 .extern ddr_start
 
-// This is where u-boot (or any bootloader) will hand off execution
+// This is where u-boot (or any bootloader) will hand off execution. This will run 
+// completly position independent. It will relocate itself to the beginning of DDR memory
+// and setup early page tables for the kernel. Finally it will enable caches and MMU and 
+// switch to the virtual memory layout. This will place the kernel at virtual address
+// 0x80000000, and the kernel should be linked at the same address
 .section .kernel_entry, "ax", %progbits
 kernel_entry:
 

@@ -1,6 +1,6 @@
 ## Summary
 
-The Chaos OS is a bare metal microkernel targeting embedded systems. It will include various bare metal example in several languages and of course several device server examples. Network stack and file systems are just implied. 
+The Chaos OS is a bare metal microkernel targeting embedded systems. It will include various bare metal example in several languages and of course several server examples. Network stack and file systems are just implied. I might also make a USB stack, graphics subsystem and a custom compiler for a new language. 
 
 ### Support
 
