@@ -77,8 +77,11 @@ cpflags += -DTFTP_CLIENT_MAC=\"$(tftp_client_mac)\"
 endif
 
 ifdef tftp_data_size
-$(info OK)
 cpflags += -DTFTP_DATA_SIZE=\"$(tftp_data_size)\"
+endif
+
+ifdef tftp_name
+cpflags += -DTFTP_FILE_NAME=\"$(tftp_name)\"
 endif
 
 # Pass some information to the linker such as the link location and DDR info
@@ -162,7 +165,7 @@ install: all
 	@python3 -B $(top)/scripts/kernel_load.py $(com) $(global_target_name).bin
 
 # Debug support for Orange Pi QEMU
-ifeq ($(board),orangepi_pc)
+ifeq ($(target),orangepi_pc)
 debug:
 	@$(gdb) -f $(global_target_name).elf -x $(top)/scripts/orangepi_qemu.gdb
 else

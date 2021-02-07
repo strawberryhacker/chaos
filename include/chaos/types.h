@@ -4,6 +4,7 @@
 #define TYPES_H
 
 #include <stdint.h>
+#include <stddef.h>
 
 // Register attributes
 #define _rw volatile

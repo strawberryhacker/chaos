@@ -33,9 +33,9 @@ relocate_kernel:
     // Check if the relocation will overwrite executing code
     ldr r2, =_kernel_bin_size
     add r2, r2, #4
-    add r4, r1, r2                     // r4 hold the upper address affected by the relocation
+    add r4, r1, r2                     // r4 hold the old kernel end address
     cmp r0, r4
-    bge .
+    blo .
 
     lsr r2, r2, #2
     add r2, r2, #1                     // Kernel size in words

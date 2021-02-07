@@ -24,6 +24,10 @@
 #define TFTP_DATA_SIZE "512"
 #endif
 
+#ifndef TFTP_FILE_NAME
+#define TFTP_FILE_NAME "none.bin"
+#endif
+
 struct __attribute__((packed)) mac_header {
     u8  dest_mac[6];
     u8  source_mac[6];
@@ -87,6 +91,9 @@ struct __attribute__((packed)) tftp_ack {
 #define TFTP_OPCODE_OACK 6
 #define TFTP_OPCODE_DATA 3
 #define TFTP_OPCODE_READ 1
+
+#define MAC_TYPE_IPv4   0x0800
+#define MAC_TYPE_ARP    0x0806
 
 static u8 mac_addr[6];
 static u8 tftp_server_mac[6];
@@ -606,8 +613,7 @@ void tftp_request(const char* file_name, const char* block_size) {
 }
 
 // Tries to read the given file from TFTP server. This will write the file to `dest`
-i32 tftp_read_file(void* dest, const char* file_name, const char* dest_ip,
-    const char* source_ip) {
+i32 tftp_read_file(void* dest) {
 
     // Clear the server TFTP port
     tftp_server_port = 0;
@@ -623,8 +629,8 @@ i32 tftp_read_file(void* dest, const char* file_name, const char* dest_ip,
     curr_sequence_num = 0;
 
     // Get the network IP address
-    string_to_ip(dest_ip, &tftp_server_ip);
-    string_to_ip(source_ip, &tftp_client_ip);
+    string_to_ip(TFTP_SERVER_IP, &tftp_server_ip);
+    string_to_ip(TFTP_CLIENT_IP, &tftp_client_ip);
 
     boot_start_timer();
 
@@ -636,7 +642,7 @@ i32 tftp_read_file(void* dest, const char* file_name, const char* dest_ip,
 
     // This is where we copy the file
     tftp_tmp_dest = dest;
-    tftp_request(file_name, TFTP_DATA_SIZE);
+    tftp_request(TFTP_FILE_NAME, TFTP_DATA_SIZE);
 
     // This loop will read the file
     tftp_done = 0;

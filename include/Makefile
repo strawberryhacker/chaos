@@ -11,7 +11,7 @@ deps-y += include/chaos/nic.h
 deps-y += include/chaos/list.h
 deps-y += include/chaos/cache.h
 deps-y += include/chaos/timer.h
-deps-y += include/chaos/boot.h
+deps-y += include/chaos/boot_message.h
 
 deps-$(soft_reboot) += include/chaos/netbuf.h
 deps-$(soft_reboot) += include/chaos/tftp.h

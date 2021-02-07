@@ -2,7 +2,6 @@
 
 #include <chaos/timer.h>
 #include <chaos/kprint.h>
-
 #include <sama5d2/regmap.h>
 #include <sama5d2/sama5d2_clk.h>
 
@@ -23,6 +22,7 @@ void sama5d2_init() {
     timer_reg->channel[0].cmr = 0;
 }
 
+// Restarts the timer
 void sama5d2_restart() {
     struct timer_reg* const timer_reg = TIMER0_REG;
 
@@ -30,6 +30,7 @@ void sama5d2_restart() {
     timer_reg->channel[0].ccr = (1 << 2) | (1 << 0);
 }
 
+// Returns the timer counter registers
 u32 sama5d2_get_time() {
     struct timer_reg* const timer_reg = TIMER0_REG;
     return timer_reg->channel[0].cv;
