@@ -397,7 +397,7 @@ void nic_send(struct netbuf* buf) {
 // Configures the NIC hardware and enables the NIC interface. This will setup the NIC in
 // a non-interrupt driven mode. Polling is the only way of sending / receiving packets
 void nic_init() {
-    boot_message("Starting kernel NIC driver for SAMA5D2\n");
+    kprint("Starting kernel NIC driver for SAMA5D2\n");
 
     // Enable clock and pins
     sama5d2_per_clk_en(5);

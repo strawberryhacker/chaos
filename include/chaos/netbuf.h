@@ -6,10 +6,11 @@
 #include <chaos/types.h>
 #include <chaos/list.h>
 
+#define NETBUF_SIZE 1600
+
 // Must be aligned with at least 64-bytes
 struct netbuf {
-    // This must be the first node
-    u8 buf[1552];
+    u8 buf[NETBUF_SIZE];
 
     // Allow to link netbuf's together. This also open for IP fragmenting
     struct list_node node;
@@ -20,9 +21,7 @@ struct netbuf {
 };
 
 void netbuf_init();
-
 struct netbuf* alloc_netbuf();
-
 void free_netbuf(struct netbuf* buf);
 
 #endif

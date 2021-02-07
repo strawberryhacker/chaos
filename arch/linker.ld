@@ -106,4 +106,5 @@ SECTIONS {
 }
 
 _kernel_size = _kernel_e - _kernel_s;
+_kernel_bin_size = linker_kernel_end - _kernel_s;
 _end = .;

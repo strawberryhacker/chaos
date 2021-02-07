@@ -35,26 +35,50 @@ include $(top)/include/Makefile
 include $(top)/config/Makefile
 
 # Check that the configuration file defines all the required variables
-ifeq ($(folder_name),)
+ifndef folder_name
 $(error Error in configuration file)
 endif
-ifeq ($(tftp_name),)
+
+ifndef tftp_name
 $(error Error in configuration file)
 endif
-ifeq ($(target_name),)
+
+ifndef target_name
 $(error Error in configuration file)
 endif
-ifeq ($(linker-script-y),)
+
+ifndef linker-script-y
 $(error Linker script is not provided)
 endif
-ifeq ($(link_location),)
+
+ifndef link_location
 $(error Link location is not specified)
 endif
-ifeq ($(ddr_size),)
+
+ifndef ddr_size
 $(error DDR size is not given)
 endif
-ifeq ($(ddr_start),)
+
+ifndef ddr_start
 $(error DDR size is not given)
+endif
+
+# In case of soft reboot we allow overriding the TFTP configuration
+ifdef tftp_client_ip
+cpflags += -DTFTP_CLIENT_IP=\"$(tftp_client_ip)\"
+endif
+
+ifdef tftp_server_ip
+cpflags += -DTFTP_SERVER_IP=\"$(tftp_server_ip)\"
+endif
+
+ifdef tftp_client_mac
+cpflags += -DTFTP_CLIENT_MAC=\"$(tftp_client_mac)\"
+endif
+
+ifdef tftp_data_size
+$(info OK)
+cpflags += -DTFTP_DATA_SIZE=\"$(tftp_data_size)\"
 endif
 
 # Pass some information to the linker such as the link location and DDR info

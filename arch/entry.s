@@ -8,7 +8,7 @@
 
 // Extern variables from the linker script
 .extern _svc_stack_e
-.extern _kernel_size
+.extern _kernel_bin_size
 
 // Extern variables from the targer configuration file
 .extern ddr_size
@@ -31,11 +31,11 @@ kernel_entry:
 
 relocate_kernel:
     // Check if the relocation will overwrite executing code
-    ldr r2, =_kernel_size
-    add r3, r2, #4
+    ldr r2, =_kernel_bin_size
+    add r2, r2, #4
     add r4, r1, r2                     // r4 hold the upper address affected by the relocation
-    cmp r4, r0
-    bls .
+    cmp r0, r4
+    bge .
 
     lsr r2, r2, #2
     add r2, r2, #1                     // Kernel size in words
